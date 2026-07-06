@@ -122,16 +122,7 @@ window.CampaignConfig = {
   ],
 
   /* ---- Historias (opcional; deja el array vacío para ocultar la sección) ---- */
-  historias: [
-    {
-      nombre: 'María, Charallave',
-      texto: 'Nos quedamos sin nada. Los alimentos y el kit de higiene que recibimos nos ayudaron a salir adelante esos primeros días.',
-    },
-    {
-      nombre: 'Familia Rodríguez, Cúa',
-      texto: 'Los kits de comida, agua y las sábanas llegaron cuando más lo necesitábamos. Gracias a quienes donaron.',
-    },
-  ],
+  historias: [],   // vacío = sección oculta. Agrega testimonios reales cuando los tengas.
 
   /* ---- Métodos de donación ALTERNATIVOS (opcional) ----
      Se muestran como opción manual mientras/además del cobro en línea.
