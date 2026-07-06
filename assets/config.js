@@ -8,7 +8,7 @@ window.CampaignConfig = {
   /* ---- Marca ---- */
   marca: {
     nombre: 'Venezuela se Levanta',
-    lema: 'Ayuda humanitaria para las familias afectadas por los terremotos',
+    lema: 'Ayuda humanitaria para levantar a Venezuela después de los terremotos',
     // Correo y redes se muestran en el pie de página.
     email: 'contacto@venezuelaselevanta.org',
     telefono: '',              // opcional, ej. '+58 412 000 0000'
@@ -89,8 +89,8 @@ window.CampaignConfig = {
     // Enlace a un documento/hoja pública de rendición de cuentas (opcional).
     rendicionUrl: '',
     actualizaciones: [
-      { fecha: '1 jul 2026', texto: 'Se actualizan las cifras públicas de la emergencia y se priorizan kits de agua, higiene y atención primaria.' },
-      { fecha: '30 jun 2026', texto: 'La respuesta humanitaria reporta miles de personas rescatadas y daños críticos en vivienda e infraestructura.' },
+      { fecha: '1 jul 2026', texto: 'Se actualizan las cifras públicas de la emergencia y se priorizan kits de agua, higiene y atención primaria para familias venezolanas.' },
+      { fecha: '30 jun 2026', texto: 'La respuesta humanitaria reporta miles de personas rescatadas y daños críticos en viviendas del centro-norte del país.' },
     ],
   },
 
@@ -98,7 +98,7 @@ window.CampaignConfig = {
   principios: [
     'Registro de cada donación con monto, moneda, fecha y método de pago.',
     'Separación entre ayuda directa y comisiones de pasarela para reportar el neto recibido.',
-    'Priorización de compras con comprobante: agua, alimentos, higiene, medicinas y refugio temporal.',
+    'Priorización de compras con comprobante: agua, alimentos, higiene, medicinas y refugio temporal en comunidades afectadas.',
     'Publicación de actualizaciones con fecha de corte y fuentes externas consultadas.',
   ],
 

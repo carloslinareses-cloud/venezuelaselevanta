@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="preload" as="image" href="assets/hero-relief.webp" type="image/webp" />
-  <link rel="stylesheet" href="assets/styles.css?v=3" />
+  <link rel="stylesheet" href="assets/styles.css?v=4" />
 </head>
 <body>
   <a class="skip-link" href="#donar">Saltar a donar</a>
@@ -35,9 +35,20 @@
               <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#ffcf5c"/><stop offset="1" stop-color="#f5a723"/>
               </linearGradient>
+              <symbol id="star-ve" viewBox="0 0 10 10">
+                <path d="M5 0.7 6.1 3.6h3.1L6.7 5.4l1 3.1L5 6.7 2.3 8.5l1-3.1L0.8 3.6h3.1Z"/>
+              </symbol>
             </defs>
             <rect width="40" height="40" rx="11" fill="#0a2540"/>
-            <path d="M20 9c-5.5 5-9 8.2-9 12.6A9 9 0 0 0 20 30a9 9 0 0 0 9-8.4C29 17.2 25.5 14 20 9Z" fill="url(#g1)"/>
+            <path d="M0 0h40v13.5H0z" fill="#f6c945"/>
+            <path d="M0 13.5h40V27H0z" fill="#003f87"/>
+            <path d="M0 27h40v13H0z" fill="#cf142b"/>
+            <g fill="#fff" opacity=".95" transform="translate(9.4 15.4) scale(.33)">
+              <use href="#star-ve" x="0" y="0"/><use href="#star-ve" x="9" y="-3"/><use href="#star-ve" x="18" y="-4"/>
+              <use href="#star-ve" x="27" y="-3"/><use href="#star-ve" x="36" y="0"/><use href="#star-ve" x="7" y="8"/>
+              <use href="#star-ve" x="18" y="10"/><use href="#star-ve" x="29" y="8"/>
+            </g>
+            <path d="M20 9c-5.5 5-9 8.2-9 12.6A9 9 0 0 0 20 30a9 9 0 0 0 9-8.4C29 17.2 25.5 14 20 9Z" fill="#fff" opacity=".94"/>
             <path d="M15.5 22.5 20 18l4.5 4.5" fill="none" stroke="#0a2540" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M20 18v6.5" stroke="#0a2540" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
@@ -72,6 +83,10 @@
       <div class="container hero-inner">
         <div class="hero-copy">
           <span class="eyebrow"><span class="pulse-dot"></span> Emergencia activa · Venezuela</span>
+          <div class="country-seal" aria-label="Campaña venezolana">
+            <span class="seal-flag" aria-hidden="true"></span>
+            <span>Venezuela presente</span>
+          </div>
           <h1>Cuando la tierra tembló,<br><em>la solidaridad se levantó.</em></h1>
           <p class="hero-lead" data-bind="marca.lema">
             Ayuda humanitaria para las familias afectadas por los terremotos.
@@ -91,6 +106,9 @@
             <span><strong data-bind="transparencia.pctACausa">100</strong>% a la ayuda</span>
             <span>·</span>
             <span>Cifras con fuente pública</span>
+          </div>
+          <div class="star-line" aria-hidden="true">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
 
@@ -192,7 +210,7 @@
           <span class="kicker">Haz tu aporte</span>
           <h2>Dona hoy y reconstruye una vida</h2>
           <p>Tu donación única va directo a las familias afectadas. Elige el monto,
-             tu moneda y listo. Cada aporte cuenta.</p>
+             tu moneda y listo. Cada aporte suma desde Venezuela y la diáspora.</p>
           <ul class="donar-benefits">
             <li>🔒 Pago 100% seguro y cifrado</li>
             <li>🧾 Recibes comprobante por correo</li>
@@ -353,6 +371,7 @@
     <!-- ══════════════ CTA FINAL ══════════════ -->
     <section class="section section-cta-final">
       <div class="container cta-final-inner">
+        <div class="cta-stars" aria-hidden="true">★ ★ ★ ★ ★ ★ ★ ★</div>
         <h2>Juntos, Venezuela se levanta.</h2>
         <p>Una donación hoy es un techo, un plato de comida y esperanza para una familia.</p>
         <a href="#donar" class="btn btn-gold btn-lg">Quiero ayudar ahora</a>
@@ -410,8 +429,8 @@
     </div>
   </div>
 
-  <script src="assets/config.js?v=3"></script>
-  <script src="assets/payments.js?v=3"></script>
-  <script src="assets/app.js?v=3"></script>
+  <script src="assets/config.js?v=4"></script>
+  <script src="assets/payments.js?v=4"></script>
+  <script src="assets/app.js?v=4"></script>
 </body>
 </html>
