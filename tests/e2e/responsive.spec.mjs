@@ -18,3 +18,18 @@ for (const viewport of viewports) {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 }
+
+test('mobile prioritizes the donation form at the top of the page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const donationSection = await page.locator('#donar').boundingBox();
+  const heroSection = await page.locator('.hero').boundingBox();
+  const donationForm = await page.locator('#donate-form').boundingBox();
+
+  expect(donationSection).not.toBeNull();
+  expect(heroSection).not.toBeNull();
+  expect(donationForm).not.toBeNull();
+  expect(donationSection.y).toBeLessThan(heroSection.y);
+  expect(donationForm.y).toBeLessThan(320);
+});

@@ -385,7 +385,11 @@ h3 { font-size: 1.2rem; }
   .container { padding: 0 16px; }
   h1 { font-size: clamp(1.95rem, 10vw, 2.6rem); }
   h2 { font-size: clamp(1.55rem, 8vw, 2.1rem); }
+  main { display: flex; flex-direction: column; }
+  .section-donar { order: -2; }
+  .hero { order: -1; }
   .section { padding: 44px 0; }
+  .section-donar { padding-top: 28px; padding-bottom: 36px; }
   .section-head { margin-bottom: 28px; }
   .section-lead { font-size: 1rem; }
   .hero { padding-top: 34px; }
@@ -415,7 +419,11 @@ h3 { font-size: 1.2rem; }
   .niveles-grid { grid-template-columns: 1fr 1fr; }
   .footer-inner { grid-template-columns: 1fr; }
   .amounts { grid-template-columns: repeat(3, 1fr); }
-  .donate-card { padding: 20px; }
+  .donar-inner { display: flex; flex-direction: column; gap: 22px; }
+  .donate-card { order: 1; padding: 20px; }
+  .donar-copy { order: 2; }
+  .donar-copy > p { font-size: .98rem; }
+  .donar-benefits { margin: 18px 0 0; gap: 10px; }
   .dc-head { align-items: stretch; flex-direction: column; gap: 12px; }
   .currency-switch { width: 100%; }
   .cur-btn { flex: 1; min-height: 38px; }
