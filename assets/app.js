@@ -311,6 +311,23 @@
     var err = $('#form-error'); if (err) err.hidden = true;
   }
 
+  function asegurarBotonDonacion() {
+    var btn = $('#donate-btn');
+    if (!btn) return null;
+    if (!$('#donate-btn-amount', btn)) {
+      btn.innerHTML = 'Donar <span id="donate-btn-amount"></span> ahora';
+    }
+    return btn;
+  }
+
+  function restaurarBotonDonacion() {
+    var btn = asegurarBotonDonacion();
+    if (!btn) return;
+    btn.disabled = false;
+    btn.style.opacity = '';
+    actualizarResumen();
+  }
+
   function bindWidget() {
     $$('.cur-btn').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -354,8 +371,9 @@
     };
 
     var btn = $('#donate-btn');
+    if (!btn) return;
     btn.disabled = true; btn.style.opacity = '.7';
-    var original = btn.innerHTML; btn.innerHTML = 'Procesando…';
+    btn.innerHTML = 'Procesando...';
 
     Promise.resolve(window.Payments.iniciarDonacion(payload))
       .then(function (res) {
@@ -370,7 +388,7 @@
         restaurar();
       });
 
-    function restaurar() { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = original; }
+    function restaurar() { restaurarBotonDonacion(); }
   }
 
   function mostrarError(msg) {
@@ -522,5 +540,9 @@
     bannersPorURL();
     renderDonacionesVivas();
     setInterval(renderDonacionesVivas, 25000); // refresco del feed cada 25s
+  });
+
+  window.addEventListener('pageshow', function () {
+    restaurarBotonDonacion();
   });
 })();

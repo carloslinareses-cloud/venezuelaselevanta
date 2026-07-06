@@ -56,6 +56,28 @@ test('EUR payment shows backend errors without leaving the page', async ({ page 
   await expect(page).toHaveURL(/\/#donar$/);
 });
 
+test('donation button resets when returning from browser history', async ({ page }) => {
+  await page.goto('/#donar');
+
+  await page.evaluate(() => {
+    const btn = document.getElementById('donate-btn');
+    btn.disabled = true;
+    btn.style.opacity = '.7';
+    btn.innerHTML = 'Procesando...';
+    window.dispatchEvent(new Event('pageshow'));
+  });
+
+  const donateButton = page.locator('#donate-btn');
+  await expect(donateButton).toBeEnabled();
+  await expect(donateButton).toContainText('Donar');
+  await expect(donateButton).toContainText('50');
+
+  await page.locator('#amounts .amount-btn[data-val="20"]').click();
+
+  await expect(donateButton).toBeEnabled();
+  await expect(donateButton).toContainText('20');
+});
+
 test('mobile navigation opens, closes and keeps layout within viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
