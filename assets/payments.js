@@ -66,24 +66,29 @@ window.Payments = {
   async _sumup(payload) {
     var sb = window.PaymentConfig.supabase;
     var url = sb.url.replace(/\/$/, '') + '/functions/v1/' + sb.funcionDonacion;
-    var res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': sb.anonKey,
-        'Authorization': 'Bearer ' + sb.anonKey,
-      },
-      body: JSON.stringify({
-        amount: payload.monto,
-        currency: payload.moneda,
-        name: payload.donante && payload.donante.nombre || '',
-        email: payload.donante && payload.donante.email || '',
-        mensaje: payload.donante && payload.donante.mensaje || '',
-        anonimo: !!(payload.donante && payload.donante.anonimo),
-        // A dónde vuelve el donante tras pagar (funciona en localhost y en producción).
-        returnUrl: new URL('gracias.html', location.href).href,
-      }),
-    });
+    var res;
+    try {
+      res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': sb.anonKey,
+          'Authorization': 'Bearer ' + sb.anonKey,
+        },
+        body: JSON.stringify({
+          amount: payload.monto,
+          currency: payload.moneda,
+          name: payload.donante && payload.donante.nombre || '',
+          email: payload.donante && payload.donante.email || '',
+          mensaje: payload.donante && payload.donante.mensaje || '',
+          anonimo: !!(payload.donante && payload.donante.anonimo),
+          // A dónde vuelve el donante tras pagar (funciona en localhost y en producción).
+          returnUrl: new URL('gracias.html', location.href).href,
+        }),
+      });
+    } catch (e) {
+      throw new Error('No pudimos conectar con el servidor de pagos. Si estás en VPN o bloqueador, desactívalo y prueba de nuevo. Si persiste, el dominio debe autorizarse en Supabase.');
+    }
     if (!res.ok) {
       var msg = 'No se pudo iniciar el pago. Intenta de nuevo.';
       try { var j = await res.json(); if (j && j.error) msg = j.error; } catch (e) {}

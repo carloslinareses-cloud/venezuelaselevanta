@@ -14,6 +14,7 @@ function loadPayments(overrides = {}) {
     setTimeout: () => 0,
     fetch: async (url, options) => {
       calls.push({ url, options });
+      if (overrides.fetchError) throw overrides.fetchError;
       return overrides.fetchResponse || {
         ok: true,
         json: async () => ({ hostedUrl: 'https://checkout.example/pay/123', checkoutId: 'chk_123' }),
@@ -69,5 +70,16 @@ test('SumUp surfaces backend errors safely', async () => {
   await assert.rejects(
     () => payments.iniciarDonacion({ monto: 25, moneda: 'EUR', donante: {} }),
     /Pagos no configurados/,
+  );
+});
+
+test('SumUp surfaces network and CORS failures with a donor-friendly message', async () => {
+  const { payments } = loadPayments({
+    fetchError: new TypeError('Failed to fetch'),
+  });
+
+  await assert.rejects(
+    () => payments.iniciarDonacion({ monto: 25, moneda: 'EUR', donante: {} }),
+    /No pudimos conectar con el servidor de pagos/,
   );
 });

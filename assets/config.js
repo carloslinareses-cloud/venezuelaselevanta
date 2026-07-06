@@ -52,17 +52,17 @@ window.CampaignConfig = {
     zona: 'La Guaira, Caracas y el centro-norte del país',
     fecha: '24 de junio de 2026',
     magnitud: '7,2 y 7,5',
-    // Cifras oficiales preliminares con corte al 1 de julio de 2026. 0 se oculta.
-    corte: '1 de julio de 2026, 19:00 VET',
-    fallecidos: 2295,
-    heridos: 11267,
-    damnificados: 26403,
+    // Cifras preliminares con corte al 6 de julio de 2026. 0 se oculta.
+    corte: '6 de julio de 2026, 21:00 VET',
+    fallecidos: 3535,
+    heridos: 16740,
+    damnificados: 17854,
     resumen:
       'El 24 de junio de 2026, dos fuertes sismos de magnitud 7,2 y 7,5 ' +
       'golpearon en apenas 39 segundos la costa norte de Venezuela — el evento ' +
       'más fuerte en más de un siglo. La Guaira, Caracas y el centro-norte del ' +
-      'país concentran daños severos, personas desplazadas y necesidades urgentes ' +
-      'de refugio, alimentos, agua potable, atención médica y apoyo psicológico. ' +
+      'país concentran daños severos, personas sin hogar y necesidades urgentes ' +
+      'de alimentos, agua, ropa, productos de higiene y sábanas. ' +
       'Las cifras son preliminares y pueden cambiar mientras continúan las evaluaciones.',
   },
 
@@ -89,6 +89,7 @@ window.CampaignConfig = {
     // Enlace a un documento/hoja pública de rendición de cuentas (opcional).
     rendicionUrl: '',
     actualizaciones: [
+      { fecha: '6 jul 2026', texto: 'Se actualiza el balance preliminar: 3.535 fallecidos, 16.740 heridos y 17.854 personas sin hogar tras el doble terremoto.' },
       { fecha: '1 jul 2026', texto: 'Se actualizan las cifras públicas de la emergencia y se priorizan kits de agua, higiene y atención primaria para familias venezolanas.' },
       { fecha: '30 jun 2026', texto: 'La respuesta humanitaria reporta miles de personas rescatadas y daños críticos en viviendas del centro-norte del país.' },
     ],
@@ -103,6 +104,14 @@ window.CampaignConfig = {
   ],
 
   fuentes: [
+    {
+      etiqueta: 'Cadena SER · balance del 6 jul 2026',
+      url: 'https://cadenaser.com/nacional/2026/07/06/largas-fila-de-comida-y-la-busqueda-de-cuerpos-con-excavadoras-asi-se-encuentra-la-guaira-12-dias-despues-del-seismo-cadena-ser/',
+    },
+    {
+      etiqueta: 'AP · recuperación tras los terremotos (7 jul 2026)',
+      url: 'https://apnews.com/article/411e5608c47eda5385a6e13547cae7c9',
+    },
     {
       etiqueta: 'OCHA · Situation Report No. 8 (1 jul 2026)',
       url: 'https://www.unocha.org/publications/report/venezuela-bolivarian-republic/earthquakes-venezuela-situation-report-no-8-01-july-2026-time-0700-pm',
