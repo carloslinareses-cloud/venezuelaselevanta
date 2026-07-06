@@ -66,7 +66,15 @@ test('mobile navigation opens, closes and keeps layout within viewport', async (
 });
 
 test('thank-you page renders correctly', async ({ page }) => {
-  await page.goto('/gracias.html');
+  await page.route('https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-sumup?ref=DONA-SVZLA-TEST', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ paid: true, status: 'PAID' }),
+    });
+  });
+
+  await page.goto('/gracias.html?ref=DONA-SVZLA-TEST');
 
   await expect(page).toHaveTitle(/Gracias/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
