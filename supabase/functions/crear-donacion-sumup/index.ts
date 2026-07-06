@@ -78,7 +78,7 @@ async function sbFeed(): Promise<unknown[]> {
 }
 
 async function verificarYRegistrar(ref: string, origin: string | null): Promise<Response> {
-  const API_KEY = Deno.env.get("SUMUP_API_KEY") || Deno.env.get("SUMUP_SECRET_KEY");
+  const API_KEY = Deno.env.get("SUMUP_DONACION_KEY") || Deno.env.get("SUMUP_API_KEY") || Deno.env.get("SUMUP_SECRET_KEY");
   if (!API_KEY) return json({ paid: false, status: "NO_CONFIG" }, 500, origin);
   try {
     const r = await fetch(SUMUP_CHECKOUTS + "?checkout_reference=" + encodeURIComponent(ref), {
@@ -117,7 +117,7 @@ Deno.serve(async (req: Request) => {
   if (currency !== "EUR") return json({ error: "SumUp solo procesa EUR en esta campaña." }, 400, origin);
   if (!(amount >= 1) || amount > 10000) return json({ error: "Monto inválido. Debe estar entre 1 y 10.000 €." }, 400, origin);
 
-  const API_KEY = Deno.env.get("SUMUP_API_KEY") || Deno.env.get("SUMUP_SECRET_KEY");
+  const API_KEY = Deno.env.get("SUMUP_DONACION_KEY") || Deno.env.get("SUMUP_API_KEY") || Deno.env.get("SUMUP_SECRET_KEY");
   const PAY_TO = Deno.env.get("SUMUP_PAY_TO_EMAIL") || "carlos.linares.es@gmail.com";
   if (!API_KEY) return json({ error: "Pagos no configurados (falta SUMUP_API_KEY)." }, 500, origin);
 
