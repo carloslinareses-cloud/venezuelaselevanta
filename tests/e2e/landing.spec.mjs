@@ -6,9 +6,9 @@ test('renders the landing page without encoding artifacts or runtime errors', as
 
   await page.goto('/');
 
-  await expect(page).toHaveTitle(/Venezuela se Levanta/);
-  await expect(page.getByRole('heading', { name: /la solidaridad se levantó/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /donar ahora/i })).toBeVisible();
+  await expect(page).toHaveTitle(/Súmate VZLA/);
+  await expect(page.getByRole('heading', { name: /súmate hoy/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /sumarme ahora/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /datos, fuentes y controles/i })).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/Ã|Â|ðŸ|�/);
   expect(errors).toEqual([]);

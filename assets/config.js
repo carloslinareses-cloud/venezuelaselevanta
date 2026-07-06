@@ -7,12 +7,12 @@ window.CampaignConfig = {
 
   /* ---- Marca ---- */
   marca: {
-    nombre: 'Venezuela se Levanta',
-    lema: 'Ayuda humanitaria para levantar a Venezuela después de los terremotos',
+    nombre: 'Súmate VZLA',
+    lema: 'Ayuda humanitaria verificada para que Venezuela se levante',
     // Correo y redes se muestran en el pie de página.
-    email: 'contacto@venezuelaselevanta.org',
+    email: 'contacto@sumatevzla.org',
     telefono: '',              // opcional, ej. '+58 412 000 0000'
-    web: 'venezuelaselevanta.org',
+    web: 'sumatevzla.org',
     redes: {
       instagram: '',           // ej. 'https://instagram.com/...'
       facebook: '',

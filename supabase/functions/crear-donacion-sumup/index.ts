@@ -20,7 +20,7 @@
 const SUMUP_CHECKOUTS = "https://api.sumup.com/v0.1/checkouts";
 
 const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ||
-  "http://localhost:8080,http://localhost:3000,http://localhost:5173,http://127.0.0.1:8080,https://carloslinareses-cloud.github.io,https://venezuelaselevanta.org")
+  "http://localhost:8080,http://localhost:3000,http://localhost:5173,http://127.0.0.1:8080,https://carloslinareses-cloud.github.io,https://sumatevzla.org")
   .split(",").map((s) => s.trim()).filter(Boolean);
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -71,14 +71,14 @@ Deno.serve(async (req: Request) => {
   const nombre = String(body.name || "").slice(0, 80);
   const email = String(body.email || "").slice(0, 120);
   const returnUrl = String(body.returnUrl || "");
-  const reference = "DONA-VSL-" + Date.now();
+  const reference = "DONA-SVZLA-" + Date.now();
 
   const checkoutBody: Record<string, unknown> = {
     amount: Math.round(amount * 100) / 100, // SumUp usa unidades mayores (25.00), no céntimos
     currency: "EUR",
     checkout_reference: reference,
     pay_to_email: PAY_TO,
-    description: "Donación Venezuela se Levanta" +
+    description: "Donación Súmate VZLA" +
       (nombre ? " — " + nombre : email ? " — " + email : ""),
     // Hosted Checkout: SumUp aloja la página de pago y devuelve hosted_checkout_url.
     // Redirigimos ahí (más robusto que el widget embebido, que extensiones/antivirus bloquean).

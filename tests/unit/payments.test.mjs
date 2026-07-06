@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 function loadPayments(overrides = {}) {
   const calls = [];
-  const location = { href: overrides.href || 'https://venezuelaselevanta.org/index.html' };
+  const location = { href: overrides.href || 'https://sumatevzla.org/index.html' };
   const context = {
     window: { location },
     location,
@@ -55,7 +55,7 @@ test('SumUp request is sent to Supabase Edge Function and redirects to hosted ch
   assert.equal(body.amount, 25);
   assert.equal(body.currency, 'EUR');
   assert.equal(body.email, 'ana@example.com');
-  assert.equal(body.returnUrl, 'https://venezuelaselevanta.org/gracias.html');
+  assert.equal(body.returnUrl, 'https://sumatevzla.org/gracias.html');
 });
 
 test('SumUp surfaces backend errors safely', async () => {

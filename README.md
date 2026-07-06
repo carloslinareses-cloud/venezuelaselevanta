@@ -1,8 +1,8 @@
-# Venezuela se Levanta
+# Súmate VZLA
 
-Página web estática de recaudación de ayuda humanitaria para las familias afectadas por
-los terremotos en Venezuela. Incluye landing, widget de donación, retorno de pago,
-fuentes públicas, controles de transparencia y pruebas automatizadas.
+Página web estática de recaudación de ayuda humanitaria para Venezuela bajo la marca
+Súmate VZLA. Incluye landing, widget de donación, retorno de pago, fuentes públicas,
+controles de transparencia y pruebas automatizadas.
 
 ## Estructura
 
@@ -83,7 +83,7 @@ Secrets necesarios:
 ```bash
 supabase secrets set SUMUP_API_KEY="<llave-secreta-sumup>" --project-ref koxrtxplpybdfymgdhhd
 supabase secrets set SUMUP_PAY_TO_EMAIL="<email-comercio>" --project-ref koxrtxplpybdfymgdhhd
-supabase secrets set ALLOWED_ORIGINS="https://carloslinareses-cloud.github.io,https://venezuelaselevanta.org,http://127.0.0.1:53173" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set ALLOWED_ORIGINS="https://carloslinareses-cloud.github.io,https://sumatevzla.org,http://127.0.0.1:53173" --project-ref koxrtxplpybdfymgdhhd
 ```
 
 Deploy:
@@ -95,10 +95,16 @@ supabase functions deploy crear-donacion-sumup --no-verify-jwt --project-ref kox
 ## Producción
 
 El sitio no requiere build. Para GitHub Pages, publica la rama `main` desde la raíz
-del repositorio. URL esperada:
+del repositorio. URL actual:
 
 ```text
 https://carloslinareses-cloud.github.io/venezuelaselevanta/
+```
+
+Dominio elegido para conectar cuando esté comprado:
+
+```text
+https://sumatevzla.org/
 ```
 
 Antes de aceptar donaciones reales:
