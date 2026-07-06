@@ -8,7 +8,11 @@ test('renders the landing page without encoding artifacts or runtime errors', as
 
   await expect(page).toHaveTitle(/Súmate VZLA/);
   await expect(page.getByRole('heading', { name: /súmate hoy/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /sumarme ahora/i })).toBeVisible();
+  if ((page.viewportSize()?.width || 0) <= 680) {
+    await expect(page.locator('#donate-form')).toBeVisible();
+  } else {
+    await expect(page.getByRole('link', { name: /sumarme ahora/i })).toBeVisible();
+  }
   await expect(page.getByRole('heading', { name: /datos, fuentes y controles/i })).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/Ã|Â|ðŸ|�/);
   expect(errors).toEqual([]);

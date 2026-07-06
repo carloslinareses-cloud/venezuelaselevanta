@@ -19,7 +19,7 @@ for (const viewport of viewports) {
   });
 }
 
-test('mobile prioritizes the donation form at the top of the page', async ({ page }) => {
+test('mobile shows campaign context before donation without a long scroll', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
 
@@ -30,6 +30,21 @@ test('mobile prioritizes the donation form at the top of the page', async ({ pag
   expect(donationSection).not.toBeNull();
   expect(heroSection).not.toBeNull();
   expect(donationForm).not.toBeNull();
-  expect(donationSection.y).toBeLessThan(heroSection.y);
-  expect(donationForm.y).toBeLessThan(320);
+  expect(heroSection.y).toBeLessThan(donationSection.y);
+  expect(donationForm.y).toBeLessThan(900);
+});
+
+test('desktop keeps the donation form in the first viewport after the campaign context', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+
+  const donationSection = await page.locator('#donar').boundingBox();
+  const heroSection = await page.locator('.hero').boundingBox();
+  const donationForm = await page.locator('#donate-form').boundingBox();
+
+  expect(donationSection).not.toBeNull();
+  expect(heroSection).not.toBeNull();
+  expect(donationForm).not.toBeNull();
+  expect(heroSection.y).toBeLessThan(donationSection.y);
+  expect(donationForm.y).toBeLessThan(1000);
 });

@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="preload" as="image" href="assets/hero-relief.webp" type="image/webp" />
-  <link rel="stylesheet" href="assets/styles.css?v=9" />
+  <link rel="stylesheet" href="assets/styles.css?v=10" />
 </head>
 <body>
   <a class="skip-link" href="#donar">Saltar a donar</a>
@@ -92,7 +92,7 @@
           </div>
           <h1>Súmate hoy,<br><em>Venezuela se levanta.</em></h1>
           <p class="hero-lead" data-bind="marca.lema">
-            Ayuda humanitaria para las familias afectadas por los terremotos.
+            Ayuda humanitaria verificada para que Venezuela se levante
           </p>
           <p class="hero-sub">
             Súmate VZLA conecta la solidaridad de Venezuela y la diáspora con
@@ -210,15 +210,14 @@
     <section class="section section-donar" id="donar">
       <div class="container donar-inner">
         <div class="donar-copy">
-          <span class="kicker">Haz tu aporte</span>
-          <h2>Súmate con una donación segura</h2>
-          <p>Tu donación única se registra en Súmate VZLA y va directo a las familias
-             afectadas. Elige el monto, tu moneda y listo. Cada aporte suma desde
-             Venezuela y la diáspora.</p>
+          <span class="kicker">Donar ahora</span>
+          <h2>Dona en menos de un minuto</h2>
+          <p>Elige un monto, deja tu correo para el comprobante y pasa al pago seguro.
+             Súmate VZLA registra cada aporte para que la ayuda llegue con trazabilidad.</p>
           <ul class="donar-benefits">
+            <li>⚡ Formulario rápido: monto, correo y pago</li>
             <li>🔒 Pago 100% seguro y cifrado</li>
             <li>🧾 Recibes comprobante por correo</li>
-            <li>🌎 Puedes donar en USD o EUR, desde cualquier país</li>
             <li>💛 El 100% se destina a la ayuda</li>
           </ul>
           <div class="metodos-alt" id="metodos-alt" hidden>
@@ -250,17 +249,22 @@
 
           <div class="donor-fields">
             <div class="field">
-              <label for="d-nombre">Nombre <span class="opt">(opcional)</span></label>
-              <input type="text" id="d-nombre" autocomplete="name" placeholder="Tu nombre" />
-            </div>
-            <div class="field">
               <label for="d-email">Correo <span class="opt">para tu comprobante</span></label>
               <input type="email" id="d-email" autocomplete="email" placeholder="tucorreo@ejemplo.com" />
             </div>
-            <div class="field">
-              <label for="d-msg">Mensaje de aliento <span class="opt">(opcional)</span></label>
-              <textarea id="d-msg" rows="2" placeholder="Un mensaje para las familias…"></textarea>
-            </div>
+            <details class="optional-fields">
+              <summary>Agregar nombre o mensaje <span>(opcional)</span></summary>
+              <div class="optional-fields-body">
+                <div class="field">
+                  <label for="d-nombre">Nombre <span class="opt">(opcional)</span></label>
+                  <input type="text" id="d-nombre" autocomplete="name" placeholder="Tu nombre" />
+                </div>
+                <div class="field">
+                  <label for="d-msg">Mensaje de aliento <span class="opt">(opcional)</span></label>
+                  <textarea id="d-msg" rows="2" placeholder="Un mensaje para las familias…"></textarea>
+                </div>
+              </div>
+            </details>
             <label class="check">
               <input type="checkbox" id="d-anon" />
               <span>Donar de forma anónima</span>
