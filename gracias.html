@@ -3,42 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>¡Gracias por tu donación! — Súmate VZLA</title>
-  <meta name="description" content="Gracias por sumarte a la ayuda humanitaria de Súmate VZLA para las familias afectadas en Venezuela." />
+  <title>Gracias — Súmate VZLA</title>
+  <meta name="description" content="Confirmación de tu donación a Súmate VZLA para las familias afectadas en Venezuela." />
   <meta name="theme-color" content="#0a2540" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/styles.css?v=6" />
+  <link rel="stylesheet" href="assets/styles.css?v=7" />
   <style>
     .gracias { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
       background: radial-gradient(900px 500px at 50% -10%, rgba(245,167,35,.18), transparent 60%), var(--crema); padding: 40px 20px; }
     .gracias-card { max-width: 560px; }
-    .gracias .check { width: 96px; height: 96px; margin: 0 auto 24px; border-radius: 50%; background: linear-gradient(135deg, var(--oro-400), var(--oro-600)); display: grid; place-items: center; box-shadow: var(--sombra-lg); animation: pop .5s cubic-bezier(.2,.9,.3,1.3); }
+    .gracias .check { width: 96px; height: 96px; margin: 0 auto 24px; border-radius: 50%; display: grid; place-items: center; box-shadow: var(--sombra-lg); animation: pop .5s cubic-bezier(.2,.9,.3,1.3); }
+    .gracias .check.ok { background: linear-gradient(135deg, var(--oro-400), var(--oro-600)); }
+    .gracias .check.bad { background: linear-gradient(135deg, #f0a3a3, var(--ve-rojo)); }
+    .gracias .check.wait { background: var(--crema-2); box-shadow: none; }
     .gracias .check svg { width: 48px; height: 48px; }
     .gracias h1 { margin-bottom: 14px; }
     .gracias p { color: var(--gris-700); font-size: 1.1rem; margin-bottom: 10px; }
     .gracias .share { margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .spinner { width: 38px; height: 38px; border: 4px solid var(--gris-300); border-top-color: var(--oro-600); border-radius: 50%; animation: spin .8s linear infinite; }
     @keyframes pop { from { transform: scale(.6); opacity: 0; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
   <div class="gracias">
     <div class="gracias-card">
-      <div class="check">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0a2540" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+
+      <!-- Verificando -->
+      <div id="estado-verificando">
+        <div class="check wait"><div class="spinner"></div></div>
+        <span class="kicker">Un momento</span>
+        <h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">Confirmando tu pago…</h1>
+        <p>Estamos verificando tu donación de forma segura.</p>
       </div>
-      <span class="kicker">Donación recibida</span>
-      <h1>¡Gracias por tu corazón! 💛</h1>
-      <p>Tu aporte ya está en camino con Súmate VZLA para ayudar a las familias afectadas por el terremoto.</p>
-      <p>Si dejaste tu correo, recibirás un comprobante en breve.</p>
-      <div class="share">
-        <a href="index.html" class="btn btn-primary btn-lg">Volver al inicio</a>
-        <a href="index.html#donar" class="btn btn-ghost btn-lg">Compartir la causa</a>
+
+      <!-- Éxito -->
+      <div id="estado-exito" hidden>
+        <div class="check ok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0a2540" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <span class="kicker">Donación recibida</span>
+        <h1>¡Gracias por tu corazón! 💛</h1>
+        <p>Tu aporte ya está en camino con Súmate VZLA para ayudar a las familias afectadas por el terremoto.</p>
+        <p>Si dejaste tu correo, recibirás un comprobante en breve.</p>
+        <div class="share">
+          <a href="index.html" class="btn btn-primary btn-lg">Volver al inicio</a>
+          <a href="index.html#donar" class="btn btn-ghost btn-lg">Compartir la causa</a>
+        </div>
+        <p style="margin-top:26px;font-family:var(--font-display);font-size:1.3rem;color:var(--azul-900)">Súmate VZLA: Venezuela se levanta.</p>
       </div>
-      <p style="margin-top:26px;font-family:var(--font-display);font-size:1.3rem;color:var(--azul-900)">Súmate VZLA: Venezuela se levanta.</p>
+
+      <!-- No completado -->
+      <div id="estado-fallo" hidden>
+        <div class="check bad">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </div>
+        <span class="kicker" style="color:var(--ve-rojo)">Pago no completado</span>
+        <h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">Tu donación no se completó</h1>
+        <p>No registramos ningún cobro. Si quieres ayudar, puedes intentarlo de nuevo — solo toma un momento.</p>
+        <div class="share">
+          <a href="index.html#donar" class="btn btn-primary btn-lg">Intentar de nuevo</a>
+          <a href="index.html" class="btn btn-ghost btn-lg">Volver al inicio</a>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <script>
+    (function () {
+      var FN = 'https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-sumup';
+      var ANON = 'sb_publishable_024-eUVtJmUuVsdrEKTl3A_oMQl0Gla';
+      function show(id) {
+        ['estado-verificando', 'estado-exito', 'estado-fallo'].forEach(function (x) {
+          var el = document.getElementById(x); if (el) el.hidden = (x !== id);
+        });
+      }
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (!ref) { show('estado-fallo'); return; }  // llegó sin pago (ej. clic en el nombre del comercio)
+      var intentos = 0;
+      (function verificar() {
+        intentos++;
+        fetch(FN + '?ref=' + encodeURIComponent(ref), { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON } })
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d && d.paid) { show('estado-exito'); return; }
+            // El pago puede tardar un instante en confirmarse tras el redirect.
+            if (intentos < 3 && (d.status === 'PENDING' || d.status === 'NOT_FOUND')) { setTimeout(verificar, 2500); return; }
+            show('estado-fallo');
+          })
+          .catch(function () { if (intentos < 3) setTimeout(verificar, 2500); else show('estado-fallo'); });
+      })();
+    })();
+  </script>
 </body>
 </html>

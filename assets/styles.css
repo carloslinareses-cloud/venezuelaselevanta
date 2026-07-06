@@ -288,6 +288,21 @@ h3 { font-size: 1.2rem; }
 .historia-texto { font-family: var(--font-display); font-size: 1.1rem; color: var(--azul-800); margin: 18px 0 14px; position: relative; z-index: 1; }
 .historia-nombre { font-weight: 800; color: var(--oro-600); font-size: .9rem; }
 
+/* Donaciones en tiempo real */
+.section-donaciones { background: var(--blanco); border-top: 1px solid var(--borde); }
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--verde); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 0 0 rgba(22,163,74,.5); animation: livepulse 1.6s infinite; }
+@keyframes livepulse { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,.5); } 70% { box-shadow: 0 0 0 7px rgba(22,163,74,0); } 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); } }
+.donaciones-lista { display: grid; gap: 10px; }
+.donacion-item { display: flex; align-items: center; gap: 14px; background: var(--crema); border: 1px solid var(--borde); border-radius: var(--radio); padding: 12px 16px; animation: donaIn .5s ease; }
+@keyframes donaIn { from { opacity: 0; transform: translateY(8px); } }
+.donacion-ava { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: #fff; background: linear-gradient(135deg, var(--azul-600), var(--azul-900)); flex-shrink: 0; }
+.donacion-ava.anon { background: linear-gradient(135deg, var(--oro-400), var(--oro-600)); color: var(--azul-900); }
+.donacion-info { flex: 1; min-width: 0; }
+.donacion-nombre { font-weight: 800; color: var(--azul-900); }
+.donacion-cuando { font-size: .82rem; color: var(--gris-500); }
+.donacion-monto { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--verde); white-space: nowrap; }
+.donaciones-vacio { text-align: center; color: var(--gris-500); padding: 30px 10px; font-weight: 600; }
+
 /* Verificación */
 .section-verificacion { background: var(--crema); border-top: 1px solid var(--borde); }
 .verificacion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }

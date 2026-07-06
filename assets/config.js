@@ -24,9 +24,9 @@ window.CampaignConfig = {
   /* ---- Meta de recaudación (barra de progreso del hero) ---- */
   meta: {
     objetivo: 50000,           // meta total
-    recaudado: 12480,          // llevado hasta ahora  ← actualízalo
+    recaudado: 478,            // llevado hasta ahora  ← actualízalo
     moneda: 'EUR',             // moneda en la que se expresa la meta
-    donantes: 214,             // nº de personas que han aportado
+    donantes: 11,              // nº de personas que han aportado
     // Si conectas un backend, puedes actualizar recaudado/donantes por API.
   },
 
@@ -68,19 +68,19 @@ window.CampaignConfig = {
 
   /* ---- En qué se usa cada aporte (debe sumar 100) ---- */
   usoFondos: [
-    { etiqueta: 'Refugio y reconstrucción', pct: 40, icono: 'casa' },
-    { etiqueta: 'Alimentos y agua potable', pct: 25, icono: 'agua' },
-    { etiqueta: 'Salud y medicinas', pct: 20, icono: 'salud' },
-    { etiqueta: 'Apoyo psicológico y logística', pct: 15, icono: 'corazon' },
+    { etiqueta: 'Alimentos y agua potable', pct: 45, icono: 'agua' },
+    { etiqueta: 'Ropa y sábanas', pct: 25, icono: 'ropa' },
+    { etiqueta: 'Productos de higiene', pct: 20, icono: 'salud' },
+    { etiqueta: 'Logística y entrega', pct: 10, icono: 'caja' },
   ],
 
   /* ---- Qué logra cada monto (niveles de impacto) ---- */
   niveles: [
-    { monto: 10,  titulo: 'Agua y alimentos',   texto: 'Agua potable y comida por 3 días para una familia.' },
-    { monto: 25,  titulo: 'Kit de emergencia',  texto: 'Higiene, cobijas y artículos básicos para una familia.' },
-    { monto: 50,  titulo: 'Salud',              texto: 'Medicinas y atención primaria para varias personas.' },
-    { monto: 100, titulo: 'Techo seguro',       texto: 'Materiales para reparar el techo de una vivienda.' },
-    { monto: 250, titulo: 'Reconstrucción',     texto: 'Reconstrucción de un espacio seguro para una familia.' },
+    { monto: 10,  titulo: 'Alimentos',         texto: 'Comida para una familia por varios días.' },
+    { monto: 25,  titulo: 'Kit de higiene',    texto: 'Jabón, cepillos y artículos de aseo para una familia.' },
+    { monto: 50,  titulo: 'Ropa',              texto: 'Mudas de ropa para una familia que lo perdió todo.' },
+    { monto: 100, titulo: 'Sábanas y cobijas', texto: 'Descanso digno: sábanas y cobijas para una familia.' },
+    { monto: 250, titulo: 'Mercado familiar',  texto: 'Comida, higiene, ropa y sábanas para una familia.' },
   ],
 
   /* ---- Transparencia ---- */
@@ -98,7 +98,7 @@ window.CampaignConfig = {
   principios: [
     'Registro de cada donación con monto, moneda, fecha y método de pago.',
     'Separación entre ayuda directa y comisiones de pasarela para reportar el neto recibido.',
-    'Priorización de compras con comprobante: agua, alimentos, higiene, medicinas y refugio temporal en comunidades afectadas.',
+    'Priorización de compras con comprobante: alimentos, agua, ropa, productos de higiene y sábanas para familias afectadas.',
     'Publicación de actualizaciones con fecha de corte y fuentes externas consultadas.',
   ],
 
@@ -125,11 +125,11 @@ window.CampaignConfig = {
   historias: [
     {
       nombre: 'María, Charallave',
-      texto: 'Perdimos la mitad de la casa. Con la ayuda pudimos reparar el techo y volver a dormir tranquilos.',
+      texto: 'Nos quedamos sin nada. Los alimentos y el kit de higiene que recibimos nos ayudaron a salir adelante esos primeros días.',
     },
     {
       nombre: 'Familia Rodríguez, Cúa',
-      texto: 'Los kits de comida y agua llegaron cuando más lo necesitábamos. Gracias a quienes donaron.',
+      texto: 'Los kits de comida, agua y las sábanas llegaron cuando más lo necesitábamos. Gracias a quienes donaron.',
     },
   ],
 

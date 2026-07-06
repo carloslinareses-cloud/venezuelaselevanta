@@ -76,6 +76,8 @@
     agua: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
     salud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-10 2 5h6"/></svg>',
     corazon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg>',
+    ropa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 3.5 6l2 3.5L8 8v11h8V8l2.5 1.5 2-3.5L16 3l-1.8 1.4a3.5 3.5 0 0 1-4.4 0Z"/></svg>',
+    caja: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>',
   };
   function renderUso() {
     var grid = $('#uso-grid'); if (!grid) return;
@@ -460,6 +462,46 @@
   }
 
   /* ==========================================================================
+     Donaciones en tiempo real (feed)
+     ========================================================================== */
+  function tiempoRelativo(iso) {
+    var d = new Date(iso); var s = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (isNaN(s) || s < 60) return 'hace un momento';
+    var m = Math.floor(s / 60); if (m < 60) return 'hace ' + m + ' min';
+    var h = Math.floor(m / 60); if (h < 24) return 'hace ' + h + ' h';
+    var dias = Math.floor(h / 24); return 'hace ' + dias + (dias === 1 ? ' día' : ' días');
+  }
+  function renderDonacionesVivas() {
+    var cont = $('#donaciones-lista'); if (!cont) return;
+    var sb = (window.PaymentConfig && window.PaymentConfig.supabase) || {};
+    if (!sb.url || !sb.anonKey) return;
+    var url = sb.url.replace(/\/$/, '') + '/functions/v1/' + (sb.funcionDonacion || 'crear-donacion-sumup') + '?feed=1';
+    fetch(url, { headers: { apikey: sb.anonKey, Authorization: 'Bearer ' + sb.anonKey } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var arr = (d && d.donaciones) || [];
+        cont.innerHTML = '';
+        if (!arr.length) {
+          cont.appendChild(textEl('div', 'donaciones-vacio', 'Aún no hay donaciones. ¡Sé el primero en sumarte! 💛'));
+          return;
+        }
+        arr.forEach(function (x) {
+          var anon = !x.nombre || x.nombre === 'Anónimo';
+          var symb = (CFG.simbolos && CFG.simbolos[x.moneda]) || '€';
+          var item = document.createElement('div'); item.className = 'donacion-item';
+          var ava = textEl('div', 'donacion-ava' + (anon ? ' anon' : ''), anon ? '★' : String(x.nombre).trim().charAt(0).toUpperCase());
+          var info = document.createElement('div'); info.className = 'donacion-info';
+          info.appendChild(textEl('div', 'donacion-nombre', x.nombre || 'Anónimo'));
+          info.appendChild(textEl('div', 'donacion-cuando', tiempoRelativo(x.cuando)));
+          var monto = textEl('div', 'donacion-monto', symb + nf.format(Math.round(Number(x.monto) || 0)));
+          item.append(ava, info, monto);
+          cont.appendChild(item);
+        });
+      })
+      .catch(function () { /* mantener lo que haya */ });
+  }
+
+  /* ==========================================================================
      Init
      ========================================================================== */
   document.addEventListener('DOMContentLoaded', function () {
@@ -478,5 +520,7 @@
     observarReveal();
     animarProgreso();
     bannersPorURL();
+    renderDonacionesVivas();
+    setInterval(renderDonacionesVivas, 25000); // refresco del feed cada 25s
   });
 })();
