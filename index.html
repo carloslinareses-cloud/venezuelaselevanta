@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venezuela se Levanta — Ayuda a las familias del terremoto</title>
+  <meta name="description" content="Únete a la ayuda humanitaria para las familias afectadas por el terremoto en Venezuela. Tu donación se convierte en refugio, alimentos, salud y esperanza." />
+  <meta name="theme-color" content="#0a2540" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Venezuela se Levanta" />
+  <meta property="og:description" content="Ayuda humanitaria para las familias afectadas por el terremoto en Venezuela." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#donar">Saltar a donar</a>
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Venezuela se Levanta — inicio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="34" height="34" role="img">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffcf5c"/><stop offset="1" stop-color="#f5a723"/>
+              </linearGradient>
+            </defs>
+            <rect width="40" height="40" rx="11" fill="#0a2540"/>
+            <path d="M20 9c-5.5 5-9 8.2-9 12.6A9 9 0 0 0 20 30a9 9 0 0 0 9-8.4C29 17.2 25.5 14 20 9Z" fill="url(#g1)"/>
+            <path d="M15.5 22.5 20 18l4.5 4.5" fill="none" stroke="#0a2540" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 18v6.5" stroke="#0a2540" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">Venezuela<span>se Levanta</span></span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Principal">
+        <a href="#emergencia">La emergencia</a>
+        <a href="#ayuda">Cómo ayuda</a>
+        <a href="#transparencia">Transparencia</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#donar" class="btn btn-primary btn-sm nav-cta">Donar</a>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Aviso de estado tras el pago (se muestra por query param) -->
+  <div class="banner banner-ok" id="banner-cancelado" hidden>
+    <div class="container">Tu donación fue cancelada. Cuando quieras, estamos aquí. 💛</div>
+  </div>
+
+  <main>
+    <!-- ══════════════ HERO ══════════════ -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="pulse-dot"></span> Emergencia activa · Venezuela</span>
+          <h1>Cuando la tierra tembló,<br><em>la solidaridad se levantó.</em></h1>
+          <p class="hero-lead" data-bind="marca.lema">
+            Ayuda humanitaria para las familias afectadas por el terremoto.
+          </p>
+          <p class="hero-sub">
+            Miles de personas lo perdieron todo. Tu aporte se convierte en
+            refugio, alimentos, medicinas y un nuevo comienzo. El 100% llega
+            directo a quienes más lo necesitan.
+          </p>
+          <div class="hero-actions">
+            <a href="#donar" class="btn btn-primary btn-lg">Donar ahora</a>
+            <a href="#emergencia" class="btn btn-ghost btn-lg">Conocer la causa</a>
+          </div>
+          <div class="hero-trust">
+            <span>🔒 Pago seguro y cifrado</span>
+            <span>·</span>
+            <span><strong data-bind="transparencia.pctACausa">100</strong>% a la ayuda</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta de progreso -->
+        <aside class="progress-card" aria-label="Progreso de la recaudación">
+          <div class="pc-illustration" aria-hidden="true">
+            <svg viewBox="0 0 120 90" width="100%" style="height:auto;display:block">
+              <defs>
+                <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffd97d"/><stop offset="1" stop-color="#f5a723"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="58" r="20" fill="url(#sun)"/>
+              <g stroke="#f5a723" stroke-width="2.4" stroke-linecap="round">
+                <line x1="60" y1="20" x2="60" y2="28"/>
+                <line x1="34" y1="30" x2="39" y2="36"/>
+                <line x1="86" y1="30" x2="81" y2="36"/>
+                <line x1="22" y1="56" x2="30" y2="56"/>
+                <line x1="98" y1="56" x2="90" y2="56"/>
+              </g>
+              <path d="M0 72h34l10-14 12 18 10-22 14 18h40v18H0z" fill="#0a2540"/>
+              <path d="M0 78h120v12H0z" fill="#123a63"/>
+            </svg>
+          </div>
+          <div class="pc-amount">
+            <span class="pc-raised" data-bind-money="meta.recaudado">$12.480</span>
+            <span class="pc-goal">recaudado de la meta de <strong data-bind-money="meta.objetivo">$50.000</strong></span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="pc-stats">
+            <div><strong id="pc-pct" data-bind="metaPct">25%</strong><small>de la meta</small></div>
+            <div><strong data-bind="meta.donantes">214</strong><small>donantes</small></div>
+          </div>
+          <a href="#donar" class="btn btn-primary btn-block">Sumarme a la ayuda</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ══════════════ LA EMERGENCIA ══════════════ -->
+    <section class="section section-emergencia" id="emergencia">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">La emergencia</span>
+          <h2 data-bind="evento.titulo">El terremoto que golpeó a Venezuela</h2>
+          <p class="section-lead" data-bind="evento.resumen">
+            Un fuerte sismo dejó a cientos de familias sin hogar, con necesidades
+            urgentes de refugio, alimentos, agua, atención médica y apoyo psicológico.
+          </p>
+          <p class="evento-meta" id="evento-meta"></p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card reveal">
+            <span class="stat-num" data-count="meta.familiasAfectadas">1.200</span>
+            <span class="stat-lbl">familias afectadas</span>
+          </div>
+          <div class="stat-card reveal">
+            <span class="stat-num" data-count="meta.personasAlbergadas">480</span>
+            <span class="stat-lbl">personas en refugios</span>
+          </div>
+          <div class="stat-card reveal">
+            <span class="stat-num" data-count="meta.viviendasDanadas">350</span>
+            <span class="stat-lbl">viviendas dañadas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CÓMO AYUDA TU DONACIÓN ══════════════ -->
+    <section class="section section-ayuda" id="ayuda">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">En qué se usa</span>
+          <h2>A dónde va cada aporte</h2>
+          <p class="section-lead">Transparencia total: así se distribuye la ayuda que recibimos.</p>
+        </div>
+        <div class="uso-grid" id="uso-grid"><!-- generado por app.js --></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ NIVELES DE IMPACTO ══════════════ -->
+    <section class="section section-niveles">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Tu impacto</span>
+          <h2>Qué logra tu donación</h2>
+          <p class="section-lead">Cada monto se convierte en ayuda concreta para una familia.</p>
+        </div>
+        <div class="niveles-grid" id="niveles-grid"><!-- generado por app.js --></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ DONAR (widget) ══════════════ -->
+    <section class="section section-donar" id="donar">
+      <div class="container donar-inner">
+        <div class="donar-copy">
+          <span class="kicker">Haz tu aporte</span>
+          <h2>Dona hoy y reconstruye una vida</h2>
+          <p>Tu donación única va directo a las familias afectadas. Elige el monto,
+             tu moneda y listo. Cada aporte cuenta.</p>
+          <ul class="donar-benefits">
+            <li>🔒 Pago 100% seguro y cifrado</li>
+            <li>🧾 Recibes comprobante por correo</li>
+            <li>🌎 Puedes donar en USD o EUR, desde cualquier país</li>
+            <li>💛 El 100% se destina a la ayuda</li>
+          </ul>
+          <div class="metodos-alt" id="metodos-alt" hidden>
+            <h3>Otras formas de donar</h3>
+            <ul id="metodos-alt-list"></ul>
+          </div>
+        </div>
+
+        <!-- Tarjeta de donación -->
+        <form class="donate-card" id="donate-form" novalidate>
+          <div class="dc-head">
+            <h3>Tu donación</h3>
+            <div class="currency-switch" role="group" aria-label="Moneda">
+              <button type="button" class="cur-btn is-active" data-cur="EUR" aria-pressed="true">EUR €</button>
+              <button type="button" class="cur-btn" data-cur="USD" aria-pressed="false">USD $</button>
+            </div>
+          </div>
+
+          <fieldset class="amounts" id="amounts" aria-label="Monto a donar">
+            <!-- botones de monto generados por app.js -->
+          </fieldset>
+
+          <label class="custom-amount" for="custom-amount">
+            <span class="ca-symbol" id="ca-symbol">$</span>
+            <input type="number" id="custom-amount" inputmode="decimal" min="1" step="1"
+                   placeholder="Otro monto" aria-label="Otro monto" />
+          </label>
+          <p class="conv-note" id="conv-note"></p>
+
+          <div class="donor-fields">
+            <div class="field">
+              <label for="d-nombre">Nombre <span class="opt">(opcional)</span></label>
+              <input type="text" id="d-nombre" autocomplete="name" placeholder="Tu nombre" />
+            </div>
+            <div class="field">
+              <label for="d-email">Correo <span class="opt">para tu comprobante</span></label>
+              <input type="email" id="d-email" autocomplete="email" placeholder="tucorreo@ejemplo.com" />
+            </div>
+            <div class="field">
+              <label for="d-msg">Mensaje de aliento <span class="opt">(opcional)</span></label>
+              <textarea id="d-msg" rows="2" placeholder="Un mensaje para las familias…"></textarea>
+            </div>
+            <label class="check">
+              <input type="checkbox" id="d-anon" />
+              <span>Donar de forma anónima</span>
+            </label>
+          </div>
+
+          <div class="dc-summary">
+            <span>Tu aporte único</span>
+            <strong id="summary-amount">$50</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="donate-btn">
+            Donar <span id="donate-btn-amount">$50</span> ahora
+          </button>
+          <p class="secure-note">🔒 Pago seguro · tus datos están protegidos</p>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ══════════════ TRANSPARENCIA ══════════════ -->
+    <section class="section section-transparencia" id="transparencia">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Confianza</span>
+          <h2>Transparencia con cada bolívar y cada dólar</h2>
+        </div>
+        <div class="trans-grid">
+          <div class="trans-card">
+            <div class="trans-icon">💯</div>
+            <h3><span data-bind="transparencia.pctACausa">100</span>% a la causa</h3>
+            <p>Cada aporte se destina íntegramente a la ayuda directa a las familias.</p>
+          </div>
+          <div class="trans-card">
+            <div class="trans-icon">📋</div>
+            <h3>Rendición de cuentas</h3>
+            <p>Publicamos en qué se usa la ayuda y compartimos actualizaciones del avance.</p>
+          </div>
+          <div class="trans-card">
+            <div class="trans-icon">🤝</div>
+            <h3>Ayuda que llega</h3>
+            <p>Trabajamos en terreno, entregando la ayuda directamente donde se necesita.</p>
+          </div>
+        </div>
+        <div class="updates" id="updates" hidden>
+          <h3>Últimas actualizaciones</h3>
+          <ul id="updates-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ HISTORIAS ══════════════ -->
+    <section class="section section-historias" id="historias" hidden>
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Voces</span>
+          <h2>Historias de quienes reciben tu ayuda</h2>
+        </div>
+        <div class="historias-grid" id="historias-grid"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ PREGUNTAS ══════════════ -->
+    <section class="section section-faq" id="preguntas">
+      <div class="container container-narrow">
+        <div class="section-head">
+          <span class="kicker">Preguntas frecuentes</span>
+          <h2>Todo lo que necesitas saber</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>¿A dónde va exactamente mi donación?</summary>
+            <p>Tu aporte se destina a refugio y reconstrucción, alimentos y agua, salud
+               y medicinas, y apoyo psicológico para las familias afectadas por el terremoto.</p></details>
+          <details><summary>¿Es seguro donar aquí?</summary>
+            <p>Sí. El cobro se procesa a través de una pasarela de pago cifrada y segura.
+               Nunca almacenamos los datos de tu tarjeta.</p></details>
+          <details><summary>¿Recibo un comprobante?</summary>
+            <p>Sí. Si nos dejas tu correo, te enviamos el comprobante de tu donación.</p></details>
+          <details><summary>¿Puedo donar desde fuera de Venezuela?</summary>
+            <p>Claro. Puedes donar desde cualquier país, en dólares (USD) o euros (EUR).</p></details>
+          <details><summary>¿Puedo donar en euros?</summary>
+            <p>Sí. Usa el selector de moneda en la tarjeta de donación para elegir USD o EUR.</p></details>
+          <details><summary>¿Cómo sé que la ayuda realmente llega?</summary>
+            <p>Publicamos actualizaciones periódicas sobre las entregas y el uso de los
+               fondos en la sección de transparencia.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CTA FINAL ══════════════ -->
+    <section class="section section-cta-final">
+      <div class="container cta-final-inner">
+        <h2>Juntos, Venezuela se levanta.</h2>
+        <p>Una donación hoy es un techo, un plato de comida y esperanza para una familia.</p>
+        <a href="#donar" class="btn btn-gold btn-lg">Quiero ayudar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-text light">Venezuela<span>se Levanta</span></span>
+        <p data-bind="marca.lema">Ayuda humanitaria para las familias afectadas por el terremoto.</p>
+        <div class="footer-social" id="footer-social"></div>
+      </div>
+      <nav class="footer-links" aria-label="Pie de página">
+        <a href="#emergencia">La emergencia</a>
+        <a href="#ayuda">Cómo ayuda</a>
+        <a href="#transparencia">Transparencia</a>
+        <a href="#donar">Donar</a>
+      </nav>
+      <div class="footer-contact" id="footer-contact"></div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> Venezuela se Levanta. Iniciativa de ayuda humanitaria independiente.</p>
+      <p class="legal-note">Esta es una campaña de recaudación solidaria. Verifica siempre los datos
+         de la organización antes de donar. Las cifras mostradas son informativas.</p>
+    </div>
+  </footer>
+
+  <!-- ══════════════ MODAL: pagos aún no configurados ══════════════ -->
+  <div class="modal-bg" id="modal-info" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+      <div class="modal-icon">💛</div>
+      <h3 id="modal-title">¡Gracias por tu enorme gesto!</h3>
+      <p id="modal-text">El cobro en línea se está activando. Muy pronto podrás completar
+         tu donación aquí mismo. Mientras tanto, puedes usar los métodos de la lista o
+         escribirnos y te avisamos apenas esté listo.</p>
+      <div class="modal-resumen" id="modal-resumen"></div>
+      <a class="btn btn-primary btn-block" id="modal-cta" href="#donar">Entendido</a>
+    </div>
+  </div>
+
+  <!-- ══════════════ MODAL: pago con SumUp (EUR) ══════════════ -->
+  <div class="modal-bg" id="sumup-modal" hidden>
+    <div class="modal modal-wide" role="dialog" aria-modal="true" aria-label="Completar donación">
+      <button class="modal-close" id="sumup-close" aria-label="Cancelar pago">✕</button>
+      <h3>Completa tu donación</h3>
+      <p class="sumup-amount" id="sumup-amount"></p>
+      <p class="form-error" id="sumup-error" hidden></p>
+      <div id="sumup-card" class="sumup-card"></div>
+      <p class="secure-note">🔒 Pago seguro procesado por SumUp. No almacenamos los datos de tu tarjeta.</p>
+    </div>
+  </div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/payments.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
