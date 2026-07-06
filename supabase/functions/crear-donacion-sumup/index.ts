@@ -2,7 +2,7 @@
 // Edge Function: crear-donacion-sumup
 // ----------------------------------------------------------------------------
 // Crea un checkout de SumUp para una donación de MONTO LIBRE en EUR y devuelve
-// { checkoutId }. El frontend monta el widget de SumUp con ese id.
+// { hostedUrl, checkoutId }. El frontend redirige al Hosted Checkout de SumUp.
 //
 // Mismo comercio SumUp que AeroSocio. La llave SECRETA de SumUp vive como
 // secret de Supabase (nunca en el frontend).
@@ -11,7 +11,8 @@
 //   SUMUP_API_KEY        (obligatorio)  — llave secreta de SumUp (la misma de AeroSocio)
 //   SUMUP_PAY_TO_EMAIL   (opcional)     — email del comercio SumUp que recibe el cobro
 //                                         (default: carlos.linares.es@gmail.com, igual que AeroSocio)
-//   ALLOWED_ORIGINS      (opcional)     — orígenes permitidos, separados por coma
+//   ALLOWED_ORIGINS      (opcional)     — orígenes permitidos, separados por coma.
+//                                         Debe incluir el dominio público de producción.
 //
 // Deploy:  supabase functions deploy crear-donacion-sumup --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
 // ============================================================================
@@ -19,7 +20,7 @@
 const SUMUP_CHECKOUTS = "https://api.sumup.com/v0.1/checkouts";
 
 const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ||
-  "http://localhost:8080,http://localhost:3000,http://localhost:5173,http://127.0.0.1:8080")
+  "http://localhost:8080,http://localhost:3000,http://localhost:5173,http://127.0.0.1:8080,https://carloslinareses-cloud.github.io,https://venezuelaselevanta.org")
   .split(",").map((s) => s.trim()).filter(Boolean);
 
 function corsHeaders(origin: string | null): Record<string, string> {

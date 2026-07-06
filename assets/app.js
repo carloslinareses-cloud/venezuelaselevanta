@@ -14,6 +14,12 @@
   }
   function sym(cur) { return (CFG.simbolos && CFG.simbolos[cur]) || '$'; }
   function money(n, cur) { return sym(cur) + nf.format(Math.round(Number(n) || 0)); }
+  function textEl(tag, className, text) {
+    var el = document.createElement(tag);
+    if (className) el.className = className;
+    el.textContent = text == null ? '' : String(text);
+    return el;
+  }
 
   /* ---------- Estado del widget ---------- */
   var state = {
@@ -44,7 +50,7 @@
   function metaPct() {
     var m = CFG.meta || {};
     if (!m.objetivo) return 0;
-    return Math.min(100, Math.round((m.recaudado / m.objetivo) * 100));
+    return Math.max(0, Math.min(100, Math.round((m.recaudado / m.objetivo) * 100)));
   }
 
   /* ==========================================================================
@@ -58,6 +64,8 @@
     if (e.magnitud) partes.push('📊 Magnitud ' + e.magnitud);
     var el = $('#evento-meta');
     if (el) { el.textContent = partes.join('   ·   '); if (!partes.length) el.hidden = true; }
+    var note = $('#source-note');
+    if (note && e.corte) note.textContent = 'Cifras oficiales preliminares con corte: ' + e.corte + '. Consulta las fuentes públicas en la sección de verificación.';
   }
 
   /* ==========================================================================
@@ -74,11 +82,17 @@
     (CFG.usoFondos || []).forEach(function (u) {
       var card = document.createElement('div');
       card.className = 'uso-card reveal';
-      card.innerHTML =
-        '<div class="uso-icon">' + (ICONOS[u.icono] || ICONOS.corazon) + '</div>' +
-        '<div class="uso-pct">' + u.pct + '%</div>' +
-        '<div class="uso-lbl">' + u.etiqueta + '</div>' +
-        '<div class="uso-bar"><span data-w="' + u.pct + '"></span></div>';
+      var icon = document.createElement('div');
+      icon.className = 'uso-icon';
+      icon.innerHTML = ICONOS[u.icono] || ICONOS.corazon;
+      var pct = textEl('div', 'uso-pct', u.pct + '%');
+      var label = textEl('div', 'uso-lbl', u.etiqueta);
+      var bar = document.createElement('div');
+      var fill = document.createElement('span');
+      bar.className = 'uso-bar';
+      fill.setAttribute('data-w', u.pct);
+      bar.appendChild(fill);
+      card.append(icon, pct, label, bar);
       grid.appendChild(card);
     });
   }
@@ -88,16 +102,18 @@
      ========================================================================== */
   function renderNiveles() {
     var grid = $('#niveles-grid'); if (!grid) return;
+    var monedaImpacto = CFG.monedaImpacto || (CFG.monedas && CFG.monedas[0]) || 'EUR';
     (CFG.niveles || []).forEach(function (n) {
       var card = document.createElement('button');
       card.type = 'button';
       card.className = 'nivel-card reveal';
-      card.innerHTML =
-        '<div class="nivel-monto">' + money(n.monto, 'USD') + '</div>' +
-        '<div class="nivel-titulo">' + n.titulo + '</div>' +
-        '<div class="nivel-texto">' + n.texto + '</div>';
+      card.append(
+        textEl('div', 'nivel-monto', money(n.monto, monedaImpacto)),
+        textEl('div', 'nivel-titulo', n.titulo),
+        textEl('div', 'nivel-texto', n.texto)
+      );
       card.addEventListener('click', function () {
-        state.moneda = 'USD'; sincronizarMonedaUI();
+        state.moneda = monedaImpacto; sincronizarMonedaUI();
         seleccionarMonto(n.monto, false);
         document.getElementById('donar').scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -115,7 +131,7 @@
     wrap.hidden = false;
     ups.forEach(function (u) {
       var li = document.createElement('li');
-      li.innerHTML = '<b>' + (u.fecha || '') + '</b> — ' + (u.texto || '');
+      li.append(textEl('b', '', u.fecha || ''), document.createTextNode(' — ' + (u.texto || '')));
       list.appendChild(li);
     });
   }
@@ -127,8 +143,7 @@
     hs.forEach(function (h) {
       var d = document.createElement('div');
       d.className = 'historia-card reveal';
-      d.innerHTML = '<p class="historia-texto">' + h.texto + '</p>' +
-                    '<div class="historia-nombre">— ' + h.nombre + '</div>';
+      d.append(textEl('p', 'historia-texto', h.texto), textEl('div', 'historia-nombre', '— ' + h.nombre));
       grid.appendChild(d);
     });
   }
@@ -139,10 +154,18 @@
     wrap.hidden = false;
     ms.forEach(function (m) {
       var li = document.createElement('li');
+      var strong = textEl('strong', '', (m.etiqueta || '') + ':');
+      li.appendChild(strong);
+      li.appendChild(document.createTextNode(' '));
       if (m.tipo === 'enlace') {
-        li.innerHTML = '<strong>' + m.etiqueta + ':</strong> <a href="' + m.valor + '" target="_blank" rel="noopener">' + m.valor + '</a>';
+        var a = document.createElement('a');
+        a.href = m.valor;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = m.valor || '';
+        li.appendChild(a);
       } else {
-        li.innerHTML = '<strong>' + m.etiqueta + ':</strong> ' + m.valor;
+        li.appendChild(document.createTextNode(m.valor || ''));
       }
       list.appendChild(li);
     });
@@ -150,21 +173,74 @@
   function renderFooter() {
     var m = CFG.marca || {};
     // Contacto
-    var c = $('#footer-contact'), out = [];
-    if (m.email) out.push('<div>✉️ <a href="mailto:' + m.email + '">' + m.email + '</a></div>');
-    if (m.telefono) out.push('<div>📞 ' + m.telefono + '</div>');
-    if (m.web) out.push('<div>🌐 ' + m.web + '</div>');
-    if (c) c.innerHTML = out.join('');
+    var c = $('#footer-contact');
+    if (c) {
+      c.textContent = '';
+      if (m.email) {
+        var mailWrap = document.createElement('div');
+        var mail = document.createElement('a');
+        mail.href = 'mailto:' + m.email;
+        mail.textContent = m.email;
+        mailWrap.append(document.createTextNode('✉️ '), mail);
+        c.appendChild(mailWrap);
+      }
+      if (m.telefono) c.appendChild(textEl('div', '', '📞 ' + m.telefono));
+      if (m.web) c.appendChild(textEl('div', '', '🌐 ' + m.web));
+    }
     // Redes
-    var r = (m.redes || {}), soc = $('#footer-social'), links = [];
+    var r = (m.redes || {}), soc = $('#footer-social');
     var iconos = {
       instagram: 'IG', facebook: 'FB', x: 'X', whatsapp: 'WA',
     };
-    Object.keys(iconos).forEach(function (k) {
-      if (r[k]) links.push('<a href="' + r[k] + '" target="_blank" rel="noopener" aria-label="' + k + '"><span style="font-size:.72rem;font-weight:800">' + iconos[k] + '</span></a>');
-    });
-    if (soc) soc.innerHTML = links.join('');
+    if (soc) {
+      soc.textContent = '';
+      Object.keys(iconos).forEach(function (k) {
+        if (!r[k]) return;
+        var a = document.createElement('a');
+        var span = document.createElement('span');
+        a.href = r[k];
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.setAttribute('aria-label', k);
+        span.className = 'social-label';
+        span.textContent = iconos[k];
+        a.appendChild(span);
+        soc.appendChild(a);
+      });
+    }
     var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
+  }
+
+  function renderVerificacion() {
+    var principios = $('#principios-list');
+    if (principios) {
+      principios.textContent = '';
+      (CFG.principios || []).forEach(function (txt) {
+        var li = document.createElement('li');
+        li.textContent = txt;
+        principios.appendChild(li);
+      });
+    }
+    var fuentes = $('#fuentes-list');
+    if (fuentes) {
+      fuentes.textContent = '';
+      (CFG.fuentes || []).forEach(function (f) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = f.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = f.etiqueta || f.url;
+        li.appendChild(a);
+        fuentes.appendChild(li);
+      });
+    }
+    var rendicion = $('#rendicion-link');
+    var url = CFG.transparencia && CFG.transparencia.rendicionUrl;
+    if (rendicion && url) {
+      rendicion.href = url;
+      rendicion.hidden = false;
+    }
   }
 
   /* ==========================================================================
@@ -328,26 +404,13 @@
     });
   }
 
-  function animarContador(el, target) {
-    var dur = 1400, t0 = null;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / dur);
-      var val = Math.floor((1 - Math.pow(1 - p, 3)) * target);
-      el.textContent = nf.format(val);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = nf.format(target);
-    }
-    requestAnimationFrame(step);
-  }
-
   function observarReveal() {
     // Contadores
     var counters = $$('[data-count]');
     counters.forEach(function (el) {
       var target = Number(resolve(el.getAttribute('data-count'))) || 0;
       el.dataset.target = target;
-      el.textContent = '0';
+      el.textContent = nf.format(target);
     });
     if (!('IntersectionObserver' in window)) {
       $$('.reveal').forEach(function (el) { el.classList.add('in'); });
@@ -358,7 +421,6 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         en.target.classList.add('in');
-        if (en.target.hasAttribute('data-count')) animarContador(en.target, Number(en.target.dataset.target));
         io.unobserve(en.target);
       });
     }, { threshold: 0.2 });
@@ -409,6 +471,7 @@
     renderHistorias();
     renderMetodosAlt();
     renderFooter();
+    renderVerificacion();
     sincronizarMonedaUI();  // arma montos + selecciona por defecto
     bindWidget();
     bindNav();

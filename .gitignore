@@ -1,5 +1,8 @@
 node_modules/
 dist/
+coverage/
+playwright-report/
+test-results/
 .DS_Store
 *.log
 .env
@@ -7,3 +10,4 @@ dist/
 !.env.example
 .vscode/
 .supabase/
+.dev-server.pid

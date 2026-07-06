@@ -8,7 +8,7 @@ window.CampaignConfig = {
   /* ---- Marca ---- */
   marca: {
     nombre: 'Venezuela se Levanta',
-    lema: 'Ayuda humanitaria para las familias afectadas por el terremoto',
+    lema: 'Ayuda humanitaria para las familias afectadas por los terremotos',
     // Correo y redes se muestran en el pie de página.
     email: 'contacto@venezuelaselevanta.org',
     telefono: '',              // opcional, ej. '+58 412 000 0000'
@@ -52,18 +52,18 @@ window.CampaignConfig = {
     zona: 'La Guaira, Caracas y el centro-norte del país',
     fecha: '24 de junio de 2026',
     magnitud: '7,2 y 7,5',
-    // Cifras oficiales al 30 de junio de 2026 (en actualización). 0 se oculta.
-    fallecidos: 1943,
-    heridos: 10571,
-    damnificados: 15000,
+    // Cifras oficiales preliminares con corte al 1 de julio de 2026. 0 se oculta.
+    corte: '1 de julio de 2026, 19:00 VET',
+    fallecidos: 2295,
+    heridos: 11267,
+    damnificados: 26403,
     resumen:
       'El 24 de junio de 2026, dos fuertes sismos de magnitud 7,2 y 7,5 ' +
       'golpearon en apenas 39 segundos la costa norte de Venezuela — el evento ' +
-      'más fuerte en más de un siglo. Cientos de edificios colapsaron en La ' +
-      'Guaira, Caracas y el centro-norte del país, dejando a miles de familias ' +
-      'sin hogar y con necesidades urgentes de refugio, alimentos, agua potable, ' +
-      'atención médica y apoyo psicológico. Cada aporte se convierte en ayuda ' +
-      'directa para quienes lo perdieron todo.',
+      'más fuerte en más de un siglo. La Guaira, Caracas y el centro-norte del ' +
+      'país concentran daños severos, personas desplazadas y necesidades urgentes ' +
+      'de refugio, alimentos, agua potable, atención médica y apoyo psicológico. ' +
+      'Las cifras son preliminares y pueden cambiar mientras continúan las evaluaciones.',
   },
 
   /* ---- En qué se usa cada aporte (debe sumar 100) ---- */
@@ -89,9 +89,37 @@ window.CampaignConfig = {
     // Enlace a un documento/hoja pública de rendición de cuentas (opcional).
     rendicionUrl: '',
     actualizaciones: [
-      // { fecha: 'Julio 2026', texto: 'Se entregaron 300 kits de higiene en Cúa.' },
+      { fecha: '1 jul 2026', texto: 'Se actualizan las cifras públicas de la emergencia y se priorizan kits de agua, higiene y atención primaria.' },
+      { fecha: '30 jun 2026', texto: 'La respuesta humanitaria reporta miles de personas rescatadas y daños críticos en vivienda e infraestructura.' },
     ],
   },
+
+  /* ---- Controles de confianza visibles para donantes ---- */
+  principios: [
+    'Registro de cada donación con monto, moneda, fecha y método de pago.',
+    'Separación entre ayuda directa y comisiones de pasarela para reportar el neto recibido.',
+    'Priorización de compras con comprobante: agua, alimentos, higiene, medicinas y refugio temporal.',
+    'Publicación de actualizaciones con fecha de corte y fuentes externas consultadas.',
+  ],
+
+  fuentes: [
+    {
+      etiqueta: 'OCHA · Situation Report No. 8 (1 jul 2026)',
+      url: 'https://www.unocha.org/publications/report/venezuela-bolivarian-republic/earthquakes-venezuela-situation-report-no-8-01-july-2026-time-0700-pm',
+    },
+    {
+      etiqueta: 'USGS · evento M 7.5, 28 km SE de Yumare',
+      url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us6000t7zp/executive',
+    },
+    {
+      etiqueta: 'USGS · evento M 7.2, 23 km SE de Yumare',
+      url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us6000t7zc/executive',
+    },
+    {
+      etiqueta: 'ReliefWeb · disaster brief EQ-2026-000093-VEN',
+      url: 'https://reliefweb.int/report/venezuela-bolivarian-republic/venezuela-earthquake-disaster-brief-eq-2026-000093-ven-americas-venezuela-july-1-2026',
+    },
+  ],
 
   /* ---- Historias (opcional; deja el array vacío para ocultar la sección) ---- */
   historias: [

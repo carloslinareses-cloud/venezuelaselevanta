@@ -1,108 +1,109 @@
-# Venezuela se Levanta 🇻🇪
+# Venezuela se Levanta
 
-Página web de recaudación de ayuda humanitaria para las familias afectadas por el
-terremoto en Venezuela. Sitio **estático** (HTML/CSS/JS), sin build, listo para
-desplegar en GitHub Pages, Cloudflare Pages/Workers o cualquier hosting.
+Página web estática de recaudación de ayuda humanitaria para las familias afectadas por
+los terremotos en Venezuela. Incluye landing, widget de donación, retorno de pago,
+fuentes públicas, controles de transparencia y pruebas automatizadas.
 
 ## Estructura
 
-```
+```text
 venezuela-se-levanta/
-├── index.html          ← landing principal (secciones + widget de donación)
-├── gracias.html        ← página de agradecimiento (retorno tras pago exitoso)
+├── index.html
+├── gracias.html
 ├── assets/
-│   ├── styles.css       ← todo el diseño
-│   ├── config.js        ← ⭐ TODO lo editable: marca, meta, montos, datos del evento
-│   ├── payments.js      ← ⭐ integración de cobros (aquí van los APIs)
-│   ├── app.js           ← lógica (no suele hacer falta tocarlo)
+│   ├── styles.css
+│   ├── config.js
+│   ├── payments.js
+│   ├── app.js
+│   ├── hero-relief.webp
 │   └── favicon.svg
-└── README.md
+├── supabase/functions/crear-donacion-sumup/index.ts
+├── tests/
+├── package.json
+└── playwright.config.mjs
 ```
 
-## 1. Personalizar la campaña — `assets/config.js`
-
-Todo el contenido editable vive en un solo archivo. Ajusta:
-
-- **marca**: nombre, lema, correo, teléfono, web y redes sociales.
-- **meta**: objetivo, recaudado, nº de donantes (barra de progreso del hero).
-- **montos**: montos sugeridos por moneda (USD / EUR) y monto mínimo.
-- **evento**: ⚠️ **rellena con datos reales y verificados** (zona, fecha, magnitud,
-  familias afectadas, etc.). Lo que dejes vacío se oculta solo.
-- **usoFondos / niveles**: en qué se usa la ayuda y qué logra cada monto.
-- **transparencia**: % a la causa y actualizaciones del avance.
-- **historias**: testimonios (deja el array vacío para ocultar la sección).
-- **metodosAlternativos**: PayPal.me, Zelle, Pago Móvil, etc. (opcional).
-
-## 2. Cobros — `assets/payments.js` (ruteo por moneda)
-
-Los cobros se rutean **por moneda** en `PaymentConfig.proveedorPorMoneda`:
-
-- **EUR → SumUp** (ya cableado; usa el mismo comercio SumUp que AeroSocio).
-- **USD → Stripe** (pendiente; muestra un aviso amable hasta configurarlo).
-
-> **Seguridad:** la llave PÚBLICA/anon de Supabase es segura en el front. La
-> llave SECRETA de SumUp vive SOLO en la Edge Function (secret de Supabase).
-
-### 2.1 SumUp (EUR) — cómo funciona
-
-Igual que en AeroSocio:
-
-1. El botón de donar llama a `Payments.iniciarDonacion({monto, moneda:'EUR', ...})`.
-2. Eso hace `POST` a la Edge Function **`crear-donacion-sumup`** (Supabase), que
-   crea un checkout de SumUp por ese monto y devuelve `{ checkoutId }`.
-3. La página carga el SDK de SumUp y monta el **widget de tarjeta in-page** en un
-   modal. Al pagar con éxito → redirige a `gracias.html`.
-
-### 2.2 Desplegar la Edge Function
-
-La función está en `supabase/functions/crear-donacion-sumup/index.ts`.
+## Desarrollo local
 
 ```bash
-supabase login   # una vez (navegador, o pega un access token sbp_...)
+npm install
+npm run serve
+```
 
-# Desplegar al proyecto (el mismo de AeroSocio)
-supabase functions deploy crear-donacion-sumup --project-ref koxrtxplpybdfymgdhhd
+Abre `http://127.0.0.1:53173/`.
 
-# Secrets (reutiliza los de AeroSocio; confirma los nombres exactos)
+## Pruebas
+
+```bash
+npm test
+```
+
+La suite ejecuta:
+
+- Unit/static: configuración, ruteo de pagos, assets locales, codificación UTF-8 y CORS de producción.
+- E2E: landing, formulario de donación, fallback USD, errores SumUp, navegación móvil y responsive.
+- Accesibilidad: axe/WCAG en desktop y móvil, sin violaciones serias.
+
+Comandos separados:
+
+```bash
+npm run test:unit
+npm run test:e2e
+npm run test:a11y
+```
+
+## Personalizar campaña
+
+Todo el contenido editable vive en `assets/config.js`:
+
+- `marca`: nombre, lema, correo, web y redes.
+- `meta`: objetivo, recaudado y número de donantes.
+- `evento`: zona, fecha, magnitud, cifras y fecha de corte.
+- `usoFondos`: distribución porcentual de la ayuda; debe sumar 100.
+- `niveles`: impacto estimado de cada monto.
+- `transparencia`, `principios` y `fuentes`: rendición, controles y enlaces públicos.
+- `metodosAlternativos`: PayPal, Zelle, pago móvil u otros métodos manuales.
+
+## Pagos
+
+`assets/payments.js` enruta por moneda:
+
+- EUR usa SumUp mediante la Edge Function `crear-donacion-sumup`.
+- USD está como `ninguno` hasta conectar Stripe u otro proveedor.
+
+La llave pública/anon de Supabase puede vivir en el frontend. La llave secreta de
+SumUp debe estar solo como secret de Supabase (`SUMUP_API_KEY` o `SUMUP_SECRET_KEY`).
+
+### Edge Function
+
+Archivo: `supabase/functions/crear-donacion-sumup/index.ts`.
+
+Secrets necesarios:
+
+```bash
 supabase secrets set SUMUP_API_KEY="<llave-secreta-sumup>" --project-ref koxrtxplpybdfymgdhhd
-supabase secrets set SUMUP_MERCHANT_CODE="<merchant_code>"  --project-ref koxrtxplpybdfymgdhhd  # opcional
-supabase secrets set ALLOWED_ORIGINS="https://tudominio.com,http://localhost:8080" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set SUMUP_PAY_TO_EMAIL="<email-comercio>" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set ALLOWED_ORIGINS="https://carloslinareses-cloud.github.io,https://venezuelaselevanta.org,http://127.0.0.1:53173" --project-ref koxrtxplpybdfymgdhhd
 ```
 
-> Si la función `crear-pago-sumup` de AeroSocio usa OTRO nombre de secret o un
-> formato distinto, dímelo (o dame acceso) y ajusto `crear-donacion-sumup` para
-> que use exactamente lo mismo.
-
-### 2.3 USD (Stripe, más adelante)
-
-Cambia `proveedorPorMoneda.USD` a `'stripe'` y completa `stripe.publishableKey`
-y `stripe.crearSesionUrl` (endpoint que crea la Checkout Session con tu llave
-secreta). Retornos: éxito → `gracias.html`, cancelado → `index.html?donacion=cancelada`.
-
-## 3. Probar localmente
-
-Cualquier servidor estático sirve. Por ejemplo:
+Deploy:
 
 ```bash
-npx serve .        # o:  python -m http.server 8080
+supabase functions deploy crear-donacion-sumup --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
 ```
 
-Abre `http://localhost:8080`.
+## Producción
 
-## 4. Desplegar
+El sitio no requiere build. Para GitHub Pages, publica la rama `main` desde la raíz
+del repositorio. URL esperada:
 
-- **GitHub Pages:** sube el repo y activa Pages sobre la rama principal (raíz `/`).
-- **Cloudflare Pages/Workers:** publica el directorio tal cual (no requiere build).
+```text
+https://carloslinareses-cloud.github.io/venezuelaselevanta/
+```
 
-## Checklist antes de publicar
+Antes de aceptar donaciones reales:
 
-- [ ] Datos del evento **reales y verificados** en `config.js` (fecha, magnitud, cifras).
-- [ ] Meta y recaudado reales.
-- [ ] Correo, teléfono y redes de contacto correctos.
-- [ ] APIs de cobro conectados en `payments.js` (o métodos alternativos cargados).
-- [ ] Texto legal / de transparencia revisado por ti.
-- [ ] (Opcional) Reemplazar cifras de ejemplo por las reales de la campaña.
-
----
-
-Marca, textos y diseño creados desde cero para esta campaña. Ajusta lo que quieras.
+- Confirma que `ALLOWED_ORIGINS` incluye el dominio final.
+- Revisa que `SUMUP_PAY_TO_EMAIL` sea el comercio correcto.
+- Sustituye correo, redes, meta recaudada y métodos alternativos por datos reales.
+- Mantén las cifras de `evento` actualizadas con fecha de corte y fuente pública.

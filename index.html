@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venezuela se Levanta — Ayuda a las familias del terremoto</title>
-  <meta name="description" content="Únete a la ayuda humanitaria para las familias afectadas por el terremoto en Venezuela. Tu donación se convierte en refugio, alimentos, salud y esperanza." />
+  <title>Venezuela se Levanta — Ayuda humanitaria verificada</title>
+  <meta name="description" content="Únete a la ayuda humanitaria para las familias afectadas por los terremotos en Venezuela. Tu donación se convierte en refugio, alimentos, salud y esperanza." />
   <meta name="theme-color" content="#0a2540" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Venezuela se Levanta" />
-  <meta property="og:description" content="Ayuda humanitaria para las familias afectadas por el terremoto en Venezuela." />
+  <meta property="og:description" content="Ayuda humanitaria para las familias afectadas por los terremotos en Venezuela." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/hero-relief.webp" />
 
   <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/styles.css?v=2" />
+  <link rel="preload" as="image" href="assets/hero-relief.webp" type="image/webp" />
+  <link rel="stylesheet" href="assets/styles.css?v=3" />
 </head>
 <body>
   <a class="skip-link" href="#donar">Saltar a donar</a>
@@ -47,6 +49,7 @@
         <a href="#emergencia">La emergencia</a>
         <a href="#ayuda">Cómo ayuda</a>
         <a href="#transparencia">Transparencia</a>
+        <a href="#verificacion">Fuentes</a>
         <a href="#preguntas">Preguntas</a>
         <a href="#donar" class="btn btn-primary btn-sm nav-cta">Donar</a>
       </nav>
@@ -71,21 +74,23 @@
           <span class="eyebrow"><span class="pulse-dot"></span> Emergencia activa · Venezuela</span>
           <h1>Cuando la tierra tembló,<br><em>la solidaridad se levantó.</em></h1>
           <p class="hero-lead" data-bind="marca.lema">
-            Ayuda humanitaria para las familias afectadas por el terremoto.
+            Ayuda humanitaria para las familias afectadas por los terremotos.
           </p>
           <p class="hero-sub">
-            Miles de personas lo perdieron todo. Tu aporte se convierte en
-            refugio, alimentos, medicinas y un nuevo comienzo. El 100% llega
-            directo a quienes más lo necesitan.
+            Miles de personas necesitan refugio, agua, alimentos, medicinas y
+            acompañamiento. Tu aporte se registra con trazabilidad y se destina
+            a ayuda directa para las familias afectadas.
           </p>
           <div class="hero-actions">
             <a href="#donar" class="btn btn-primary btn-lg">Donar ahora</a>
             <a href="#emergencia" class="btn btn-ghost btn-lg">Conocer la causa</a>
           </div>
           <div class="hero-trust">
-            <span>🔒 Pago seguro y cifrado</span>
+            <span>Pago seguro y cifrado</span>
             <span>·</span>
             <span><strong data-bind="transparencia.pctACausa">100</strong>% a la ayuda</span>
+            <span>·</span>
+            <span>Cifras con fuente pública</span>
           </div>
         </div>
 
@@ -111,10 +116,10 @@
             </svg>
           </div>
           <div class="pc-amount">
-            <span class="pc-raised" data-bind-money="meta.recaudado">$12.480</span>
+            <span class="pc-raised" data-bind-money="meta.recaudado">€12.480</span>
             <span class="pc-goal">recaudado de la meta de <strong data-bind-money="meta.objetivo">$50.000</strong></span>
           </div>
-          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbar">
+          <div class="progress-track" role="progressbar" aria-label="Porcentaje recaudado de la meta" aria-valuemin="0" aria-valuemax="100" id="progressbar">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
           <div class="pc-stats">
@@ -149,9 +154,10 @@
           </div>
           <div class="stat-card reveal">
             <span class="stat-num" data-count="evento.damnificados">15.000</span>
-            <span class="stat-lbl">personas damnificadas</span>
+            <span class="stat-lbl">personas afectadas</span>
           </div>
         </div>
+        <p class="source-note" id="source-note"></p>
       </div>
     </section>
 
@@ -264,12 +270,13 @@
           <div class="trans-card">
             <div class="trans-icon">💯</div>
             <h3><span data-bind="transparencia.pctACausa">100</span>% a la causa</h3>
-            <p>Cada aporte se destina íntegramente a la ayuda directa a las familias.</p>
+            <p>El aporte neto recibido se asigna a ayuda directa. Las comisiones de pasarela se reportan por separado.</p>
           </div>
           <div class="trans-card">
             <div class="trans-icon">📋</div>
             <h3>Rendición de cuentas</h3>
             <p>Publicamos en qué se usa la ayuda y compartimos actualizaciones del avance.</p>
+            <a class="text-link" id="rendicion-link" href="#" target="_blank" rel="noopener" hidden>Ver reporte público</a>
           </div>
           <div class="trans-card">
             <div class="trans-icon">🤝</div>
@@ -280,6 +287,27 @@
         <div class="updates" id="updates" hidden>
           <h3>Últimas actualizaciones</h3>
           <ul id="updates-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ VERIFICACIÓN ══════════════ -->
+    <section class="section section-verificacion" id="verificacion">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Verificación</span>
+          <h2>Datos, fuentes y controles de confianza</h2>
+          <p class="section-lead">Las cifras de la emergencia cambian con rapidez. Por eso mostramos fecha de corte, fuentes públicas y cómo se documenta cada entrega.</p>
+        </div>
+        <div class="verificacion-grid">
+          <article class="verify-panel">
+            <h3>Cómo protegemos tu aporte</h3>
+            <ul class="check-list" id="principios-list"></ul>
+          </article>
+          <article class="verify-panel">
+            <h3>Fuentes consultadas</h3>
+            <ul class="source-list" id="fuentes-list"></ul>
+          </article>
         </div>
       </div>
     </section>
@@ -337,21 +365,22 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <span class="brand-text light">Venezuela<span>se Levanta</span></span>
-        <p data-bind="marca.lema">Ayuda humanitaria para las familias afectadas por el terremoto.</p>
+        <p data-bind="marca.lema">Ayuda humanitaria para las familias afectadas por los terremotos.</p>
         <div class="footer-social" id="footer-social"></div>
       </div>
       <nav class="footer-links" aria-label="Pie de página">
         <a href="#emergencia">La emergencia</a>
         <a href="#ayuda">Cómo ayuda</a>
         <a href="#transparencia">Transparencia</a>
+        <a href="#verificacion">Fuentes</a>
         <a href="#donar">Donar</a>
       </nav>
       <div class="footer-contact" id="footer-contact"></div>
     </div>
     <div class="container footer-bottom">
       <p>© <span id="year">2026</span> Venezuela se Levanta. Iniciativa de ayuda humanitaria independiente.</p>
-      <p class="legal-note">Esta es una campaña de recaudación solidaria. Verifica siempre los datos
-         de la organización antes de donar. Las cifras mostradas son informativas.</p>
+      <p class="legal-note">Esta es una campaña de recaudación solidaria independiente. Verifica siempre los datos
+         de la organización antes de donar. Las cifras mostradas son preliminares y deben contrastarse con las fuentes enlazadas.</p>
     </div>
   </footer>
 
@@ -381,8 +410,8 @@
     </div>
   </div>
 
-  <script src="assets/config.js?v=2"></script>
-  <script src="assets/payments.js?v=2"></script>
-  <script src="assets/app.js?v=2"></script>
+  <script src="assets/config.js?v=3"></script>
+  <script src="assets/payments.js?v=3"></script>
+  <script src="assets/app.js?v=3"></script>
 </body>
 </html>
