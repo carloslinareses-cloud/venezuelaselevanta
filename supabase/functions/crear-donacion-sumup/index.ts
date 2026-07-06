@@ -68,8 +68,6 @@ Deno.serve(async (req: Request) => {
     return json({ error: "Pagos no configurados (falta SUMUP_API_KEY)." }, 500, origin);
   }
 
-  const nombre = String(body.name || "").slice(0, 80);
-  const email = String(body.email || "").slice(0, 120);
   const returnUrl = String(body.returnUrl || "");
   const reference = "DONA-SVZLA-" + Date.now();
 
@@ -78,8 +76,7 @@ Deno.serve(async (req: Request) => {
     currency: "EUR",
     checkout_reference: reference,
     pay_to_email: PAY_TO,
-    description: "Donación Súmate VZLA" +
-      (nombre ? " — " + nombre : email ? " — " + email : ""),
+    description: "Donación · Súmate VZLA",
     // Hosted Checkout: SumUp aloja la página de pago y devuelve hosted_checkout_url.
     // Redirigimos ahí (más robusto que el widget embebido, que extensiones/antivirus bloquean).
     hosted_checkout: { enabled: true },
