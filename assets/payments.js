@@ -80,6 +80,8 @@ window.Payments = {
         email: payload.donante && payload.donante.email || '',
         mensaje: payload.donante && payload.donante.mensaje || '',
         anonimo: !!(payload.donante && payload.donante.anonimo),
+        // A dónde vuelve el donante tras pagar (funciona en localhost y en producción).
+        returnUrl: new URL('gracias.html', location.href).href,
       }),
     });
     if (!res.ok) {
@@ -88,6 +90,12 @@ window.Payments = {
       throw new Error(msg);
     }
     var data = await res.json();
+    // Preferido: redirigir a la página de pago alojada por SumUp (robusto ante bloqueadores).
+    if (data.hostedUrl) {
+      window.location.href = data.hostedUrl;
+      return { estado: 'redirigiendo' };
+    }
+    // Respaldo: widget embebido (si por algo no vino hostedUrl).
     var checkoutId = data.checkoutId || data.id;
     if (!checkoutId) throw new Error('SumUp no devolvió un checkout válido.');
     await this._montarSumup(checkoutId, payload);

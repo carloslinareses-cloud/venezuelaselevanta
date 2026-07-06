@@ -69,6 +69,7 @@ Deno.serve(async (req: Request) => {
 
   const nombre = String(body.name || "").slice(0, 80);
   const email = String(body.email || "").slice(0, 120);
+  const returnUrl = String(body.returnUrl || "");
   const reference = "DONA-VSL-" + Date.now();
 
   const checkoutBody: Record<string, unknown> = {
@@ -78,7 +79,12 @@ Deno.serve(async (req: Request) => {
     pay_to_email: PAY_TO,
     description: "Donación Venezuela se Levanta" +
       (nombre ? " — " + nombre : email ? " — " + email : ""),
+    // Hosted Checkout: SumUp aloja la página de pago y devuelve hosted_checkout_url.
+    // Redirigimos ahí (más robusto que el widget embebido, que extensiones/antivirus bloquean).
+    hosted_checkout: { enabled: true },
   };
+  // redirect_url: a dónde vuelve el donante tras pagar (solo https; en localhost SumUp lo rechaza).
+  if (/^https:\/\//i.test(returnUrl)) checkoutBody.redirect_url = returnUrl;
 
   let resp: Response;
   try {
@@ -99,5 +105,9 @@ Deno.serve(async (req: Request) => {
     return json({ error: msg }, 502, origin);
   }
 
-  return json({ checkoutId: data.id, checkout_reference: reference }, 200, origin);
+  return json({
+    hostedUrl: data.hosted_checkout_url || null,
+    checkoutId: data.id,
+    checkout_reference: reference,
+  }, 200, origin);
 });
