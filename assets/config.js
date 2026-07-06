@@ -25,7 +25,7 @@ window.CampaignConfig = {
   meta: {
     objetivo: 50000,           // meta total
     recaudado: 12480,          // llevado hasta ahora  ← actualízalo
-    moneda: 'USD',             // moneda en la que se expresa la meta
+    moneda: 'EUR',             // moneda en la que se expresa la meta
     donantes: 214,             // nº de personas que han aportado
     // Si conectas un backend, puedes actualizar recaudado/donantes por API.
   },
@@ -48,19 +48,22 @@ window.CampaignConfig = {
      Estos valores aparecen en la sección "La emergencia". Usa cifras reales.
      Déjalos vacíos si aún no las tienes: la página oculta lo que esté vacío. */
   evento: {
-    titulo: 'El terremoto que golpeó a Venezuela',
-    zona: 'Estado Miranda y zonas aledañas',   // ej. 'Cristóbal Rojas, Miranda'
-    fecha: '',                 // ej. 'Junio de 2026'  (verifica antes de publicar)
-    magnitud: '',              // ej. '6.2'            (verifica antes de publicar)
-    // Cifras de impacto (usa datos reales; 0 se oculta)
-    familiasAfectadas: 1200,
-    personasAlbergadas: 480,
-    viviendasDanadas: 350,
+    titulo: 'El doble terremoto que golpeó a Venezuela',
+    zona: 'La Guaira, Caracas y el centro-norte del país',
+    fecha: '24 de junio de 2026',
+    magnitud: '7,2 y 7,5',
+    // Cifras oficiales al 30 de junio de 2026 (en actualización). 0 se oculta.
+    fallecidos: 1943,
+    heridos: 10571,
+    damnificados: 15000,
     resumen:
-      'Un fuerte sismo dejó a cientos de familias sin hogar, con viviendas ' +
-      'dañadas y necesidades urgentes de refugio, alimentos, agua potable, ' +
-      'atención médica y apoyo psicológico. La emergencia continúa y cada ' +
-      'aporte se convierte en ayuda directa para quienes lo perdieron todo.',
+      'El 24 de junio de 2026, dos fuertes sismos de magnitud 7,2 y 7,5 ' +
+      'golpearon en apenas 39 segundos la costa norte de Venezuela — el evento ' +
+      'más fuerte en más de un siglo. Cientos de edificios colapsaron en La ' +
+      'Guaira, Caracas y el centro-norte del país, dejando a miles de familias ' +
+      'sin hogar y con necesidades urgentes de refugio, alimentos, agua potable, ' +
+      'atención médica y apoyo psicológico. Cada aporte se convierte en ayuda ' +
+      'directa para quienes lo perdieron todo.',
   },
 
   /* ---- En qué se usa cada aporte (debe sumar 100) ---- */
