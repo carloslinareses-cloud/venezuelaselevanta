@@ -6,6 +6,7 @@ const viewports = [
   { width: 768, height: 1024 },
   { width: 390, height: 844 },
   { width: 360, height: 740 },
+  { width: 320, height: 568 },
 ];
 
 for (const viewport of viewports) {

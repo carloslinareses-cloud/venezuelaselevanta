@@ -367,12 +367,25 @@ h3 { font-size: 1.2rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 680px) {
+  .container { padding: 0 16px; }
+  h1 { font-size: clamp(1.95rem, 10vw, 2.6rem); }
+  h2 { font-size: clamp(1.55rem, 8vw, 2.1rem); }
+  .section { padding: 44px 0; }
+  .section-head { margin-bottom: 28px; }
+  .section-lead { font-size: 1rem; }
   .hero { padding-top: 34px; }
   .hero-bg {
     background:
       linear-gradient(180deg, rgba(251,247,240,.98) 0%, rgba(251,247,240,.92) 58%, rgba(251,247,240,.96) 100%),
       url("hero-relief.webp") 58% top / auto 48% no-repeat;
   }
+  .hero-inner { gap: 24px; }
+  .hero-sub { font-size: 1rem; max-width: none; }
+  .hero-actions { display: grid; gap: 10px; margin-top: 22px; }
+  .hero-actions .btn { width: 100%; }
+  .progress-card { width: 100%; max-width: none; padding: 18px; }
+  .pc-illustration { padding: 10px 14px 0; }
+  .pc-raised { font-size: 1.85rem; }
   .nav-toggle { display: flex; }
   .site-nav {
     position: fixed; inset: 68px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
@@ -388,13 +401,49 @@ h3 { font-size: 1.2rem; }
   .footer-inner { grid-template-columns: 1fr; }
   .amounts { grid-template-columns: repeat(3, 1fr); }
   .donate-card { padding: 20px; }
+  .dc-head { align-items: stretch; flex-direction: column; gap: 12px; }
+  .currency-switch { width: 100%; }
+  .cur-btn { flex: 1; min-height: 38px; }
   .hero-trust span:nth-child(2), .hero-trust span:nth-child(4) { display: none; }
   .country-seal { margin-bottom: 12px; font-size: .72rem; }
   .star-line { gap: 6px; font-size: .78rem; }
   .cta-stars { letter-spacing: .18em; }
+  .verify-panel, .trans-card, .historia-card { padding: 20px; }
+  .faq-list summary { padding: 16px 44px 16px 16px; }
+  .faq-list p { padding: 0 16px 16px; }
 }
 @media (max-width: 400px) {
+  .container { padding: 0 14px; }
+  .header-inner { height: 62px; }
+  .brand { gap: 8px; }
+  .brand-mark svg { width: 30px; height: 30px; }
+  .brand-text { font-size: .96rem; }
+  .brand-text span { font-size: .68rem; }
+  .site-nav { inset: 62px 0 auto 0; max-height: calc(100vh - 62px); }
+  html { scroll-padding-top: 72px; }
+  .hero { padding-top: 28px; }
+  .eyebrow { max-width: 100%; white-space: normal; line-height: 1.25; }
+  .country-seal { letter-spacing: .04em; }
+  .hero-actions .btn, .btn-lg { min-height: 46px; padding: 14px 18px; white-space: normal; line-height: 1.15; }
+  .progress-card { padding: 16px; }
+  .pc-stats { gap: 8px; }
+  .pc-stats div { padding: 9px 8px; }
   .uso-grid, .niveles-grid { grid-template-columns: 1fr; }
+  .amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .amount-btn { min-height: 46px; font-size: 1.05rem; }
+  .custom-amount { padding: 0 10px; }
+  .field input, .field textarea { font-size: .95rem; }
+  .dc-summary { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .section-donar::before { width: 5px; }
+  .cta-final-inner p { font-size: 1rem; }
+  .footer-bottom { font-size: .78rem; }
+}
+@media (max-width: 340px) {
+  .container { padding: 0 12px; }
+  h1 { font-size: 1.85rem; }
+  .hero-lead, .hero-sub { font-size: .95rem; }
+  .donate-card { padding: 16px; }
+  .star-line { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
