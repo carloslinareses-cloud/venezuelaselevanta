@@ -31,8 +31,10 @@ test('routes currencies to configured providers', async () => {
   const { payments } = loadPayments();
 
   assert.equal(payments.proveedorDe('EUR'), 'sumup');
+  assert.equal(payments.proveedorDe('COP'), 'wompi');
   assert.equal(payments.proveedorDe('USD'), 'ninguno');
   assert.equal(payments.configurado('EUR'), true);
+  assert.equal(payments.configurado('COP'), true);
   assert.equal(payments.configurado('USD'), false);
   const fallback = await payments.iniciarDonacion({ moneda: 'USD' });
   assert.equal(fallback.estado, 'sin_configurar');
@@ -49,7 +51,7 @@ test('SumUp request is sent to Supabase Edge Function and redirects to hosted ch
   assert.equal(result.estado, 'redirigiendo');
   assert.equal(location.href, 'https://checkout.example/pay/123');
   assert.equal(calls.length, 1);
-  assert.equal(calls[0].url, `${config.supabase.url}/functions/v1/${config.supabase.funcionDonacion}`);
+  assert.equal(calls[0].url, `${config.supabase.url}/functions/v1/${config.sumup.funcionDonacion}`);
   assert.equal(calls[0].options.method, 'POST');
   assert.equal(calls[0].options.headers.Authorization, `Bearer ${config.supabase.anonKey}`);
 
@@ -58,6 +60,20 @@ test('SumUp request is sent to Supabase Edge Function and redirects to hosted ch
   assert.equal(body.currency, 'EUR');
   assert.equal(body.email, 'ana@example.com');
   assert.equal(body.returnUrl, 'https://sumatevzla.org/gracias.html');
+});
+
+test('SumUp keeps using the EUR function when the page default feed function is Wompi', async () => {
+  const { payments, config, calls } = loadPayments();
+  config.supabase.funcionDonacion = 'crear-donacion-wompi-colombia';
+  config.sumup.funcionDonacion = 'crear-donacion-sumup';
+
+  await payments.iniciarDonacion({
+    monto: 20,
+    moneda: 'EUR',
+    donante: {},
+  });
+
+  assert.equal(calls[0].url, `${config.supabase.url}/functions/v1/crear-donacion-sumup`);
 });
 
 test('SumUp surfaces backend errors safely', async () => {

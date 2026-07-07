@@ -5,7 +5,7 @@
      · EUR → SumUp (mismo patrón que AeroSocio: una Edge Function de Supabase
              crea el checkout y devuelve checkoutId; aquí montamos el widget
              in-page de SumUp).
-     · USD → Stripe (pendiente de configurar; muestra aviso mientras tanto).
+     · COP → Wompi Colombia (una Edge Function firma el checkout).
 
    La llave PÚBLICA/anon de Supabase es segura en el front. La llave SECRETA de
    SumUp vive SOLO en la Edge Function (secret de Supabase), nunca aquí.
@@ -15,6 +15,7 @@ window.PaymentConfig = {
   // Qué proveedor cobra cada moneda. 'ninguno' = aún sin cobro en línea.
   proveedorPorMoneda: {
     EUR: 'sumup',
+    COP: 'wompi',
     USD: 'ninguno',   // ← cámbialo a 'stripe' cuando configures USD
   },
 
@@ -27,6 +28,7 @@ window.PaymentConfig = {
 
   sumup: {
     sdkUrl: 'https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js',
+    funcionDonacion: 'crear-donacion-sumup',
     locale: 'es-ES',
     country: 'ES',
   },
@@ -71,7 +73,9 @@ window.Payments = {
   /* ---------------- SumUp (EUR) ---------------- */
   async _sumup(payload) {
     var sb = window.PaymentConfig.supabase;
-    var url = sb.url.replace(/\/$/, '') + '/functions/v1/' + sb.funcionDonacion;
+    var sc = window.PaymentConfig.sumup || {};
+    var fn = sc.funcionDonacion || sb.funcionDonacion || 'crear-donacion-sumup';
+    var url = sb.url.replace(/\/$/, '') + '/functions/v1/' + fn;
     var res;
     try {
       res = await fetch(url, {

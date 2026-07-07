@@ -31,13 +31,14 @@ window.CampaignConfig = {
   },
 
   /* ---- Monedas y montos sugeridos ----
-     Colombia cobra en pesos colombianos usando Wompi. */
-  monedas: ['COP'],
-  simbolos: { COP: 'COP $' },
+     COP cobra con Wompi y EUR con SumUp. */
+  monedas: ['COP', 'EUR'],
+  simbolos: { COP: 'COP $', EUR: '€' },
   montos: {
     COP: [20000, 50000, 100000, 200000, 500000],
+    EUR: [10, 20, 50, 100, 250],
   },
-  montoMinimo: { COP: 5000 },
+  montoMinimo: { COP: 5000, EUR: 5 },
   // Tasa de referencia SOLO para mostrar el equivalente aproximado.
   // El cobro se hace en la moneda que elija el donante. (EUR por 1 USD)
   eurPorUsd: 0.92,

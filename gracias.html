@@ -76,19 +76,26 @@
 
   <script>
     (function () {
-      var FN = 'https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-sumup';
+      var SUMUP_FN = 'https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-sumup';
+      var WOMPI_FN = 'https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-wompi-colombia';
       var ANON = 'sb_publishable_024-eUVtJmUuVsdrEKTl3A_oMQl0Gla';
       function show(id) {
         ['estado-verificando', 'estado-exito', 'estado-fallo'].forEach(function (x) {
           var el = document.getElementById(x); if (el) el.hidden = (x !== id);
         });
       }
-      var ref = new URLSearchParams(location.search).get('ref');
-      if (!ref) { show('estado-fallo'); return; }  // llegó sin pago (ej. clic en el nombre del comercio)
+      var qs = new URLSearchParams(location.search);
+      var ref = qs.get('ref');
+      var txid = qs.get('id');
+      if (ref) { verificar(SUMUP_FN, 'ref', ref); return; }
+      if (txid) { verificar(WOMPI_FN, 'id', txid); return; }
+      show('estado-fallo'); // llegó sin pago o sin retorno de pasarela
+
+      function verificar(fn, param, value) {
       var intentos = 0;
       (function verificar() {
         intentos++;
-        fetch(FN + '?ref=' + encodeURIComponent(ref), { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON } })
+        fetch(fn + '?' + param + '=' + encodeURIComponent(value), { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON } })
           .then(function (r) { return r.json(); })
           .then(function (d) {
             if (d && d.paid) { show('estado-exito'); return; }
@@ -98,6 +105,7 @@
           })
           .catch(function () { if (intentos < 3) setTimeout(verificar, 2500); else show('estado-fallo'); });
       })();
+      }
     })();
   </script>
 </body>

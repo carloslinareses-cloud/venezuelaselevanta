@@ -18,7 +18,15 @@ test('renders the landing page without encoding artifacts or runtime errors', as
   expect(errors).toEqual([]);
 });
 
-test('donation widget validates input and shows fallback for unconfigured USD payments', async ({ page }) => {
+test('donation widget validates input and routes COP payments to Wompi', async ({ page }) => {
+  await page.route('https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-wompi-colombia', async (route) => {
+    await route.fulfill({
+      status: 500,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: 'Pagos Wompi no configurados.' }),
+    });
+  });
+
   await page.goto('/#donar');
 
   await expect(page.locator('#summary-amount')).toHaveText('€50');
@@ -32,11 +40,10 @@ test('donation widget validates input and shows fallback for unconfigured USD pa
   await expect(page.locator('#form-error')).toContainText('Revisa tu correo');
 
   await page.locator('#d-email').fill('donante@example.com');
-  await page.getByRole('button', { name: 'USD $' }).click();
-  await expect(page.locator('#summary-amount')).toHaveText('$50');
-  await page.getByRole('button', { name: /donar \$50 ahora/i }).click();
-  await expect(page.getByRole('dialog', { name: /gracias/i })).toBeVisible();
-  await expect(page.locator('#modal-resumen')).toContainText('$50');
+  await page.getByRole('button', { name: 'COP $' }).click();
+  await expect(page.locator('#summary-amount')).toHaveText('COP $100.000');
+  await page.getByRole('button', { name: /donar COP \$100\.000 ahora/i }).click();
+  await expect(page.locator('#form-error')).toContainText('Pagos Wompi no configurados.');
 });
 
 test('EUR payment shows backend errors without leaving the page', async ({ page }) => {
@@ -106,4 +113,19 @@ test('thank-you page renders correctly', async ({ page }) => {
   await expect(page).toHaveTitle(/Gracias/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
   await expect(page.getByRole('link', { name: /volver al inicio/i })).toHaveAttribute('href', 'index.html');
+});
+
+test('root thank-you page verifies Wompi transactions too', async ({ page }) => {
+  await page.route('https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-wompi-colombia?id=TX-ROOT', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ paid: true, status: 'APPROVED' }),
+    });
+  });
+
+  await page.goto('/gracias.html?id=TX-ROOT');
+
+  await expect(page).toHaveTitle(/Gracias/);
+  await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
 });

@@ -31,15 +31,14 @@ window.CampaignConfig = {
   },
 
   /* ---- Monedas y montos sugeridos ----
-     La primera es la moneda por defecto. EUR va primero porque es la que ya
-     cobra en línea (SumUp); USD entrará cuando se configure Stripe. */
-  monedas: ['EUR', 'USD'],
-  simbolos: { USD: '$', EUR: '€' },
+     La primera es la moneda por defecto. EUR cobra con SumUp y COP con Wompi. */
+  monedas: ['EUR', 'COP'],
+  simbolos: { EUR: '€', COP: 'COP $' },
   montos: {
-    USD: [10, 25, 50, 100, 250],
     EUR: [10, 20, 50, 100, 250],
+    COP: [20000, 50000, 100000, 200000, 500000],
   },
-  montoMinimo: { USD: 5, EUR: 5 },
+  montoMinimo: { EUR: 5, COP: 5000 },
   // Tasa de referencia SOLO para mostrar el equivalente aproximado.
   // El cobro se hace en la moneda que elija el donante. (EUR por 1 USD)
   eurPorUsd: 0.92,

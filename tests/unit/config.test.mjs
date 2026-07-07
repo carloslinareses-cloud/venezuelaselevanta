@@ -13,9 +13,9 @@ test('campaign config has coherent donation setup', () => {
   const cfg = loadConfig();
 
   assert.ok(cfg.marca.nombre);
-  assert.deepEqual(Array.from(cfg.monedas), ['EUR', 'USD']);
+  assert.deepEqual(Array.from(cfg.monedas), ['EUR', 'COP']);
   assert.equal(cfg.simbolos.EUR, '€');
-  assert.equal(cfg.simbolos.USD, '$');
+  assert.equal(cfg.simbolos.COP, 'COP $');
 
   for (const moneda of cfg.monedas) {
     assert.ok(Array.isArray(cfg.montos[moneda]), `${moneda} amounts missing`);
@@ -23,13 +23,17 @@ test('campaign config has coherent donation setup', () => {
   }
 });
 
-test('colombia campaign charges in COP only', () => {
+test('colombia campaign charges in COP and EUR', () => {
   const cfg = loadConfig('assets/config-colombia.js');
 
   assert.equal(cfg.marca.nombre, 'Súmate VZLA Colombia');
-  assert.deepEqual(Array.from(cfg.monedas), ['COP']);
+  assert.deepEqual(Array.from(cfg.monedas), ['COP', 'EUR']);
   assert.equal(cfg.simbolos.COP, 'COP $');
-  assert.ok(cfg.montos.COP.every((monto) => monto >= cfg.montoMinimo.COP));
+  assert.equal(cfg.simbolos.EUR, '€');
+  for (const moneda of cfg.monedas) {
+    assert.ok(Array.isArray(cfg.montos[moneda]), `${moneda} amounts missing`);
+    assert.ok(cfg.montos[moneda].every((monto) => monto >= cfg.montoMinimo[moneda]));
+  }
   assert.equal(cfg.meta.moneda, 'COP');
 });
 
