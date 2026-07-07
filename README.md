@@ -89,7 +89,9 @@ supabase secrets set ALLOWED_ORIGINS="https://carloslinareses-cloud.github.io,ht
 
 # Wompi Colombia
 supabase secrets set WOMPI_PUBLIC_KEY="<pub_prod_o_pub_test>" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set WOMPI_PRIVATE_KEY="<prv_prod_o_prv_test>" --project-ref koxrtxplpybdfymgdhhd
 supabase secrets set WOMPI_INTEGRITY_SECRET="<prod_integrity_o_test_integrity>" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set WOMPI_EVENTS_SECRET="<prod_events_o_test_events>" --project-ref koxrtxplpybdfymgdhhd
 ```
 
 Deploy:
@@ -97,6 +99,12 @@ Deploy:
 ```bash
 supabase functions deploy crear-donacion-sumup --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
 supabase functions deploy crear-donacion-wompi-colombia --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
+```
+
+URL de eventos Wompi Colombia:
+
+```text
+https://koxrtxplpybdfymgdhhd.supabase.co/functions/v1/crear-donacion-wompi-colombia
 ```
 
 ## Producción

@@ -50,3 +50,11 @@ test('production CORS defaults include the expected GitHub Pages origin', () => 
   const edgeFunction = readFileSync('supabase/functions/crear-donacion-sumup/index.ts', 'utf8');
   assert.match(edgeFunction, /https:\/\/carloslinareses-cloud\.github\.io/);
 });
+
+test('Wompi Colombia edge function validates signed webhook events', () => {
+  const edgeFunction = readFileSync('supabase/functions/crear-donacion-wompi-colombia/index.ts', 'utf8');
+  assert.match(edgeFunction, /WOMPI_EVENTS_SECRET/);
+  assert.match(edgeFunction, /eventChecksumIsValid/);
+  assert.match(edgeFunction, /transaction\.updated/);
+  assert.match(edgeFunction, /DONA-SVZLA-CO-/);
+});
