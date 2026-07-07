@@ -296,7 +296,7 @@
     var el = $('#conv-note'); if (!el) return;
     var r = CFG.eurPorUsd || 0.92;
     var txt = '';
-    if (state.monto > 0) {
+    if (state.monto > 0 && (state.moneda === 'USD' || state.moneda === 'EUR')) {
       if (state.moneda === 'USD') txt = '≈ ' + money(state.monto * r, 'EUR') + ' aprox.';
       else txt = '≈ ' + money(state.monto / r, 'USD') + ' aprox.';
     }

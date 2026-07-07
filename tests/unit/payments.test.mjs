@@ -7,7 +7,7 @@ function loadPayments(overrides = {}) {
   const calls = [];
   const location = { href: overrides.href || 'https://sumatevzla.org/index.html' };
   const context = {
-    window: { location },
+    window: { location, WidgetCheckout: overrides.WidgetCheckout },
     location,
     URL,
     document: overrides.document || {},
@@ -21,6 +21,7 @@ function loadPayments(overrides = {}) {
       };
     },
   };
+  if (overrides.WidgetCheckout) context.WidgetCheckout = overrides.WidgetCheckout;
   vm.runInNewContext(readFileSync('assets/payments.js', 'utf8'), context);
   context.window.fetch = context.fetch;
   return { payments: context.window.Payments, config: context.window.PaymentConfig, calls, location };
@@ -82,4 +83,56 @@ test('SumUp surfaces network and CORS failures with a donor-friendly message', a
     () => payments.iniciarDonacion({ monto: 25, moneda: 'EUR', donante: {} }),
     /No pudimos conectar con el servidor de pagos/,
   );
+});
+
+test('Wompi request is signed by Supabase function and opens widget checkout', async () => {
+  let checkoutConfig;
+  let opened = false;
+  function WidgetCheckout(config) {
+    checkoutConfig = config;
+    this.open = (callback) => {
+      opened = true;
+      callback({ transaction: { id: 'tx_123' } });
+    };
+  }
+
+  const { payments, config, calls, location } = loadPayments({
+    href: 'https://sumatevzla.org/colombia/index.html',
+    WidgetCheckout,
+    fetchResponse: {
+      ok: true,
+      json: async () => ({
+        publicKey: 'pub_test_abc',
+        currency: 'COP',
+        amountInCents: 5000000,
+        reference: 'DONA-SVZLA-CO-123',
+        signature: 'abc123',
+        redirectUrl: 'https://sumatevzla.org/colombia/gracias.html',
+      }),
+    },
+  });
+  config.proveedorPorMoneda = { COP: 'wompi' };
+  config.supabase.funcionDonacion = 'crear-donacion-wompi-colombia';
+  config.wompi = { funcionDonacion: 'crear-donacion-wompi-colombia' };
+  config.retorno = { exito: 'gracias.html' };
+
+  const result = await payments.iniciarDonacion({
+    monto: 50000,
+    moneda: 'COP',
+    donante: { nombre: 'Ana', email: 'ana@example.com', anonimo: false },
+  });
+
+  assert.equal(result.estado, 'widget_abierto');
+  assert.equal(opened, true);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, `${config.supabase.url}/functions/v1/crear-donacion-wompi-colombia`);
+
+  const body = JSON.parse(calls[0].options.body);
+  assert.equal(body.amount, 50000);
+  assert.equal(body.currency, 'COP');
+  assert.equal(body.returnUrl, 'https://sumatevzla.org/colombia/gracias.html');
+  assert.equal(checkoutConfig.amountInCents, 5000000);
+  assert.equal(checkoutConfig.currency, 'COP');
+  assert.equal(checkoutConfig.reference, 'DONA-SVZLA-CO-123');
+  assert.equal(location.href, 'https://sumatevzla.org/colombia/gracias.html?id=tx_123');
 });

@@ -31,6 +31,11 @@ window.PaymentConfig = {
     country: 'ES',
   },
 
+  wompi: {
+    sdkUrl: 'https://checkout.wompi.co/widget.js',
+    funcionDonacion: 'crear-donacion-wompi-colombia',
+  },
+
   // USD (futuro): Stripe Checkout. La llave secreta va en tu backend.
   stripe: { publishableKey: '', crearSesionUrl: '' },
 
@@ -58,6 +63,7 @@ window.Payments = {
   async iniciarDonacion(payload) {
     var prov = this.proveedorDe(payload.moneda);
     if (prov === 'sumup') return this._sumup(payload);
+    if (prov === 'wompi') return this._wompi(payload);
     if (prov === 'stripe') return this._stripe(payload);
     return { estado: 'sin_configurar' };
   },
@@ -195,6 +201,85 @@ window.Payments = {
     if (err) { err.textContent = msg; err.hidden = false; }
     var loading = document.querySelector('#sumup-card .sumup-loading');
     if (loading) loading.remove();
+  },
+
+  /* ---------------- Wompi (COP / Colombia) ---------------- */
+  async _wompi(payload) {
+    var sb = window.PaymentConfig.supabase;
+    var wc = window.PaymentConfig.wompi || {};
+    var fn = wc.funcionDonacion || sb.funcionDonacion || 'crear-donacion-wompi-colombia';
+    var url = sb.url.replace(/\/$/, '') + '/functions/v1/' + fn;
+    var returnUrl = new URL((window.PaymentConfig.retorno && window.PaymentConfig.retorno.exito) || 'gracias.html', location.href).href;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': sb.anonKey,
+          'Authorization': 'Bearer ' + sb.anonKey,
+        },
+        body: JSON.stringify({
+          amount: payload.monto,
+          currency: payload.moneda,
+          name: payload.donante && payload.donante.nombre || '',
+          email: payload.donante && payload.donante.email || '',
+          mensaje: payload.donante && payload.donante.mensaje || '',
+          anonimo: !!(payload.donante && payload.donante.anonimo),
+          returnUrl: returnUrl,
+        }),
+      });
+    } catch (e) {
+      throw new Error('No pudimos conectar con el servidor de pagos de Wompi. Intenta de nuevo en unos minutos.');
+    }
+    if (!res.ok) {
+      var msg = 'No se pudo iniciar el pago con Wompi. Intenta de nuevo.';
+      try { var j = await res.json(); if (j && j.error) msg = j.error; } catch (e) {}
+      throw new Error(msg);
+    }
+    var data = await res.json();
+    await this._loadWompiSdk();
+    if (!window.WidgetCheckout) throw new Error('Wompi no está disponible en este momento.');
+
+    var checkout = new window.WidgetCheckout({
+      currency: data.currency || 'COP',
+      amountInCents: data.amountInCents,
+      reference: data.reference,
+      publicKey: data.publicKey,
+      signature: { integrity: data.signature },
+      redirectUrl: data.redirectUrl || returnUrl,
+      customerData: {
+        email: payload.donante && payload.donante.email || undefined,
+        fullName: payload.donante && payload.donante.nombre || undefined,
+      },
+    });
+    checkout.open(function (result) {
+      var tx = result && result.transaction;
+      if (tx && tx.id) {
+        var next = new URL(returnUrl);
+        next.searchParams.set('id', tx.id);
+        window.location.href = next.href;
+      }
+    });
+    return { estado: 'widget_abierto' };
+  },
+
+  _loadWompiSdk() {
+    if (window.WidgetCheckout) return Promise.resolve();
+    var u = (window.PaymentConfig.wompi && window.PaymentConfig.wompi.sdkUrl) || 'https://checkout.wompi.co/widget.js';
+    return new Promise(function (resolve, reject) {
+      var ex = document.querySelector('script[src="' + u + '"]');
+      if (ex) {
+        ex.addEventListener('load', function () { resolve(); });
+        ex.addEventListener('error', function () { reject(new Error('No se pudo cargar Wompi')); });
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = u; s.async = true;
+      s.onload = function () { resolve(); };
+      s.onerror = function () { reject(new Error('No se pudo cargar Wompi')); };
+      document.body.appendChild(s);
+    });
   },
 
   /* ---------------- Stripe (USD, futuro) ---------------- */

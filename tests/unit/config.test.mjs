@@ -3,9 +3,9 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
-function loadConfig() {
+function loadConfig(file = 'assets/config.js') {
   const context = { window: {} };
-  vm.runInNewContext(readFileSync('assets/config.js', 'utf8'), context);
+  vm.runInNewContext(readFileSync(file, 'utf8'), context);
   return context.window.CampaignConfig;
 }
 
@@ -21,6 +21,16 @@ test('campaign config has coherent donation setup', () => {
     assert.ok(Array.isArray(cfg.montos[moneda]), `${moneda} amounts missing`);
     assert.ok(cfg.montos[moneda].every((monto) => monto >= cfg.montoMinimo[moneda]));
   }
+});
+
+test('colombia campaign charges in COP only', () => {
+  const cfg = loadConfig('assets/config-colombia.js');
+
+  assert.equal(cfg.marca.nombre, 'Súmate VZLA Colombia');
+  assert.deepEqual(Array.from(cfg.monedas), ['COP']);
+  assert.equal(cfg.simbolos.COP, 'COP $');
+  assert.ok(cfg.montos.COP.every((monto) => monto >= cfg.montoMinimo.COP));
+  assert.equal(cfg.meta.moneda, 'COP');
 });
 
 test('fund allocation sums 100 percent', () => {

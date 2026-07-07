@@ -70,6 +70,8 @@ Todo el contenido editable vive en `assets/config.js`:
 
 - EUR usa SumUp mediante la Edge Function `crear-donacion-sumup`.
 - USD está como `ninguno` hasta conectar Stripe u otro proveedor.
+- La variante `/colombia/` cobra en COP mediante Wompi y la Edge Function
+  `crear-donacion-wompi-colombia`.
 
 La llave pública/anon de Supabase puede vivir en el frontend. La llave secreta de
 SumUp debe estar solo como secret de Supabase (`SUMUP_API_KEY` o `SUMUP_SECRET_KEY`).
@@ -84,12 +86,17 @@ Secrets necesarios:
 supabase secrets set SUMUP_API_KEY="<llave-secreta-sumup>" --project-ref koxrtxplpybdfymgdhhd
 supabase secrets set SUMUP_PAY_TO_EMAIL="<email-comercio>" --project-ref koxrtxplpybdfymgdhhd
 supabase secrets set ALLOWED_ORIGINS="https://carloslinareses-cloud.github.io,https://sumatevzla.org,http://127.0.0.1:53173" --project-ref koxrtxplpybdfymgdhhd
+
+# Wompi Colombia
+supabase secrets set WOMPI_PUBLIC_KEY="<pub_prod_o_pub_test>" --project-ref koxrtxplpybdfymgdhhd
+supabase secrets set WOMPI_INTEGRITY_SECRET="<prod_integrity_o_test_integrity>" --project-ref koxrtxplpybdfymgdhhd
 ```
 
 Deploy:
 
 ```bash
 supabase functions deploy crear-donacion-sumup --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
+supabase functions deploy crear-donacion-wompi-colombia --no-verify-jwt --project-ref koxrtxplpybdfymgdhhd
 ```
 
 ## Producción

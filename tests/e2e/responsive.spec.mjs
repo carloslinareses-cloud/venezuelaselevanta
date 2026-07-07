@@ -12,7 +12,7 @@ const viewports = [
 for (const viewport of viewports) {
   test(`page has no horizontal overflow at ${viewport.width}x${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
@@ -21,7 +21,7 @@ for (const viewport of viewports) {
 
 test('mobile shows campaign context before donation without a long scroll', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const donationSection = await page.locator('#donar').boundingBox();
   const heroSection = await page.locator('.hero').boundingBox();
@@ -36,7 +36,7 @@ test('mobile shows campaign context before donation without a long scroll', asyn
 
 test('desktop keeps the donation form in the first viewport after the campaign context', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const donationSection = await page.locator('#donar').boundingBox();
   const heroSection = await page.locator('.hero').boundingBox();
