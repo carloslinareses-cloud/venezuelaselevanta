@@ -384,7 +384,7 @@
         restaurar();
       })
       .catch(function (e2) {
-        mostrarError((e2 && e2.message) || 'No se pudo procesar. Intenta de nuevo.');
+        mostrarError((e2 && e2.message) || (typeof e2 === 'string' ? e2 : '') || 'No se pudo procesar. Intenta de nuevo.');
         restaurar();
       });
 

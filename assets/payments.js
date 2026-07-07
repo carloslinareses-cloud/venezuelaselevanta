@@ -241,18 +241,22 @@ window.Payments = {
     await this._loadWompiSdk();
     if (!window.WidgetCheckout) throw new Error('Wompi no está disponible en este momento.');
 
-    var checkout = new window.WidgetCheckout({
+    var checkoutConfig = {
       currency: data.currency || 'COP',
       amountInCents: data.amountInCents,
       reference: data.reference,
       publicKey: data.publicKey,
       signature: { integrity: data.signature },
       redirectUrl: data.redirectUrl || returnUrl,
-      customerData: {
-        email: payload.donante && payload.donante.email || undefined,
-        fullName: payload.donante && payload.donante.nombre || undefined,
-      },
-    });
+    };
+    var email = payload.donante && payload.donante.email;
+    var fullName = payload.donante && payload.donante.nombre;
+    var customerData = {};
+    if (email) customerData.email = email;
+    if (fullName) customerData.fullName = fullName;
+    if (Object.keys(customerData).length) checkoutConfig.customerData = customerData;
+
+    var checkout = new window.WidgetCheckout(checkoutConfig);
     checkout.open(function (result) {
       var tx = result && result.transaction;
       if (tx && tx.id) {

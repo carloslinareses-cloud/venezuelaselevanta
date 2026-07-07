@@ -136,3 +136,39 @@ test('Wompi request is signed by Supabase function and opens widget checkout', a
   assert.equal(checkoutConfig.reference, 'DONA-SVZLA-CO-123');
   assert.equal(location.href, 'https://sumatevzla.org/colombia/gracias.html?id=tx_123');
 });
+
+test('Wompi omits empty customer data so anonymous COP donations can open checkout', async () => {
+  let checkoutConfig;
+  function WidgetCheckout(config) {
+    checkoutConfig = config;
+    this.open = () => {};
+  }
+
+  const { payments, config } = loadPayments({
+    href: 'https://sumatevzla.org/colombia/index.html',
+    WidgetCheckout,
+    fetchResponse: {
+      ok: true,
+      json: async () => ({
+        publicKey: 'pub_test_abc',
+        currency: 'COP',
+        amountInCents: 5000000,
+        reference: 'DONA-SVZLA-CO-123',
+        signature: 'abc123',
+        redirectUrl: 'https://sumatevzla.org/colombia/gracias.html',
+      }),
+    },
+  });
+  config.proveedorPorMoneda = { COP: 'wompi' };
+  config.supabase.funcionDonacion = 'crear-donacion-wompi-colombia';
+  config.wompi = { funcionDonacion: 'crear-donacion-wompi-colombia' };
+  config.retorno = { exito: 'gracias.html' };
+
+  await payments.iniciarDonacion({
+    monto: 50000,
+    moneda: 'COP',
+    donante: { nombre: '', email: '', anonimo: true },
+  });
+
+  assert.equal('customerData' in checkoutConfig, false);
+});
