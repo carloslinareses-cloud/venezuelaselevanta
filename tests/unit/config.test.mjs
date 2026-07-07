@@ -16,6 +16,7 @@ test('campaign config has coherent donation setup', () => {
   assert.deepEqual(Array.from(cfg.monedas), ['EUR', 'COP']);
   assert.equal(cfg.simbolos.EUR, '€');
   assert.equal(cfg.simbolos.COP, 'COP $');
+  assert.equal(cfg.marca.redes.tiktok, 'https://www.tiktok.com/@sumatevzla');
 
   for (const moneda of cfg.monedas) {
     assert.ok(Array.isArray(cfg.montos[moneda]), `${moneda} amounts missing`);
@@ -30,6 +31,7 @@ test('colombia campaign charges in COP and EUR', () => {
   assert.deepEqual(Array.from(cfg.monedas), ['COP', 'EUR']);
   assert.equal(cfg.simbolos.COP, 'COP $');
   assert.equal(cfg.simbolos.EUR, '€');
+  assert.equal(cfg.marca.redes.tiktok, 'https://www.tiktok.com/@sumatevzla');
   for (const moneda of cfg.monedas) {
     assert.ok(Array.isArray(cfg.montos[moneda]), `${moneda} amounts missing`);
     assert.ok(cfg.montos[moneda].every((monto) => monto >= cfg.montoMinimo[moneda]));

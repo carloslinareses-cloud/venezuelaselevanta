@@ -17,6 +17,7 @@ window.CampaignConfig = {
       instagram: '',           // ej. 'https://instagram.com/...'
       facebook: '',
       x: '',
+      tiktok: 'https://www.tiktok.com/@sumatevzla',
       whatsapp: '',            // ej. 'https://wa.me/58412...'
     },
   },

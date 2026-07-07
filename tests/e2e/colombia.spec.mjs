@@ -6,6 +6,7 @@ test('colombia page renders the Venezuela campaign with COP donations', async ({
   await expect(page).toHaveTitle(/Súmate VZLA Colombia/);
   await expect(page.getByText('Colombia presente')).toBeVisible();
   await expect(page.locator('h1')).toContainText('Venezuela se levanta');
+  await expect(page.getByRole('link', { name: 'tiktok' })).toHaveAttribute('href', 'https://www.tiktok.com/@sumatevzla');
   await expect(page.locator('#summary-amount')).toHaveText('COP $100.000');
   await expect(page.getByRole('button', { name: /donar COP \$100\.000 ahora/i })).toBeVisible();
   await expect(page.locator('#conv-note')).toHaveText('');

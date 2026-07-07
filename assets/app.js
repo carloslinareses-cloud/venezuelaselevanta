@@ -192,7 +192,7 @@
     // Redes
     var r = (m.redes || {}), soc = $('#footer-social');
     var iconos = {
-      instagram: 'IG', facebook: 'FB', x: 'X', whatsapp: 'WA',
+      instagram: 'IG', facebook: 'FB', x: 'X', tiktok: 'TT', whatsapp: 'WA',
     };
     if (soc) {
       soc.textContent = '';

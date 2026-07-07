@@ -14,6 +14,7 @@ test('renders the landing page without encoding artifacts or runtime errors', as
     await expect(page.getByRole('link', { name: /sumarme ahora/i })).toBeVisible();
   }
   await expect(page.getByRole('heading', { name: /datos, fuentes y controles/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'tiktok' })).toHaveAttribute('href', 'https://www.tiktok.com/@sumatevzla');
   await expect(page.locator('body')).not.toContainText(/Ã|Â|ðŸ|�/);
   expect(errors).toEqual([]);
 });
