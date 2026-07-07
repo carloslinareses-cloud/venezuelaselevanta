@@ -52,6 +52,7 @@ test('EUR payment shows backend errors without leaving the page', async ({ page 
   await page.locator('#d-email').fill('donante@example.com');
   await page.getByRole('button', { name: /donar €50 ahora/i }).click();
 
+  await expect(page.locator('#form-error')).toBeVisible();
   await expect(page.locator('#form-error')).toContainText('Pagos temporalmente no disponibles.');
   await expect(page).toHaveURL(/\/#donar$/);
 });

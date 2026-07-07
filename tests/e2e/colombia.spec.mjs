@@ -24,6 +24,7 @@ test('colombia Wompi payment shows backend errors without leaving the page', asy
   await page.locator('#d-email').fill('donante@example.com');
   await page.getByRole('button', { name: /donar COP \$100\.000 ahora/i }).click();
 
+  await expect(page.locator('#form-error')).toBeVisible();
   await expect(page.locator('#form-error')).toContainText('Pagos Wompi no configurados.');
   await expect(page).toHaveURL(/\/colombia\/#donar$/);
 });

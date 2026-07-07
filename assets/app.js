@@ -303,12 +303,12 @@
     el.textContent = txt;
   }
 
-  function actualizarResumen() {
+  function actualizarResumen(ocultarError) {
     var etiqueta = state.monto > 0 ? money(state.monto, state.moneda) : sym(state.moneda) + '0';
     var sa = $('#summary-amount'); if (sa) sa.textContent = etiqueta;
     var ba = $('#donate-btn-amount'); if (ba) ba.textContent = etiqueta;
     convNota();
-    var err = $('#form-error'); if (err) err.hidden = true;
+    var err = $('#form-error'); if (err && ocultarError !== false) err.hidden = true;
   }
 
   function asegurarBotonDonacion() {
@@ -325,7 +325,7 @@
     if (!btn) return;
     btn.disabled = false;
     btn.style.opacity = '';
-    actualizarResumen();
+    actualizarResumen(false);
   }
 
   function bindWidget() {
