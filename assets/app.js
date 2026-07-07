@@ -199,14 +199,27 @@
       Object.keys(iconos).forEach(function (k) {
         if (!r[k]) return;
         var a = document.createElement('a');
-        var span = document.createElement('span');
         a.href = r[k];
         a.target = '_blank';
         a.rel = 'noopener';
         a.setAttribute('aria-label', k);
-        span.className = 'social-label';
-        span.textContent = iconos[k];
-        a.appendChild(span);
+        a.className = 'social-link social-' + k;
+        if (k === 'tiktok') {
+          a.innerHTML =
+            '<span class="tiktok-logo" aria-hidden="true">' +
+              '<svg viewBox="0 0 24 24" focusable="false">' +
+                '<path class="tk-cyan" d="M14.6 3.2c.2 2 1.3 3.5 3.1 4.3.7.3 1.4.5 2.3.5v3.8c-1.9 0-3.6-.6-5.1-1.7v5.6c0 3.4-2.4 5.8-5.7 5.8-3 0-5.3-2.1-5.3-5 0-3.2 2.5-5.3 5.7-5.3.4 0 .8 0 1.1.1v3.9c-.3-.1-.7-.2-1.1-.2-1.1 0-1.9.6-1.9 1.5s.8 1.5 1.8 1.5c1.2 0 1.8-.7 1.8-2V3.2h3.3Z"/>' +
+                '<path class="tk-pink" d="M15.3 2.5c.2 2 1.3 3.5 3.1 4.3.7.3 1.4.5 2.3.5v3.8c-1.9 0-3.6-.6-5.1-1.7V15c0 3.4-2.4 5.8-5.7 5.8-3 0-5.3-2.1-5.3-5 0-3.2 2.5-5.3 5.7-5.3.4 0 .8 0 1.1.1v3.9c-.3-.1-.7-.2-1.1-.2-1.1 0-1.9.6-1.9 1.5s.8 1.5 1.8 1.5c1.2 0 1.8-.7 1.8-2V2.5h3.3Z"/>' +
+                '<path class="tk-white" d="M15 2.8c.2 2 1.3 3.5 3.1 4.3.7.3 1.4.5 2.3.5v3.5c-1.9 0-3.6-.6-5.1-1.7V15c0 3.4-2.4 5.8-5.7 5.8-3 0-5.3-2.1-5.3-5 0-3.2 2.5-5.3 5.7-5.3.4 0 .8 0 1.1.1v3.5c-.3-.1-.7-.2-1.1-.2-1.1 0-1.9.6-1.9 1.5s.8 1.5 1.8 1.5c1.2 0 1.8-.7 1.8-2V2.8H15Z"/>' +
+              '</svg>' +
+            '</span>' +
+            '<span class="social-label social-label-text">TikTok</span>';
+        } else {
+          var span = document.createElement('span');
+          span.className = 'social-label';
+          span.textContent = iconos[k];
+          a.appendChild(span);
+        }
         soc.appendChild(a);
       });
     }
