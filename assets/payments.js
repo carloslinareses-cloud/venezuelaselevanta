@@ -256,6 +256,7 @@ window.Payments = {
     if (fullName) customerData.fullName = fullName;
     if (Object.keys(customerData).length) checkoutConfig.customerData = customerData;
 
+    this._enfocarWompi();
     var checkout = new window.WidgetCheckout(checkoutConfig);
     checkout.open(function (result) {
       var tx = result && result.transaction;
@@ -265,7 +266,28 @@ window.Payments = {
         window.location.href = next.href;
       }
     });
+    this._enfocarWompi();
     return { estado: 'widget_abierto' };
+  },
+
+  _enfocarWompi() {
+    function go() {
+      try {
+        var frame = Array.prototype.find.call(document.querySelectorAll('iframe'), function (iframe) {
+          return /wompi|checkout/i.test(iframe.src || '');
+        });
+        if (frame && frame.scrollIntoView) {
+          frame.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'auto' });
+          return;
+        }
+        if (window.scrollTo) window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      } catch (e) {}
+    }
+    go();
+    setTimeout(go, 120);
+    setTimeout(go, 500);
+    setTimeout(go, 1200);
+    setTimeout(go, 2200);
   },
 
   _loadWompiSdk() {
