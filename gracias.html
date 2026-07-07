@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/styles.css?v=12" />
+  <link rel="stylesheet" href="assets/styles.css?v=14" />
   <style>
     .gracias { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
       background: radial-gradient(900px 500px at 50% -10%, rgba(245,167,35,.18), transparent 60%), var(--crema); padding: 40px 20px; }
@@ -53,6 +53,25 @@
         <div class="share">
           <a href="index.html" class="btn btn-primary btn-lg">Volver al inicio</a>
           <a href="index.html#donar" class="btn btn-ghost btn-lg">Compartir la causa</a>
+        </div>
+        <div class="post-donation-share" data-share-url="https://sumatevzla.org/" data-share-title="Súmate VZLA" data-share-text="Acabo de apoyar ayuda humanitaria para Venezuela. Dona o comparte esta página:">
+          <strong>Comparte esta ayuda</strong>
+          <p>Tu mensaje puede hacer que otra persona se sume.</p>
+          <div class="share-actions">
+            <a class="share-btn share-whatsapp" data-share-whatsapp href="#" target="_blank" rel="noopener">
+              <span class="share-icon">WA</span>
+              Compartir por WhatsApp
+            </a>
+            <button class="share-btn share-tiktok" type="button" data-share-native>
+              <span class="share-icon">TT</span>
+              Compartir en TikTok
+            </button>
+            <button class="share-btn share-copy-btn" type="button" data-share-copy>
+              <span class="share-icon">URL</span>
+              Copiar enlace
+            </button>
+            <p class="share-feedback" role="status" hidden></p>
+          </div>
         </div>
         <p style="margin-top:26px;font-family:var(--font-display);font-size:1.3rem;color:var(--azul-900)">Súmate VZLA: Venezuela se levanta.</p>
       </div>
@@ -108,5 +127,6 @@
       }
     })();
   </script>
+  <script src="assets/app.js?v=16"></script>
 </body>
 </html>

@@ -137,6 +137,18 @@
       list.appendChild(li);
     });
   }
+  function renderEstadoCampana() {
+    var latest = (CFG.transparencia && CFG.transparencia.actualizaciones && CFG.transparencia.actualizaciones[0]) || null;
+    var text = $('#status-update-text');
+    var date = $('#status-update-date');
+    if (!latest) {
+      var panel = $('.status-update');
+      if (panel) panel.hidden = true;
+      return;
+    }
+    if (date) date.textContent = latest.fecha || 'Actualizado';
+    if (text) text.textContent = latest.texto || '';
+  }
   function renderHistorias() {
     var hs = CFG.historias || [];
     if (!hs.length) return;
@@ -488,6 +500,85 @@
     });
   }
 
+  function shareRoot(el) {
+    return el && el.closest ? (el.closest('[data-share-url]') || document) : document;
+  }
+  function shareUrl(root) {
+    if (root && root.getAttribute && root.getAttribute('data-share-url')) return root.getAttribute('data-share-url');
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical && canonical.href) return canonical.href;
+    return location.origin + location.pathname.replace(/\/index\.html$/, '/');
+  }
+  function sharePayload(el) {
+    var root = shareRoot(el);
+    var title = (root.getAttribute && root.getAttribute('data-share-title')) || (CFG.marca && CFG.marca.nombre) || 'Súmate VZLA';
+    var text = (root.getAttribute && root.getAttribute('data-share-text')) || 'Ayuda humanitaria verificada para Venezuela.';
+    return { title: title, text: text, url: shareUrl(root) };
+  }
+  function setShareFeedback(el, msg) {
+    var root = shareRoot(el);
+    var target = root.querySelector ? root.querySelector('.share-feedback') : null;
+    if (!target) return;
+    target.textContent = msg;
+    target.hidden = false;
+    clearTimeout(target._hideTimer);
+    target._hideTimer = setTimeout(function () { target.hidden = true; }, 3800);
+  }
+  function copiarTexto(txt) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(txt);
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = txt;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+  function bindCompartir() {
+    $$('[data-share-whatsapp]').forEach(function (a) {
+      var p = sharePayload(a);
+      a.href = 'https://wa.me/?text=' + encodeURIComponent(p.text + ' ' + p.url);
+    });
+    $$('[data-share-native]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var p = sharePayload(btn);
+        if (navigator.share) {
+          navigator.share(p)
+            .then(function () { setShareFeedback(btn, 'Gracias por compartir esta ayuda.'); })
+            .catch(function (e) {
+              if (e && e.name === 'AbortError') return;
+              copiarTexto(p.text + ' ' + p.url).then(function () {
+                setShareFeedback(btn, 'Enlace copiado. Puedes pegarlo en TikTok.');
+              });
+            });
+          return;
+        }
+        copiarTexto(p.text + ' ' + p.url).then(function () {
+          setShareFeedback(btn, 'Enlace copiado. Puedes pegarlo en TikTok.');
+        });
+      });
+    });
+    $$('[data-share-copy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var p = sharePayload(btn);
+        copiarTexto(p.url).then(function () {
+          setShareFeedback(btn, 'Enlace copiado.');
+        }).catch(function () {
+          setShareFeedback(btn, 'No se pudo copiar. Usa el enlace de la barra del navegador.');
+        });
+      });
+    });
+  }
+
   function bannersPorURL() {
     var q = new URLSearchParams(location.search);
     if (q.get('donacion') === 'cancelada') {
@@ -544,12 +635,14 @@
     renderUso();
     renderNiveles();
     renderUpdates();
+    renderEstadoCampana();
     renderHistorias();
     renderMetodosAlt();
     renderFooter();
     renderVerificacion();
     sincronizarMonedaUI();  // arma montos + selecciona por defecto
     bindWidget();
+    bindCompartir();
     bindNav();
     observarReveal();
     animarProgreso();

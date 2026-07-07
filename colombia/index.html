@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="preload" as="image" href="../assets/hero-relief.webp" type="image/webp" />
-  <link rel="stylesheet" href="../assets/styles.css?v=13" />
+  <link rel="stylesheet" href="../assets/styles.css?v=14" />
 </head>
 <body class="page-colombia">
   <a class="skip-link" href="#donar">Saltar a donar</a>
@@ -282,6 +282,52 @@
           <p class="secure-note">🔒 Pago seguro con Wompi · tus datos están protegidos</p>
           <p class="form-error" id="form-error" role="alert" hidden></p>
         </form>
+
+        <div class="campaign-status reveal" id="campaign-status" aria-label="Estado de la campaña">
+          <div class="status-metrics">
+            <div class="status-metric">
+              <span>Recaudado</span>
+              <strong data-bind-money="meta.recaudado">COP $0</strong>
+            </div>
+            <div class="status-metric">
+              <span>Donantes</span>
+              <strong data-bind="meta.donantes">0</strong>
+            </div>
+            <div class="status-metric">
+              <span>Meta</span>
+              <strong data-bind-money="meta.objetivo">COP $0</strong>
+            </div>
+          </div>
+          <div class="status-update">
+            <span id="status-update-date">Actualizado</span>
+            <p id="status-update-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-share" id="compartir">
+      <div class="container share-band" data-share-url="https://sumatevzla.org/colombia/" data-share-title="Súmate VZLA Colombia" data-share-text="Ayuda humanitaria desde Colombia para Venezuela. Dona o comparte esta página:">
+        <div class="share-copy">
+          <span class="kicker">Comparte esta ayuda</span>
+          <h2>Haz que llegue a más personas</h2>
+          <p>Enviar esta página a una familia, grupo o comunidad puede sumar otro aporte en COP o EUR para las familias afectadas.</p>
+        </div>
+        <div class="share-actions">
+          <a class="share-btn share-whatsapp" data-share-whatsapp href="#" target="_blank" rel="noopener">
+            <span class="share-icon">WA</span>
+            Compartir por WhatsApp
+          </a>
+          <button class="share-btn share-tiktok" type="button" data-share-native>
+            <span class="share-icon">TT</span>
+            Compartir en TikTok
+          </button>
+          <button class="share-btn share-copy-btn" type="button" data-share-copy>
+            <span class="share-icon">URL</span>
+            Copiar enlace
+          </button>
+          <p class="share-feedback" role="status" hidden></p>
+        </div>
       </div>
     </section>
 
@@ -451,6 +497,6 @@
   <script src="../assets/config-colombia.js?v=3"></script>
   <script src="../assets/payments.js?v=16"></script>
   <script src="../assets/payment-config-colombia.js?v=2"></script>
-  <script src="../assets/app.js?v=15"></script>
+  <script src="../assets/app.js?v=16"></script>
 </body>
 </html>

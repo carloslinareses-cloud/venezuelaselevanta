@@ -303,6 +303,14 @@ h3 { font-size: 1.2rem; }
 .dc-summary strong { font-family: var(--font-display); font-size: 1.6rem; color: var(--azul-900); }
 .secure-note { text-align: center; font-size: .82rem; color: var(--gris-500); margin-top: 10px; }
 .form-error { color: var(--coral); font-weight: 700; text-align: center; margin-top: 8px; font-size: .9rem; }
+.campaign-status { order: 3; grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); gap: 16px; margin-top: 2px; padding: 18px; border-radius: var(--radio); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+.status-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.status-metric { min-width: 0; padding: 14px; border-radius: var(--radio-sm); background: rgba(255,255,255,.92); }
+.status-metric span, .status-update span { display: block; margin-bottom: 5px; color: var(--gris-700); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.status-metric strong { display: block; color: var(--azul-900); font-family: var(--font-display); font-size: clamp(1.28rem, 3vw, 1.75rem); line-height: 1.05; overflow-wrap: anywhere; }
+.status-update { padding: 14px 16px; border-left: 4px solid var(--oro-400); border-radius: var(--radio-sm); background: rgba(10,37,64,.66); color: #eaf3ff; }
+.status-update span { color: var(--oro-300); }
+.status-update p { color: #eaf3ff; font-size: .94rem; line-height: 1.45; }
 
 /* Transparencia */
 .section-transparencia { background: var(--blanco); border-top: 1px solid var(--borde); }
@@ -338,6 +346,25 @@ h3 { font-size: 1.2rem; }
 .donacion-cuando { font-size: .82rem; color: var(--gris-700); }
 .donacion-monto { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: #0f6b32; white-space: nowrap; }
 .donaciones-vacio { text-align: center; color: var(--gris-500); padding: 30px 10px; font-weight: 600; }
+
+/* Compartir */
+.section-share { background: var(--blanco); border-top: 1px solid var(--borde); border-bottom: 1px solid var(--borde); }
+.share-band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); gap: 28px; align-items: center; }
+.share-copy h2 { margin-top: 6px; }
+.share-copy p { color: var(--gris-700); margin-top: 10px; max-width: 58ch; }
+.share-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.share-btn { min-height: 48px; border-radius: var(--radio-sm); border: 2px solid transparent; padding: 0 16px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; font-weight: 850; font-family: var(--font-ui); cursor: pointer; transition: var(--trans); text-align: center; }
+.share-btn:hover { transform: translateY(-1px); box-shadow: var(--sombra-sm); }
+.share-icon { min-width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .74rem; font-weight: 900; background: rgba(255,255,255,.22); }
+.share-whatsapp { background: #075e54; border-color: #075e54; color: #fff; }
+.share-whatsapp .share-icon { background: #06483f; color: #fff; }
+.share-tiktok { background: #080808; border-color: #25f4ee; color: #fff; box-shadow: 0 0 0 1px rgba(254,44,85,.28); }
+.share-copy-btn { background: var(--crema); border-color: var(--borde); color: var(--azul-900); }
+.share-feedback { flex-basis: 100%; color: var(--azul-800); font-size: .9rem; font-weight: 700; }
+.post-donation-share { margin-top: 24px; padding: 22px clamp(10px, 4vw, 18px) 0; border-top: 1px solid var(--borde); }
+.post-donation-share strong { display: block; color: var(--azul-900); font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 8px; }
+.post-donation-share p { max-width: 36ch; margin-left: auto; margin-right: auto; }
+.post-donation-share .share-actions { justify-content: center; margin-top: 14px; }
 
 /* Verificación */
 .section-verificacion { background: var(--crema); border-top: 1px solid var(--borde); }
@@ -459,6 +486,8 @@ h3 { font-size: 1.2rem; }
   .site-nav .nav-cta { margin-top: 12px; border-bottom: 0; text-align: center; }
   .stat-grid { grid-template-columns: 1fr; }
   .trans-grid { grid-template-columns: 1fr; }
+  .campaign-status, .share-band { grid-template-columns: 1fr; }
+  .status-metrics { grid-template-columns: 1fr 1fr 1fr; }
   .niveles-grid { grid-template-columns: 1fr 1fr; }
   .footer-inner { grid-template-columns: 1fr; }
   .amounts { grid-template-columns: repeat(3, 1fr); }
@@ -497,6 +526,8 @@ h3 { font-size: 1.2rem; }
   .uso-grid, .niveles-grid { grid-template-columns: 1fr; }
   .amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .amount-btn { min-height: 46px; font-size: 1.05rem; }
+  .status-metrics { grid-template-columns: 1fr; }
+  .share-btn { width: 100%; }
   .custom-amount { padding: 0 10px; }
   .field input, .field textarea { font-size: .95rem; }
   .dc-summary { align-items: flex-start; flex-direction: column; gap: 4px; }

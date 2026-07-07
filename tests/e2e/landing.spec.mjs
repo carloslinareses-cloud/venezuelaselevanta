@@ -15,6 +15,12 @@ test('renders the landing page without encoding artifacts or runtime errors', as
   }
   await expect(page.getByRole('heading', { name: /datos, fuentes y controles/i })).toBeVisible();
   await expect(page.getByRole('link', { name: 'tiktok' })).toHaveAttribute('href', 'https://www.tiktok.com/@sumatevzla');
+  await expect(page.locator('#campaign-status')).toContainText('Donantes');
+  await expect(page.locator('#status-update-text')).not.toHaveText('');
+  await expect(page.locator('#compartir')).toContainText('Comparte esta ayuda');
+  await expect(page.getByRole('link', { name: /compartir por whatsapp/i })).toHaveAttribute('href', /https:\/\/wa\.me\/\?text=/);
+  await expect(page.getByRole('button', { name: /compartir en tiktok/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /copiar enlace/i })).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/Ã|Â|ðŸ|�/);
   expect(errors).toEqual([]);
 });
@@ -113,6 +119,8 @@ test('thank-you page renders correctly', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Gracias/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
+  await expect(page.locator('.post-donation-share')).toContainText('Comparte esta ayuda');
+  await expect(page.getByRole('link', { name: /compartir por whatsapp/i })).toHaveAttribute('href', /https:\/\/wa\.me\/\?text=/);
   await expect(page.getByRole('link', { name: /volver al inicio/i })).toHaveAttribute('href', 'index.html');
 });
 

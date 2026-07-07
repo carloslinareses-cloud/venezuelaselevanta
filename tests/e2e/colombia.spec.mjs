@@ -7,6 +7,10 @@ test('colombia page renders the Venezuela campaign with COP donations', async ({
   await expect(page.getByText('Colombia presente')).toBeVisible();
   await expect(page.locator('h1')).toContainText('Venezuela se levanta');
   await expect(page.getByRole('link', { name: 'tiktok' })).toHaveAttribute('href', 'https://www.tiktok.com/@sumatevzla');
+  await expect(page.locator('#campaign-status')).toContainText('Donantes');
+  await expect(page.locator('#status-update-text')).not.toHaveText('');
+  await expect(page.locator('#compartir')).toContainText('Comparte esta ayuda');
+  await expect(page.getByRole('link', { name: /compartir por whatsapp/i })).toHaveAttribute('href', /https:\/\/wa\.me\/\?text=/);
   await expect(page.locator('#summary-amount')).toHaveText('COP $100.000');
   await expect(page.getByRole('button', { name: /donar COP \$100\.000 ahora/i })).toBeVisible();
   await expect(page.locator('#conv-note')).toHaveText('');
@@ -66,6 +70,8 @@ test('colombia thank-you page verifies Wompi transaction', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Súmate VZLA Colombia/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
+  await expect(page.locator('.post-donation-share')).toContainText('Comparte esta ayuda');
+  await expect(page.getByRole('link', { name: /compartir por whatsapp/i })).toHaveAttribute('href', /https:\/\/wa\.me\/\?text=/);
   await expect(page.getByRole('link', { name: /volver al inicio/i })).toHaveAttribute('href', 'index.html');
 });
 
