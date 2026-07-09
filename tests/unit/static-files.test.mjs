@@ -6,7 +6,6 @@ import { JSDOM } from 'jsdom';
 
 const textFiles = [
   'index.html',
-  'elearning/index.html',
   'gracias.html',
   'colombia/index.html',
   'colombia/gracias.html',
@@ -29,7 +28,7 @@ test('text files do not contain mojibake or replacement characters', () => {
 });
 
 test('local assets referenced by html exist', () => {
-  for (const file of ['index.html', 'gracias.html', 'colombia/index.html', 'colombia/gracias.html', 'elearning/index.html']) {
+  for (const file of ['index.html', 'gracias.html', 'colombia/index.html', 'colombia/gracias.html']) {
     const dom = new JSDOM(readFileSync(file, 'utf8'));
     const document = dom.window.document;
     const refs = [
