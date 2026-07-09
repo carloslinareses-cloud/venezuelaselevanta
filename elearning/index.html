@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FUNCECAIND - Aula e-learning</title>
+  <meta name="description" content="Biblioteca e-learning de FUNCECAIND con catalogo 2026, Programa Nacional de Aprendizaje, formacion profesional, control de calidad y documentos institucionales." />
+  <meta name="theme-color" content="#0f3b45" />
+  <link rel="icon" type="image/png" href="../assets/funcecaind/logo-funcecaind.png" />
+  <style>
+    :root {
+      --ink: #10242a;
+      --muted: #587078;
+      --line: #d8e1df;
+      --soft: #f3f8f6;
+      --paper: #ffffff;
+      --brand: #0f5f6e;
+      --brand-2: #123f51;
+      --accent: #dca43a;
+      --accent-2: #9f6d16;
+      --ok: #16875d;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(16, 36, 42, .12);
+      --font: Arial, Helvetica, sans-serif;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--soft);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .brand img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 5px;
+    }
+    .brand strong {
+      display: block;
+      font-size: 1.02rem;
+      line-height: 1.1;
+      color: var(--brand-2);
+    }
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .navlinks {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: .92rem;
+      font-weight: 800;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .navlinks a:hover { color: var(--brand); }
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      font-weight: 800;
+      font-size: .92rem;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-2); }
+    .btn-light { background: #fff; border-color: var(--line); color: var(--brand-2); }
+    .btn-light:hover { border-color: var(--brand); }
+    .btn-gold { background: var(--accent); color: #211400; }
+    .btn-gold:hover { background: #efbd58; }
+    main { max-width: var(--max); margin: 0 auto; padding: 26px 20px 60px; }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(310px, 390px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 28px rgba(16, 36, 42, .06);
+    }
+    .catalog-panel {
+      padding: 18px;
+      position: sticky;
+      top: 84px;
+      max-height: calc(100vh - 104px);
+      overflow: auto;
+    }
+    .eyebrow {
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .76rem;
+      font-weight: 900;
+    }
+    h1 {
+      margin: 8px 0 8px;
+      font-size: clamp(1.75rem, 4vw, 2.9rem);
+      line-height: 1.06;
+      color: var(--brand-2);
+      letter-spacing: 0;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0 0 16px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .stat strong {
+      display: block;
+      color: var(--brand-2);
+      font-size: 1.08rem;
+      line-height: 1;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 800;
+    }
+    .module-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+    .module-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .module-button:hover,
+    .module-button.is-active {
+      border-color: var(--brand);
+      background: #f7fbfa;
+      box-shadow: 0 0 0 3px rgba(15, 95, 110, .10);
+    }
+    .module-button small {
+      display: block;
+      color: var(--accent-2);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: .7rem;
+      letter-spacing: .06em;
+    }
+    .module-button strong {
+      display: block;
+      margin-top: 3px;
+      color: var(--ink);
+      font-size: .96rem;
+    }
+    .module-button span {
+      display: block;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 2px;
+    }
+    .viewer {
+      overflow: hidden;
+    }
+    .viewer-head {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+    .viewer-title h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.1;
+      color: var(--brand-2);
+      letter-spacing: 0;
+    }
+    .viewer-title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+    .viewer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .resource-summary {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfdfc;
+    }
+    .resource-summary h3 {
+      margin: 0 0 8px;
+      color: var(--brand-2);
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+    .resource-summary ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 4px;
+      font-size: .92rem;
+    }
+    .pdf-frame {
+      height: min(74vh, 760px);
+      min-height: 520px;
+      background: #e6eeec;
+    }
+    .pdf-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+    .section {
+      margin-top: 22px;
+      padding: 24px;
+    }
+    .section h2 {
+      margin: 0 0 8px;
+      color: var(--brand-2);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      letter-spacing: 0;
+    }
+    .section > p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 76ch;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--brand-2);
+      font-size: 1.06rem;
+      letter-spacing: 0;
+    }
+    .card p {
+      color: var(--muted);
+      margin: 0 0 14px;
+      font-size: .93rem;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 12px 0 0;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 27px;
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      padding: 0 10px;
+      color: var(--brand-2);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .doc-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .doc-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .doc-item strong { color: var(--brand-2); }
+    .doc-item span {
+      display: block;
+      color: var(--muted);
+      font-size: .84rem;
+      margin-top: 3px;
+    }
+    .footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 20px 36px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+    .footer a { color: var(--brand); font-weight: 800; }
+    @media (max-width: 940px) {
+      .workspace { grid-template-columns: 1fr; }
+      .catalog-panel { position: static; max-height: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .doc-list { grid-template-columns: 1fr; }
+      .pdf-frame { height: 62vh; min-height: 430px; }
+    }
+    @media (max-width: 680px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .navlinks { width: 100%; flex-wrap: wrap; gap: 10px 14px; white-space: normal; }
+      main { padding: 18px 14px 42px; }
+      .stats { grid-template-columns: 1fr; }
+      .viewer-head { grid-template-columns: 1fr; }
+      .viewer-actions { justify-content: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      .pdf-frame { height: 240px; min-height: 240px; }
+      .section { padding: 18px; }
+      .doc-item { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav">
+      <a class="brand" href="./" aria-label="FUNCECAIND e-learning">
+        <img src="../assets/funcecaind/logo-funcecaind.png" alt="FUNCECAIND" />
+        <span>
+          <strong>FUNCECAIND</strong>
+          <span>Aula e-learning</span>
+        </span>
+      </a>
+      <nav class="navlinks" aria-label="Principal">
+        <a href="#visor">Materiales</a>
+        <a href="#programas">Programas</a>
+        <a href="#institucional">Institucional</a>
+        <a href="../">Sitio principal</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="workspace" id="visor">
+      <aside class="panel catalog-panel">
+        <span class="eyebrow">Biblioteca academica</span>
+        <h1>Materiales e-learning FUNCECAIND</h1>
+        <p class="lead">Catalogo, programas formativos, contenidos tecnicos y documentos institucionales cargados desde la carpeta FUNCECAIND.</p>
+        <div class="stats" aria-label="Resumen de materiales">
+          <div class="stat"><strong>5</strong><span>recursos academicos</span></div>
+          <div class="stat"><strong>6</strong><span>PDF disponibles</span></div>
+          <div class="stat"><strong>2026</strong><span>catalogo vigente</span></div>
+        </div>
+        <div class="module-list" aria-label="Seleccionar material">
+          <button class="module-button is-active" type="button" data-title="Catalogo 2026" data-kind="Oferta academica" data-desc="Oferta institucional, programas de formacion, cursos por area e informacion general." data-points="Mision, vision y objetivos institucionales|Programas de formacion profesional y PNA|Relacion de cursos por areas|Informacion general para empresas y participantes" data-pdf="../assets/funcecaind/pdf/catalogo-2026.pdf" data-original="../assets/funcecaind/materiales/catalogo-2026.doc">
+            <small>Oferta academica</small>
+            <strong>Catalogo 2026</strong>
+            <span>Programas, cursos por area e informacion general.</span>
+          </button>
+          <button class="module-button" type="button" data-title="Programa Nacional de Aprendizaje" data-kind="PNA" data-desc="Objetivo, alcance y recaudos para la formacion integral de aprendices." data-points="Formacion integral para adolescentes|Preparacion para oficios laborales|Recaudos por triplicado para participante y representante|Insercion en mercado laboral publico o privado" data-pdf="../assets/funcecaind/pdf/programa-pna.pdf" data-original="../assets/funcecaind/materiales/programa-pna.docx">
+            <small>PNA</small>
+            <strong>Programa Nacional de Aprendizaje</strong>
+            <span>Formacion integral e insercion laboral.</span>
+          </button>
+          <button class="module-button" type="button" data-title="Formacion profesional industrial" data-kind="Especialidades tecnicas" data-desc="Contenidos de electricidad, electronica, produccion y control de calidad para programas de un ano." data-points="Electricidad y mantenimiento industrial|Electronica industrial y localizacion de fallas|Produccion, productividad y planes de trabajo|Higiene, seguridad industrial e informes tecnicos" data-pdf="../assets/funcecaind/pdf/contenidos-fp-emp.pdf" data-original="../assets/funcecaind/materiales/contenidos-fp-emp.ppt">
+            <small>Especialidades tecnicas</small>
+            <strong>Formacion profesional industrial</strong>
+            <span>Electricidad, electronica, produccion y calidad.</span>
+          </button>
+          <button class="module-button" type="button" data-title="Control de calidad" data-kind="Cursos tecnicos" data-desc="Tecnicas basicas de calidad, instrumentos de medicion, muestreo y herramientas de control." data-points="Calidad de producto, consumidor y mercado|Normas, especificaciones y tolerancias|Instrumentos de medicion y sistemas decimal/ingles|Muestreo, AQL, Pareto, flujo y control estadistico" data-pdf="../assets/funcecaind/pdf/control-de-calidad.pdf" data-original="../assets/funcecaind/materiales/control-de-calidad.ppt">
+            <small>Cursos tecnicos</small>
+            <strong>Control de calidad</strong>
+            <span>Calidad, medicion, muestreo y mejora.</span>
+          </button>
+          <button class="module-button" type="button" data-title="Resena historica de FUNCECAIND" data-kind="Institucional" data-desc="Origen, mision, vision, objetivos y datos de contacto institucionales." data-points="Inicio de actividades en Charallave en 1986|Formacion para el sector industrial de los Valles del Tuy|Mision, vision y objetivos de la fundacion|Correo, telefonos y redes sociales institucionales" data-pdf="../assets/funcecaind/pdf/resena-historica-funcecaind.pdf" data-original="../assets/funcecaind/materiales/resena-historica-funcecaind.docx">
+            <small>Institucional</small>
+            <strong>Resena historica de FUNCECAIND</strong>
+            <span>Mision, vision, objetivos y contacto.</span>
+          </button>
+          <button class="module-button" type="button" data-title="RIF nuevo" data-kind="Documento legal" data-desc="Documento RIF institucional cargado para consulta administrativa." data-points="Documento institucional vigente recibido en la carpeta FUNCECAIND|Disponible en PDF para consulta y descarga|Separado de los modulos academicos como soporte legal" data-pdf="../assets/funcecaind/pdf/rif-nuevo.pdf" data-original="../assets/funcecaind/materiales/rif-nuevo.pdf">
+            <small>Documento legal</small>
+            <strong>RIF nuevo</strong>
+            <span>Consulta institucional y administrativa.</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="panel viewer" aria-label="Visor del material seleccionado">
+        <div class="viewer-head">
+          <div class="viewer-title">
+            <span class="eyebrow" id="viewer-kind">Oferta academica</span>
+            <h2 id="viewer-title">Catalogo 2026</h2>
+            <p id="viewer-desc">Oferta institucional, programas de formacion, cursos por area e informacion general.</p>
+          </div>
+          <div class="viewer-actions">
+            <a class="btn btn-primary" id="viewer-open" href="../assets/funcecaind/pdf/catalogo-2026.pdf" target="_blank" rel="noopener">Abrir PDF</a>
+            <a class="btn btn-light" id="viewer-download" href="../assets/funcecaind/materiales/catalogo-2026.doc" download>Original</a>
+          </div>
+        </div>
+        <div class="resource-summary" aria-label="Contenido destacado">
+          <h3>Contenido destacado</h3>
+          <ul id="viewer-points">
+            <li>Mision, vision y objetivos institucionales</li>
+            <li>Programas de formacion profesional y PNA</li>
+            <li>Relacion de cursos por areas</li>
+            <li>Informacion general para empresas y participantes</li>
+          </ul>
+        </div>
+        <div class="pdf-frame">
+          <iframe id="viewer-frame" title="Catalogo 2026" src="../assets/funcecaind/pdf/catalogo-2026.pdf#view=FitH"></iframe>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel section" id="programas">
+      <span class="eyebrow">Programas y contenidos</span>
+      <h2>Rutas formativas cargadas</h2>
+      <p>Los materiales quedaron organizados por uso academico: catalogo general, Programa Nacional de Aprendizaje, especialidades industriales y cursos de control de calidad.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Programa Nacional de Aprendizaje</h3>
+          <p>Programa social orientado a la formacion integral de adolescentes para oficios laborales e insercion en el mercado publico o privado.</p>
+          <div class="tag-row">
+            <span class="tag">PNA</span><span class="tag">Recaudos</span><span class="tag">Aprendices</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Formacion profesional industrial</h3>
+          <p>Incluye modulos de autoestima, nivelacion, seguridad industrial, electricidad, electronica, produccion, mantenimiento y planos tecnicos.</p>
+          <div class="tag-row">
+            <span class="tag">1 ano</span><span class="tag">Laboratorio</span><span class="tag">Talleres</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Control de calidad</h3>
+          <p>Contenidos de calidad de producto, normas, especificaciones, tolerancias, Deming, Pareto, medicion, muestreo y control estadistico.</p>
+          <div class="tag-row">
+            <span class="tag">16-21 horas</span><span class="tag">Medicion</span><span class="tag">Muestreo</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section" id="institucional">
+      <span class="eyebrow">Institucional</span>
+      <h2>Documentos de soporte</h2>
+      <p>La resena historica y el RIF nuevo quedan disponibles para consulta junto con los materiales de formacion.</p>
+      <div class="doc-list">
+        <div class="doc-item">
+          <div>
+            <strong>Resena historica de FUNCECAIND</strong>
+            <span>Origen, ubicacion, mision, vision, objetivos y contacto.</span>
+          </div>
+          <a class="btn btn-light" href="../assets/funcecaind/pdf/resena-historica-funcecaind.pdf" target="_blank" rel="noopener">Ver PDF</a>
+        </div>
+        <div class="doc-item">
+          <div>
+            <strong>RIF nuevo</strong>
+            <span>Documento institucional cargado desde la carpeta FUNCECAIND.</span>
+          </div>
+          <a class="btn btn-gold" href="../assets/funcecaind/pdf/rif-nuevo.pdf" target="_blank" rel="noopener">Ver RIF</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>FUNCECAIND - Fundacion para la Planificacion y Desarrollo de Centros de Capacitacion Industrial. <a href="../">Volver al sitio principal</a>.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.module-button'));
+      var title = document.getElementById('viewer-title');
+      var kind = document.getElementById('viewer-kind');
+      var desc = document.getElementById('viewer-desc');
+      var frame = document.getElementById('viewer-frame');
+      var open = document.getElementById('viewer-open');
+      var download = document.getElementById('viewer-download');
+      var points = document.getElementById('viewer-points');
+
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          buttons.forEach(function (item) { item.classList.remove('is-active'); });
+          button.classList.add('is-active');
+          title.textContent = button.dataset.title;
+          kind.textContent = button.dataset.kind;
+          desc.textContent = button.dataset.desc;
+          frame.src = button.dataset.pdf + '#view=FitH';
+          frame.title = button.dataset.title;
+          open.href = button.dataset.pdf;
+          download.href = button.dataset.original;
+          points.textContent = '';
+          (button.dataset.points || '').split('|').filter(Boolean).forEach(function (point) {
+            var li = document.createElement('li');
+            li.textContent = point;
+            points.appendChild(li);
+          });
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
