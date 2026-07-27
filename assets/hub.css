@@ -41,6 +41,62 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* ---------- Cifras de la plataforma ---------- */
+.hub-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2.6rem;
+  margin: 2.4rem auto 0;
+  padding: 1.2rem 1.4rem;
+  max-width: 760px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radio-lg);
+}
+.hub-stats > div {
+  text-align: center;
+  min-width: 130px;
+}
+.hub-stats dt {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+}
+.hub-stats dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--oro-400);
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+/* ---------- Franja de confianza ---------- */
+.hub-confianza {
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+  padding: 1.1rem 0;
+}
+.hub-confianza ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem 2rem;
+}
+.hub-confianza li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--gris-700);
+  font-weight: 600;
+}
+
 /* ---------- Secciones ---------- */
 .hub-section {
   padding: 3.2rem 0;

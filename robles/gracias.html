@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gracias — Ayuda Torre B, Bosque Real</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <main class="section" style="min-height: 80vh; display: grid; place-items: center">
+      <div class="donate-card" style="max-width: 520px; text-align: center">
+        <div id="estado-cargando">
+          <p class="success-icon" aria-hidden="true">⏳</p>
+          <h1 id="titulo">Verificando tu donación…</h1>
+          <p id="mensaje" class="donar-subtitle">Un momento, por favor.</p>
+        </div>
+        <p style="margin-top: 1.5rem">
+          <a class="btn btn-primary" href="index.html" id="volver">Volver al inicio</a>
+        </p>
+      </div>
+    </main>
+
+    <script src="assets/api-base.js"></script>
+
+    <script>
+      (function () {
+        var en = (navigator.language || "es").toLowerCase().indexOf("en") === 0;
+        try {
+          var saved = localStorage.getItem("lang");
+          if (saved) en = saved === "en";
+        } catch (e) {}
+
+        var T = {
+          verificando: en ? "Verifying your donation…" : "Verificando tu donación…",
+          espera: en ? "One moment, please." : "Un momento, por favor.",
+          graciasTitulo: en ? "Thank you for your help! 💚" : "¡Gracias por tu ayuda! 💚",
+          graciasMsg: en
+            ? "Your donation helps give the families of Tower B a safe home again."
+            : "Tu donación ayuda a devolverle un hogar seguro a las familias de la Torre B.",
+          pendienteTitulo: en ? "We couldn't confirm the payment" : "No pudimos confirmar el pago",
+          pendienteMsg: en
+            ? "If you completed it, it may take a moment. If not, you can try again."
+            : "Si lo completaste, puede tardar un momento. Si no, puedes intentarlo de nuevo.",
+          volver: en ? "Back to home" : "Volver al inicio",
+        };
+
+        document.documentElement.lang = en ? "en" : "es";
+        var titulo = document.getElementById("titulo");
+        var mensaje = document.getElementById("mensaje");
+        var volver = document.getElementById("volver");
+        var icono = document.querySelector(".success-icon");
+        titulo.textContent = T.verificando;
+        mensaje.textContent = T.espera;
+        volver.textContent = T.volver;
+
+        function mostrar(ok) {
+          icono.textContent = ok ? "💚" : "⚠️";
+          titulo.textContent = ok ? T.graciasTitulo : T.pendienteTitulo;
+          mensaje.textContent = ok ? T.graciasMsg : T.pendienteMsg;
+        }
+
+        var ref = new URLSearchParams(location.search).get("ref");
+        if (!ref) {
+          mostrar(true); // sin ref no podemos verificar; agradecemos igualmente
+          return;
+        }
+        fetch((window.ROBLES_API_BASE || "") + "/api/verify?ref=" + encodeURIComponent(ref))
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (d) {
+            mostrar(!!(d && d.paid));
+          })
+          .catch(function () {
+            mostrar(false);
+          });
+      })();
+    </script>
+  </body>
+</html>

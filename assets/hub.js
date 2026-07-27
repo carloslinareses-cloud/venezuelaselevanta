@@ -105,17 +105,41 @@
     return art;
   }
 
+  /* --- Cifras agregadas de la plataforma (solo suma lo que está en euros) --- */
+  var totales = { campanas: 0, recaudado: 0, donantes: 0 };
+
+  function pintarTotales() {
+    var c = document.getElementById('stat-campanas');
+    var r = document.getElementById('stat-recaudado');
+    var d = document.getElementById('stat-donantes');
+    if (c) c.textContent = String(totales.campanas);
+    if (r) r.textContent = fmt(Math.round(totales.recaudado), 'EUR');
+    if (d) d.textContent = String(totales.donantes);
+  }
+
+  function sumar(datos) {
+    if (datos.moneda !== 'EUR' || datos.recaudado === null) return;
+    totales.recaudado += Number(datos.recaudado) || 0;
+    totales.donantes += Number(datos.donantes) || 0;
+    pintarTotales();
+  }
+
   function init() {
     var grid = document.getElementById('campanas-grid');
     var lista = window.Campanas || [];
     if (!grid || !lista.length) return;
 
-    lista
-      .filter(function (c) { return c.estado !== 'cerrada'; })
+    var activas = lista.filter(function (c) { return c.estado !== 'cerrada'; });
+    totales.campanas = activas.length;
+    pintarTotales();
+
+    activas
       .forEach(function (c) {
         var card = tarjeta(c);
         grid.appendChild(card);
-        pintarProgreso(card, progresoInicial(c));
+        var inicial = progresoInicial(c);
+        pintarProgreso(card, inicial);
+        sumar(inicial);
 
         // Campañas con contador propio: se consultan en vivo.
         if (c.progreso && c.progreso.tipo === 'api' && c.progreso.url) {
@@ -123,12 +147,14 @@
             .then(function (r) { return r.json(); })
             .then(function (d) {
               if (!d || typeof d.raised !== 'number') return;
-              pintarProgreso(card, {
+              var datos = {
                 recaudado: d.raised,
                 donantes: d.count || 0,
                 objetivo: d.goal || (c.meta && c.meta.objetivo) || 0,
                 moneda: (c.meta && c.meta.moneda) || 'EUR',
-              });
+              };
+              pintarProgreso(card, datos);
+              sumar(datos);
             })
             .catch(function () {
               // Si no responde, se muestra al menos la meta.

@@ -17,10 +17,20 @@ test('la portada muestra las campañas activas', async ({ page }) => {
   await expect(terremoto).toBeVisible();
   await expect(terremoto.locator('.camp-cta')).toHaveAttribute('href', 'terremoto/');
 
-  // Campaña de la Torre B (Ayuda Robles)
+  // Campaña de la Torre B (vive dentro del sitio, en /robles)
   const robles = page.locator('[data-campana="torre-b-robles"]');
   await expect(robles).toBeVisible();
-  await expect(robles.locator('.camp-cta')).toHaveAttribute('href', /ayuda-robles\.pages\.dev/);
+  await expect(robles.locator('.camp-cta')).toHaveAttribute('href', 'robles/');
+});
+
+test('desde la portada se llega a la campaña de la Torre B', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('[data-campana="torre-b-robles"] .camp-cta').click();
+  await expect(page).toHaveURL(/\/robles\//);
+  await expect(page.locator('#donar')).toBeVisible();
+  // El backend de pagos vive en Cloudflare, no en GitHub Pages
+  const base = await page.evaluate(() => window.ROBLES_API_BASE);
+  expect(base).toContain('ayuda-robles.pages.dev');
 });
 
 test('cada campaña muestra su meta o lo recaudado', async ({ page }) => {

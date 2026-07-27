@@ -1,0 +1,1082 @@
+/* Paleta compartida con Súmate VZLA (sumatevzla.org): azul marino + oro + crema,
+   para que pasar del directorio de campañas a esta página no se sienta un salto. */
+:root {
+  --primary: #123a63;
+  --primary-dark: #0a2540;
+  --accent: #d88916;
+  --accent-claro: #ffc857;
+  --ink: #14263b;
+  --muted: #52677b;
+  --bg: #fbf7f0;
+  --card: #ffffff;
+  --border: #e7ded1;
+  --success: #16a34a;
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(10, 37, 64, 0.1);
+  --max: 1080px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  /* Mismas tipografías que sumatevzla.org */
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+}
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  line-height: 1.2;
+  color: var(--ink);
+}
+a {
+  color: var(--primary);
+}
+img {
+  max-width: 100%;
+}
+
+/* ---------- Barra de la plataforma (conecta con sumatevzla.org) ---------- */
+.plataforma-bar {
+  background: var(--primary-dark);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+.plataforma-bar a {
+  color: var(--accent-claro);
+  text-decoration: none;
+  font-weight: 600;
+}
+.plataforma-bar a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1.1rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-logo {
+  font-size: 1.6rem;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brand-text small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.lang-toggle {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lang-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.05s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.btn-sm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+}
+.btn-block {
+  width: 100%;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 3.5rem 1.2rem 4rem;
+}
+.hero-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-areas:
+    "text donate"
+    "figure donate";
+  gap: 1.6rem 2.5rem;
+  align-items: start;
+}
+.hero-text {
+  grid-area: text;
+}
+.hero-figure {
+  grid-area: figure;
+  margin: 0;
+}
+.donate-panel {
+  grid-area: donate;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 16px;
+  padding: 1.4rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+.hero-figure img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+.hero-figure figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* La tarjeta de donación va dentro del panel blanco: sin doble marco */
+.donate-panel .donate-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.donate-panel .donar-fallback {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+}
+.meta-block {
+  margin-bottom: 1.2rem;
+}
+.meta-math {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.amount-tag {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+  margin-top: 0.15rem;
+}
+.amount-hint {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-height: 1.1rem;
+}
+.estimacion {
+  margin: 1.4rem 0 0;
+  padding: 1rem 1.2rem;
+  background: #fff8e9;
+  border: 1px solid #f0dcb4;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #6b5322;
+}
+.cta-inline {
+  margin-top: 1.6rem;
+}
+
+/* ---------- Pago móvil (Venezuela) ---------- */
+.pm-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.8rem;
+  align-items: start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.pm-qr {
+  text-align: center;
+}
+.pm-qr img {
+  width: 210px;
+  height: 210px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px;
+}
+.pm-qr-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.pm-list {
+  margin: 0.8rem 0 0;
+  display: grid;
+  gap: 0.55rem;
+}
+.pm-list > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.8rem;
+  align-items: center;
+}
+.pm-list dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+}
+.pm-list dd {
+  margin: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.pm-copy {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.28rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pm-copy:hover {
+  border-color: var(--primary);
+}
+.pm-copy.copiado {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+.pm-aviso {
+  margin: 1.2rem 0 0;
+  padding: 0.9rem 1.1rem;
+  background: #fff8e9;
+  border: 1px solid #f0dcb4;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #6b5322;
+}
+@media (max-width: 720px) {
+  .pm-card {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 1.1rem;
+  }
+  .pm-list > div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+  .pm-copy {
+    min-height: 34px;
+  }
+}
+
+/* ---------- Verificar / daños ---------- */
+.verif-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+.verif-list a {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+.verif-list a:hover {
+  border-color: var(--primary);
+}
+.danos-table {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+}
+.danos-head,
+.danos-row {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+}
+.danos-head {
+  background: #eef3f1;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.danos-row + .danos-row,
+.danos-row {
+  border-top: 1px solid var(--border);
+}
+.danos-row span:first-child {
+  font-weight: 600;
+}
+.danos-row span:last-child {
+  color: #47555f;
+}
+
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "text"
+      "donate"
+      "figure";
+  }
+  .hero-figure img {
+    max-height: 260px;
+  }
+  .danos-head,
+  .danos-row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  .danos-head {
+    display: none;
+  }
+}
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-claro);
+  margin: 0 0 0.6rem;
+}
+.hero h1 {
+  color: #fff;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0 0 1rem;
+}
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 auto 1.2rem;
+  max-width: 620px;
+}
+.hero-location {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 1.8rem;
+}
+.hero-cta {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding: 3rem 1.2rem;
+}
+.section-alt {
+  background: #eef3f1;
+}
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.container-narrow {
+  max-width: 620px;
+}
+.section h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0 0 1.2rem;
+}
+.section-note {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0 0 1.4rem;
+}
+.prose p {
+  margin: 0 0 1rem;
+  color: #37474f;
+  font-size: 1.05rem;
+}
+
+/* ---------- Meta / progreso ---------- */
+.meta-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+  max-width: 640px;
+}
+.meta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+.meta-raised {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+.meta-goal {
+  color: var(--muted);
+}
+.progress {
+  height: 14px;
+  background: #e3ebe8;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.meta-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0.9rem 0 0;
+}
+.uso-title {
+  margin: 2.2rem 0 1rem;
+}
+.uso-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+.uso-list li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 1.02rem;
+}
+.uso-list li span:first-child {
+  font-size: 1.3rem;
+}
+
+/* ---------- Donar ---------- */
+.donar-subtitle {
+  color: var(--muted);
+  margin: 0 0 1.4rem;
+}
+.donate-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+}
+.field-label {
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.amount-btn {
+  padding: 0.9rem 0.4rem;
+  border: 2px solid var(--border);
+  background: #fff;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.amount-btn:hover {
+  border-color: var(--primary);
+}
+.amount-btn.selected {
+  border-color: var(--primary);
+  background: #e6f2ef;
+  color: var(--primary-dark);
+}
+.custom-amount {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+.custom-amount label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.custom-amount input {
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 1.1rem;
+  outline: none;
+}
+.custom-amount input:focus {
+  border-color: var(--primary);
+}
+.sumup-card {
+  margin-top: 1.2rem;
+}
+.donate-status {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+.donate-status.error {
+  background: #fdecec;
+  color: #b42318;
+}
+.donate-status.info {
+  background: #eef6f4;
+  color: var(--primary-dark);
+}
+.donate-success {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+.success-icon {
+  font-size: 2.6rem;
+}
+.donar-fallback {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 1.2rem;
+}
+
+/* ---------- Actualizaciones ---------- */
+.updates {
+  list-style: none;
+  margin: 0 0 1.2rem;
+  padding: 0 0 0 1.4rem;
+  border-left: 3px solid var(--border);
+  display: grid;
+  gap: 1.4rem;
+}
+.updates li {
+  position: relative;
+}
+.updates li::before {
+  content: "";
+  position: absolute;
+  left: -1.85rem;
+  top: 0.45rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.update-date {
+  display: block;
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 0.9rem;
+}
+.updates p {
+  margin: 0.3rem 0 0;
+  color: #47555f;
+}
+
+/* ---------- Señales de confianza ---------- */
+.trust-row {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+/* ---------- Galería ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.gallery-item {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  background: #dbe6e2;
+  border: 2px dashed #b6c8c2;
+  border-radius: 12px;
+  color: #7a8f88;
+}
+.gallery-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.gallery-link img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+.gallery-link:hover img {
+  transform: scale(1.05);
+}
+
+/* ---------- Donantes / progreso ---------- */
+.meta-donantes {
+  margin: 0.7rem 0 0;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+/* ---------- FAQ ---------- */
+.container-medium {
+  max-width: 820px;
+}
+.faq-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 1.1rem;
+}
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 1rem 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary::after {
+  content: "+";
+  font-size: 1.4rem;
+  color: var(--primary);
+  font-weight: 400;
+  line-height: 1;
+}
+.faq-item[open] summary::after {
+  content: "−";
+}
+.faq-answer {
+  padding: 0 0 1.1rem;
+  color: #47555f;
+}
+
+/* ---------- Compartir ---------- */
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.share-wa {
+  background: #25d366;
+  color: #05391b;
+}
+.share-fb {
+  /* Azul de Facebook ligeramente oscurecido para cumplir el contraste 4.5:1 */
+  background: #1461c9;
+}
+.share-x {
+  background: #111;
+}
+.share-copy {
+  background: #fff;
+  color: var(--ink);
+  border: 2px solid var(--border);
+}
+/* Menú nativo del teléfono: es el principal, debe verse como tal */
+.share-native {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.share-copy.copiado {
+  background: var(--success);
+  color: #fff;
+  border-color: var(--success);
+}
+.share-btn:hover {
+  filter: brightness(0.94);
+  transform: translateY(-1px);
+}
+.share-btn:active {
+  transform: translateY(0);
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox[hidden] {
+  display: none;
+}
+.lb-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.6);
+}
+.lb-close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 2.6rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+.lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.35);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.1rem 0.9rem;
+  border-radius: 10px;
+}
+.lb-prev {
+  left: 12px;
+}
+.lb-next {
+  right: 12px;
+}
+.lb-close:hover,
+.lb-nav:hover {
+  color: var(--accent-claro);
+}
+@media (max-width: 620px) {
+  .lb-nav {
+    font-size: 2.2rem;
+    padding: 0.1rem 0.6rem;
+  }
+}
+
+/* ---------- Ficha de la organización ---------- */
+.ficha {
+  margin: 1.4rem 0 0;
+  display: grid;
+  gap: 0.1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ficha > div {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+.ficha > div:last-child {
+  border-bottom: none;
+}
+.ficha dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+}
+.ficha dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+.contact-person {
+  display: block;
+  color: var(--muted);
+}
+@media (max-width: 620px) {
+  .ficha > div {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+/* ---------- Contacto ---------- */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.2rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.contact-card:hover {
+  border-color: var(--primary);
+}
+.contact-card span:first-child {
+  font-size: 1.6rem;
+}
+.contact-card strong {
+  display: block;
+}
+.contact-card small {
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink);
+  color: #cbd5d1;
+  text-align: center;
+  padding: 2rem 1.2rem 5rem;
+  font-size: 0.92rem;
+}
+.footer-small {
+  color: #90a2a0;
+  font-size: 0.82rem;
+  margin-top: 0.4rem;
+}
+
+/* ---------- Botón flotante (móvil) ---------- */
+.floating-donate {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  background: var(--accent-claro);
+  color: #3a2a06;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 0.9rem 2.4rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  display: none;
+}
+
+/* =========================================================
+   MÓVIL — la mayor parte del tráfico llega desde WhatsApp
+   ========================================================= */
+@media (max-width: 620px) {
+  .hero {
+    padding: 1.6rem 1rem 2.2rem;
+  }
+  .hero h1 {
+    font-size: 1.55rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  .hero-location {
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+  }
+  .section {
+    padding: 2.2rem 1rem;
+  }
+  .section h2 {
+    font-size: 1.35rem;
+  }
+  .prose p {
+    font-size: 1rem;
+  }
+  .donate-panel {
+    padding: 1.1rem;
+    border-radius: 14px;
+  }
+  .meta-raised {
+    font-size: 1.7rem;
+  }
+
+  /* Montos: 2 columnas, altura cómoda para el pulgar */
+  .amount-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .amount-btn {
+    min-height: 56px;
+    padding: 0.6rem 0.3rem;
+  }
+  /* 16px evita que iOS haga zoom al enfocar el campo */
+  .custom-amount input {
+    font-size: 16px;
+    min-height: 52px;
+  }
+  .btn {
+    min-height: 52px;
+  }
+  .btn-block {
+    font-size: 1.05rem;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .uso-list li,
+  .contact-card {
+    font-size: 0.95rem;
+  }
+  .share-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 48px;
+  }
+  .site-footer {
+    padding-bottom: 6rem;
+  }
+
+  .floating-donate {
+    display: block;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    text-align: center;
+    padding: 1rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .floating-donate.oculto {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(80px);
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 1.35rem;
+  }
+  .amount-btn {
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="meta.title">Ayuda para la Torre B — Bosque Real, Charallave</title>
+    <meta
+      name="description"
+      data-i18n="meta.desc"
+      content="Campaña solidaria para reparar la Torre B de la urbanización Bosque Real, sector Los Robles, en Charallave, Venezuela, dañada por un terremoto."
+    />
+    <meta name="theme-color" content="#0d6e63" />
+    <!-- Vista previa al compartir en WhatsApp, Facebook, X… -->
+    <link rel="canonical" href="https://sumatevzla.org/robles/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ayuda Torre B — Los Robles, Charallave" />
+    <meta
+      property="og:title"
+      content="Ayúdanos a reparar la Torre B de Los Robles, en Charallave"
+    />
+    <meta
+      property="og:description"
+      content="El terremoto del 24 de junio dañó la estructura del edificio, el ascensor y las barandas. Las familias de la Torre B piden ayuda para repararlo."
+    />
+    <meta property="og:url" content="https://sumatevzla.org/robles/" />
+    <meta
+      property="og:image"
+      content="https://sumatevzla.org/robles/assets/img/dano-29.jpeg"
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Ayúdanos a reparar la Torre B de Los Robles, en Charallave"
+    />
+    <meta
+      name="twitter:description"
+      content="El terremoto del 24 de junio dañó la estructura del edificio, el ascensor y las barandas."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sumatevzla.org/robles/assets/img/dano-29.jpeg"
+    />
+
+    <link rel="preconnect" href="https://gateway.sumup.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <!-- SDK de SumUp para el formulario de tarjeta -->
+    <script src="https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js"></script>
+  </head>
+  <body>
+    <div class="plataforma-bar">
+      <a href="https://sumatevzla.org/">← Súmate VZLA · ver todas las campañas</a>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="#inicio">
+        <span class="brand-logo" aria-hidden="true">🏢</span>
+        <span class="brand-text">
+          <strong data-i18n="brand.name">Ayuda Robles</strong>
+          <small data-i18n="brand.tag">Bosque Real · Charallave</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">
+          EN
+        </button>
+        <a class="btn btn-primary btn-sm" href="#donar" data-i18n="nav.donate">Donar</a>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <!-- HERO + DONACIÓN (lo primero que se ve, sin necesidad de bajar) -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <p class="kicker" data-i18n="hero.kicker">Tras el terremoto</p>
+            <h1 data-i18n="hero.title">
+              Ayúdanos a reparar la Torre B del sector Los Robles de Bosque Real
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+              El 24 de junio de 2026, dos terremotos de magnitud 7,2 y 7,5 sacudieron el norte de
+              Venezuela. Nuestro edificio quedó con daños en la estructura, el ascensor parado y
+              barandas partidas. Somos los vecinos y pedimos ayuda para repararlo.
+            </p>
+            <p class="hero-location" data-i18n="hero.location">
+              📍 Urbanización Bosque Real · Sector Los Robles · Torre B · Charallave, Venezuela
+            </p>
+          </div>
+
+          <figure class="hero-figure">
+            <img
+              src="assets/img/dano-27.jpeg"
+              alt="Parapeto de un balcón de la Torre B partido en dos por el terremoto"
+              width="720"
+              height="1280"
+            />
+            <figcaption data-i18n="hero.caption">
+              Baranda de un balcón partida por completo: se ve la luz del día a través de la
+              grieta.
+            </figcaption>
+          </figure>
+
+          <!-- Tarjeta de donación: arriba, siempre visible -->
+          <div class="donate-panel" id="donar">
+            <div class="meta-block">
+              <div class="meta-row" id="meta-row">
+                <span class="meta-raised" id="meta-raised">€0</span>
+                <span class="meta-goal">
+                  <span id="meta-of" data-i18n="meta.of">de</span>
+                  <strong id="meta-goal">€10.000</strong>
+                </span>
+              </div>
+              <div
+                class="progress"
+                id="progress"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+              </div>
+              <p class="meta-donantes" id="meta-donantes" hidden></p>
+              <p class="meta-math" data-i18n="meta.math">
+                Con <strong>200 donaciones de 50 €</strong> se completa la meta.
+              </p>
+            </div>
+
+            <div class="donate-card">
+              <div id="amount-step">
+                <p class="field-label" data-i18n="donar.amountLabel">Elige un monto</p>
+                <div class="amount-grid" id="amount-grid"></div>
+                <p class="amount-hint" id="amount-hint"></p>
+                <div class="custom-amount">
+                  <label for="custom-amount" data-i18n="donar.customLabel">Otro monto (€)</label>
+                  <input
+                    id="custom-amount"
+                    type="number"
+                    min="1"
+                    step="1"
+                    inputmode="decimal"
+                    placeholder="0"
+                  />
+                </div>
+                <button id="donate-btn" class="btn btn-primary btn-block" type="button">
+                  <span id="donate-btn-label" data-i18n="donar.continue">Donar</span>
+                </button>
+              </div>
+
+              <!-- Formulario de tarjeta de SumUp (respaldo) se monta aquí -->
+              <div id="sumup-card" class="sumup-card"></div>
+
+              <p id="donate-status" class="donate-status" hidden></p>
+
+              <div id="donate-success" class="donate-success" hidden>
+                <span class="success-icon" aria-hidden="true">💚</span>
+                <h3 data-i18n="donar.thanksTitle">¡Gracias por tu ayuda!</h3>
+                <p data-i18n="donar.thanksBody">
+                  Tu donación ayuda a devolverle un hogar seguro a las familias de la Torre B.
+                </p>
+              </div>
+
+              <ul class="trust-row">
+                <li data-i18n="trust.secure">🔒 Pago seguro procesado por SumUp</li>
+                <li data-i18n="trust.card">💳 Los datos de tu tarjeta no pasan por este sitio</li>
+                <li data-i18n="trust.auto">📊 La recaudación se actualiza automáticamente</li>
+              </ul>
+            </div>
+
+            <p class="donar-venezuela">
+              <a href="#venezuela" data-i18n="donar.venezuela"
+                >🇻🇪 ¿Estás en Venezuela? Ayuda por pago móvil en bolívares →</a
+              >
+            </p>
+
+            <p class="donar-fallback">
+              <span data-i18n="donar.fallback"
+                >¿Prefieres otra vía o tienes problemas con el pago? Escríbenos:</span
+              >
+              <a
+                id="contact-link-donate"
+                href="mailto:CORREO@EJEMPLO.com"
+                data-i18n="donar.contactCta"
+                >Contáctanos</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESDE VENEZUELA: PAGO MÓVIL -->
+      <section id="venezuela" class="section section-alt">
+        <div class="container container-medium">
+          <h2 data-i18n="pm.title">¿Estás en Venezuela? Ayuda por pago móvil</h2>
+          <p class="section-note" data-i18n="pm.intro">
+            El pago con tarjeta de arriba es en euros y está pensado para quienes ayudan desde el
+            exterior. Si estás <strong>dentro de Venezuela</strong>, puedes aportar en bolívares
+            por <strong>pago móvil</strong> a la cuenta de la Junta de Condominio.
+          </p>
+
+          <div class="pm-card">
+            <div class="pm-qr">
+              <img
+                src="assets/img/pago-movil-qr.png"
+                alt="Código QR de pago móvil de la Junta de Condominio Los Robles Torre B"
+                width="340"
+                height="340"
+              />
+              <p class="pm-qr-note" data-i18n="pm.qrNote">
+                Escanéalo desde la app de tu banco
+              </p>
+            </div>
+
+            <div class="pm-datos">
+              <p class="field-label" data-i18n="pm.datosTitle">O ingresa los datos a mano:</p>
+              <dl class="pm-list">
+                <div>
+                  <dt data-i18n="pm.banco">Banco</dt>
+                  <dd>Banco de Venezuela (0102)</dd>
+                </div>
+                <div>
+                  <dt data-i18n="pm.rif">RIF</dt>
+                  <dd>
+                    <span id="pm-rif">J-501036594</span>
+                    <button type="button" class="pm-copy" data-copiar="pm-rif" data-i18n="pm.copiar">Copiar</button>
+                  </dd>
+                </div>
+                <div>
+                  <dt data-i18n="pm.tel">Teléfono</dt>
+                  <dd>
+                    <span id="pm-tel">0412-9331278</span>
+                    <button type="button" class="pm-copy" data-copiar="pm-tel" data-i18n="pm.copiar">Copiar</button>
+                  </dd>
+                </div>
+                <div>
+                  <dt data-i18n="pm.titular">A nombre de</dt>
+                  <dd>Junta de Condominio Los Robles Torre B</dd>
+                </div>
+              </dl>
+
+              <p class="pm-aviso" data-i18n="pm.aviso">
+                ⚠️ <strong>Importante:</strong> los aportes por pago móvil <strong>no aparecen
+                automáticamente</strong> en el contador de arriba, porque ese contador solo lee los
+                pagos con tarjeta. Los sumamos a mano y los reportamos en
+                <a href="#actualizaciones">Actualizaciones</a>. Si aportas por esta vía, avísanos
+                por WhatsApp para llevar la cuenta y agradecerte.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SITUACIÓN -->
+      <section id="situacion" class="section">
+        <div class="container container-medium">
+          <h2 data-i18n="situacion.title">¿Qué está pasando?</h2>
+          <div class="prose" data-i18n="situacion.body">
+            <p>
+              El <strong>24 de junio de 2026</strong>, a las 6:04 de la tarde, un terremoto de
+              magnitud <strong>7,2</strong> sacudió el norte de Venezuela con epicentro cerca de
+              San Felipe, en el estado Yaracuy. Treinta y nueve segundos después llegó un segundo
+              sismo, de magnitud <strong>7,5</strong>. Fue uno de los peores desastres naturales
+              de la historia reciente del país.
+            </p>
+            <p>
+              Nuestro edificio, la Torre B de la urbanización Bosque Real, en el sector Los Robles
+              de Charallave, quedó en pie, pero <strong>dañado en su estructura</strong>. Las
+              fotos de esta página muestran grietas verticales que recorren
+              <strong>columnas</strong> de piso a techo, concreto desprendido en las
+              <strong>uniones de vigas y columnas</strong>, <strong>losas de piso agrietadas</strong>
+              y muros rajados en diagonal, incluida la estructura de la azotea.
+            </p>
+            <p>
+              El <strong>ascensor dejó de funcionar</strong> y varias
+              <strong>barandas de los balcones se partieron</strong> por completo: en algunas se
+              ve la luz del día a través de la grieta.
+            </p>
+            <p>
+              Pedimos ayuda fuera de Venezuela porque la reparación excede lo que las familias del
+              edificio pueden reunir. Lo que buscamos es concreto:
+              <strong>reparar la estructura, poner el ascensor en marcha y asegurar las barandas</strong>.
+            </p>
+          </div>
+
+          <h3 class="uso-title" data-i18n="uso.title">¿Para qué se usará tu ayuda?</h3>
+          <ul class="uso-list">
+            <li>
+              <span aria-hidden="true">🏗️</span>
+              <span data-i18n="uso.item1">Reparación estructural: columnas, vigas y nudos viga-columna</span>
+            </li>
+            <li>
+              <span aria-hidden="true">🛗</span>
+              <span data-i18n="uso.item2">Reparación del ascensor</span>
+            </li>
+            <li>
+              <span aria-hidden="true">🧱</span>
+              <span data-i18n="uso.item3">Muros agrietados, barandas de seguridad y azotea</span>
+            </li>
+          </ul>
+          <p class="estimacion" data-i18n="uso.estimacion">
+            <strong>Sobre los 10.000 €:</strong> es la estimación preliminar de la Junta de
+            Condominio a partir de los daños visibles. Ya gestionamos la evaluación técnica del
+            edificio y publicaremos aquí los presupuestos con el desglose por partidas. Si la
+            cifra final cambia, lo diremos en esta misma página.
+          </p>
+          <p class="cta-inline">
+            <a class="btn btn-primary" href="#donar" data-i18n="hero.ctaDonate">Donar ahora</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- VERIFICAR -->
+      <section id="verificar" class="section section-alt">
+        <div class="container container-medium">
+          <h2 data-i18n="verif.title">Verifícalo tú mismo</h2>
+          <p class="section-note" data-i18n="verif.note">
+            No hace falta que nos creas sobre el terremoto: fue noticia mundial. Estos medios e
+            instituciones informan del sismo; <strong>no avalan esta campaña</strong>.
+          </p>
+          <ul class="verif-list">
+            <li>
+              <a
+                href="https://es.wikipedia.org/wiki/Terremotos_de_Venezuela_de_2026"
+                target="_blank"
+                rel="noopener"
+                >Wikipedia — Terremotos de Venezuela de 2026</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cnnespanol.cnn.com/2026/06/24/venezuela/live-news/terremoto-sismo-en-vivo-noticias-caracas-orix"
+                target="_blank"
+                rel="noopener"
+                >CNN en Español — cobertura del 24 y 25 de junio</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.infobae.com/venezuela/2026/06/24/un-terremoto-de-magnitud-71-sacudio-varias-regiones-de-venezuela-hay-alerta-de-tsunami-para-aruba-curazao-y-bonaire/"
+                target="_blank"
+                rel="noopener"
+                >Infobae — dos terremotos de 7,2 y 7,5 en Venezuela</a
+              >
+            </li>
+            <li>
+              <a href="https://earthquake.usgs.gov/earthquakes/map/" target="_blank" rel="noopener"
+                >USGS — catálogo sísmico mundial</a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- QUÉ SIGNIFICAN LOS DAÑOS -->
+      <section id="danos" class="section">
+        <div class="container container-medium">
+          <h2 data-i18n="danos.title">Qué ves en las fotos y qué significa</h2>
+          <p class="section-note" data-i18n="danos.note">
+            Una grieta no es igual que otra. Esto es lo que muestran las fotos.
+          </p>
+          <div class="danos-table">
+            <div class="danos-head">
+              <span data-i18n="danos.col1">Qué se ve</span>
+              <span data-i18n="danos.col2">Qué significa</span>
+            </div>
+            <div class="danos-row">
+              <span data-i18n="danos.r1a">Grietas verticales que recorren una columna de piso a techo</span>
+              <span data-i18n="danos.r1b">Las columnas sostienen el edificio. Una grieta así indica que ese elemento trabajó al límite durante el sismo.</span>
+            </div>
+            <div class="danos-row">
+              <span data-i18n="danos.r2a">Concreto reventado donde una viga se une con una columna</span>
+              <span data-i18n="danos.r2b">Es el punto que más sufre en un terremoto. Al desprenderse el concreto queda expuesto el interior del elemento.</span>
+            </div>
+            <div class="danos-row">
+              <span data-i18n="danos.r3a">Grietas diagonales en escalón, siguiendo las juntas de los bloques</span>
+              <span data-i18n="danos.r3b">Es la huella típica del esfuerzo de un sismo sobre una pared.</span>
+            </div>
+            <div class="danos-row">
+              <span data-i18n="danos.r4a">Barandas y parapetos de balcón partidos y separados</span>
+              <span data-i18n="danos.r4b">Riesgo inmediato de desprendimiento hacia el vacío. Es lo más urgente de asegurar.</span>
+            </div>
+            <div class="danos-row">
+              <span data-i18n="danos.r5a">Losas de piso agrietadas y baldosas separadas</span>
+              <span data-i18n="danos.r5b">La estructura se movió lo suficiente para fracturar el piso.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERÍA -->
+      <section id="galeria" class="section section-alt">
+        <div class="container">
+          <h2 data-i18n="galeria.title">La Torre B hoy</h2>
+          <p class="section-note" data-i18n="galeria.note">
+            Fotos reales de los daños que dejó el terremoto en la Torre B. Toca una imagen para
+            verla completa.
+          </p>
+          <div class="gallery" id="gallery"></div>
+        </div>
+      </section>
+
+      <!-- TRANSPARENCIA -->
+      <section id="transparencia" class="section">
+        <div class="container container-medium">
+          <h2 data-i18n="transp.title">Cómo manejamos el dinero</h2>
+          <div class="prose" data-i18n="transp.body">
+            <p>
+              Sabemos que donar a un grupo de vecinos en otro país exige confianza. Por eso
+              asumimos estos compromisos:
+            </p>
+          </div>
+          <ul class="uso-list">
+            <li>
+              <span aria-hidden="true">🏛️</span>
+              <span data-i18n="transp.item1">
+                Los fondos los administra la
+                <strong>Junta de Condominio Los Robles Torre B</strong> (RIF
+                <strong>J-501036594</strong>), que rinde cuentas ante la asamblea de propietarios
+                del edificio.
+              </span>
+            </li>
+            <li>
+              <span aria-hidden="true">📊</span>
+              <span data-i18n="transp.item2">
+                El monto recaudado que ves arriba <strong>lo reporta la pasarela de pago</strong>,
+                no lo escribimos nosotros.
+              </span>
+            </li>
+            <li>
+              <span aria-hidden="true">🧾</span>
+              <span data-i18n="transp.item3">
+                Publicaremos aquí <strong>en qué se usa cada aporte</strong>, con fotos del avance
+                de los trabajos.
+              </span>
+            </li>
+            <li>
+              <span aria-hidden="true">📐</span>
+              <span data-i18n="transp.item4">
+                La <strong>evaluación técnica del edificio ya está gestionada</strong> y los
+                <strong>presupuestos de la reparación</strong> se publicarán en esta misma página,
+                para que cualquiera pueda ver de dónde sale la cifra que pedimos.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PRESUPUESTOS (aparece al subir las fotos) -->
+      <section id="presupuestos" class="section section-alt" hidden>
+        <div class="container container-medium">
+          <h2 data-i18n="presup.title">Presupuestos y evaluación técnica</h2>
+          <p class="section-note" data-i18n="presup.note">
+            Estos son los documentos en los que se basa la cifra que pedimos. Toca una imagen
+            para verla completa.
+          </p>
+          <div id="presupuestos-list" class="gallery"></div>
+        </div>
+      </section>
+
+      <!-- ACTUALIZACIONES -->
+      <section id="actualizaciones" class="section">
+        <div class="container container-medium">
+          <h2 data-i18n="updates.title">Actualizaciones</h2>
+          <ol class="updates">
+            <li>
+              <span class="update-date" data-i18n="updates.u2date">Julio de 2026 · Evaluación técnica</span>
+              <p data-i18n="updates.u2body">
+                Ya gestionamos la evaluación técnica del edificio. Publicaremos aquí los
+                presupuestos de la reparación en cuanto los tengamos en mano.
+              </p>
+            </li>
+            <li>
+              <span class="update-date" data-i18n="updates.u1date">Julio de 2026 · Inicio</span>
+              <p data-i18n="updates.u1body">
+                Abrimos esta campaña. Documentamos los daños del terremoto con fotografías del
+                edificio y comenzamos a pedir ayuda para las reparaciones.
+              </p>
+            </li>
+          </ol>
+          <p class="section-note" data-i18n="updates.note">
+            Iremos publicando aquí cada avance: presupuestos, informe del ingeniero y el progreso
+            de las obras.
+          </p>
+        </div>
+      </section>
+
+      <!-- PREGUNTAS FRECUENTES -->
+      <section id="faq" class="section section-alt">
+        <div class="container container-medium">
+          <h2 data-i18n="faq.title">Preguntas frecuentes</h2>
+          <div id="faq-list" class="faq-list"></div>
+        </div>
+      </section>
+
+      <!-- COMPARTIR -->
+      <section id="compartir" class="section">
+        <div class="container container-narrow" style="text-align: center">
+          <h2 data-i18n="compartir.title">¿No puedes donar? Comparte</h2>
+          <p class="donar-subtitle" data-i18n="compartir.body">
+            Difundir esta campaña cuesta un minuto y puede valer tanto como una donación. Que
+            llegue a quien pueda ayudar.
+          </p>
+          <div id="share-buttons" class="share-buttons"></div>
+        </div>
+      </section>
+
+      <!-- QUIÉNES SOMOS / CONTACTO -->
+      <section id="contacto" class="section section-alt">
+        <div class="container container-medium">
+          <h2 data-i18n="quienes.title">Quiénes somos</h2>
+          <div class="prose" data-i18n="quienes.body">
+            <p>
+              Esta campaña está organizada por la
+              <strong>Junta de Condominio Los Robles Torre B</strong>, en representación de las
+              familias que viven en el edificio de la urbanización Bosque Real, sector Los Robles,
+              en Charallave. Toda la ayuda recibida se destina a la reparación de la torre.
+            </p>
+          </div>
+
+          <!-- Ficha verificable de la organización -->
+          <dl class="ficha">
+            <div>
+              <dt data-i18n="ficha.entidad">Organiza</dt>
+              <dd data-campo="entidad">Junta de Condominio Los Robles Torre B</dd>
+            </div>
+            <div>
+              <dt data-i18n="ficha.rif">RIF</dt>
+              <dd data-campo="rif">J-501036594</dd>
+            </div>
+            <div>
+              <dt data-i18n="ficha.contacto">Persona de contacto</dt>
+              <dd data-campo="contactoNombre">Bárbara Bohorques</dd>
+            </div>
+            <div>
+              <dt data-i18n="ficha.ubicacion">Ubicación</dt>
+              <dd data-i18n="ficha.ubicacionValor">
+                Torre B, urbanización Bosque Real, sector Los Robles, Charallave, estado Miranda,
+                Venezuela
+              </dd>
+            </div>
+          </dl>
+
+          <div class="contact-cards">
+            <a class="contact-card" id="contact-email" href="#" hidden>
+              <span aria-hidden="true">✉️</span>
+              <span>
+                <strong data-i18n="quienes.emailLabel">Correo</strong>
+                <small></small>
+              </span>
+            </a>
+            <a class="contact-card" id="contact-whatsapp" href="#" target="_blank" rel="noopener" hidden>
+              <span aria-hidden="true">💬</span>
+              <span>
+                <strong>WhatsApp</strong>
+                <small>+58 412-9331278</small>
+                <small class="contact-person">Bárbara Bohorques</small>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p data-i18n="footer.location">
+        Urbanización Bosque Real · Sector Los Robles · Torre B · Charallave, estado Miranda,
+        Venezuela
+      </p>
+      <p class="footer-small" data-i18n="footer.legal">
+        Campaña organizada por la Junta de Condominio Los Robles Torre B · RIF J-501036594 ·
+        Contacto: Bárbara Bohorques, +58 412-9331278
+      </p>
+    </footer>
+
+    <!-- Lightbox de la galería -->
+    <div id="lightbox" class="lightbox" hidden>
+      <button class="lb-close" id="lb-close" type="button" aria-label="Cerrar">&times;</button>
+      <button class="lb-nav lb-prev" id="lb-prev" type="button" aria-label="Anterior">&#8249;</button>
+      <img id="lightbox-img" class="lb-img" src="" alt="Daño estructural — Torre B" />
+      <button class="lb-nav lb-next" id="lb-next" type="button" aria-label="Siguiente">&#8250;</button>
+    </div>
+
+    <!-- Botón de donar fijo en móvil (se oculta cuando la tarjeta ya está visible) -->
+    <a class="floating-donate" id="floating-donate" href="#donar" data-i18n="nav.donate">Donar</a>
+
+    <script src="assets/api-base.js"></script>
+    <script src="assets/app.js" defer></script>
+  </body>
+</html>

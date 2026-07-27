@@ -45,7 +45,7 @@ window.Campanas = [
     resumen:
       'El terremoto dañó la estructura del edificio, dejó el ascensor sin funcionar y partió ' +
       'las barandas de los balcones. La Junta de Condominio pide ayuda para repararlo.',
-    url: 'https://ayuda-robles.pages.dev/',
+    url: 'robles/',
     imagen: 'assets/campanas/torre-b.jpeg',
     alt: 'Baranda de un balcón de la Torre B partida por el terremoto',
     etiquetas: ['Reparación estructural', 'Tarjeta en €', 'Pago móvil en Bs'],
