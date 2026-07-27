@@ -4,7 +4,7 @@ test('renders the landing page without encoding artifacts or runtime errors', as
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
 
-  await page.goto('/');
+  await page.goto('/terremoto/');
 
   await expect(page).toHaveTitle(/Súmate VZLA/);
   await expect(page.getByRole('heading', { name: /súmate hoy/i })).toBeVisible();
@@ -34,7 +34,7 @@ test('donation widget validates input and routes COP payments to Wompi', async (
     });
   });
 
-  await page.goto('/#donar');
+  await page.goto('/terremoto/#donar');
 
   await expect(page.locator('#summary-amount')).toHaveText('€50');
   await page.locator('#custom-amount').fill('4');
@@ -62,7 +62,7 @@ test('EUR payment shows backend errors without leaving the page', async ({ page 
     });
   });
 
-  await page.goto('/#donar');
+  await page.goto('/terremoto/#donar');
   await page.locator('#d-email').fill('donante@example.com');
   await page.getByRole('button', { name: /donar €50 ahora/i }).click();
 
@@ -72,7 +72,7 @@ test('EUR payment shows backend errors without leaving the page', async ({ page 
 });
 
 test('donation button resets when returning from browser history', async ({ page }) => {
-  await page.goto('/#donar');
+  await page.goto('/terremoto/#donar');
 
   await page.evaluate(() => {
     const btn = document.getElementById('donate-btn');
@@ -95,7 +95,7 @@ test('donation button resets when returning from browser history', async ({ page
 
 test('mobile navigation opens, closes and keeps layout within viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/terremoto/');
 
   await page.getByRole('button', { name: /abrir menú/i }).click();
   await expect(page.locator('#site-nav')).toHaveClass(/open/);
@@ -115,7 +115,7 @@ test('thank-you page renders correctly', async ({ page }) => {
     });
   });
 
-  await page.goto('/gracias.html?ref=DONA-SVZLA-TEST');
+  await page.goto('/terremoto/gracias.html?ref=DONA-SVZLA-TEST');
 
   await expect(page).toHaveTitle(/Gracias/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();
@@ -133,7 +133,7 @@ test('root thank-you page verifies Wompi transactions too', async ({ page }) => 
     });
   });
 
-  await page.goto('/gracias.html?id=TX-ROOT');
+  await page.goto('/terremoto/gracias.html?id=TX-ROOT');
 
   await expect(page).toHaveTitle(/Gracias/);
   await expect(page.getByRole('heading', { name: /gracias por tu corazón/i })).toBeVisible();

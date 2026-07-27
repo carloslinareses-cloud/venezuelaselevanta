@@ -7,15 +7,20 @@ import { JSDOM } from 'jsdom';
 const textFiles = [
   'index.html',
   'gracias.html',
+  'terremoto/index.html',
+  'terremoto/gracias.html',
   'colombia/index.html',
   'colombia/gracias.html',
   'README.md',
   'assets/app.js',
   'assets/config.js',
   'assets/config-colombia.js',
+  'assets/campanas.js',
+  'assets/hub.js',
   'assets/payments.js',
   'assets/payment-config-colombia.js',
   'assets/styles.css',
+  'assets/hub.css',
   'supabase/functions/crear-donacion-sumup/index.ts',
   'supabase/functions/crear-donacion-wompi-colombia/index.ts',
 ];
@@ -28,7 +33,14 @@ test('text files do not contain mojibake or replacement characters', () => {
 });
 
 test('local assets referenced by html exist', () => {
-  for (const file of ['index.html', 'gracias.html', 'colombia/index.html', 'colombia/gracias.html']) {
+  for (const file of [
+    'index.html',
+    'gracias.html',
+    'terremoto/index.html',
+    'terremoto/gracias.html',
+    'colombia/index.html',
+    'colombia/gracias.html',
+  ]) {
     const dom = new JSDOM(readFileSync(file, 'utf8'));
     const document = dom.window.document;
     const refs = [

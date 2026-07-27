@@ -1,0 +1,253 @@
+/* ============================================================================
+   hub.css — Estilos del directorio de campañas (portada de sumatevzla.org).
+   Reutiliza las variables y componentes de styles.css.
+   ============================================================================ */
+
+.hub-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-left: auto;
+}
+.hub-nav a:not(.btn) {
+  color: var(--tinta);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.hub-nav a:not(.btn):hover {
+  color: var(--azul-700);
+}
+
+/* ---------- Hero ---------- */
+.hub-hero {
+  background: linear-gradient(160deg, var(--azul-900) 0%, var(--azul-700) 100%);
+  color: #fff;
+  padding: 3.6rem 0 4rem;
+  text-align: center;
+}
+.hub-h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  margin: 0.8rem auto 1rem;
+  max-width: 16ch;
+  color: #fff;
+}
+.hub-sub {
+  max-width: 62ch;
+  margin: 0 auto 1.8rem;
+  font-size: 1.08rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Secciones ---------- */
+.hub-section {
+  padding: 3.2rem 0;
+}
+.hub-section-alt {
+  background: var(--crema-2);
+}
+.hub-h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  margin: 0 0 0.5rem;
+  color: var(--tinta);
+}
+.hub-note {
+  color: var(--gris-500);
+  margin: 0 0 1.8rem;
+  max-width: 70ch;
+}
+
+/* ---------- Tarjetas de campaña ---------- */
+.campanas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.6rem;
+}
+.camp-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  box-shadow: var(--sombra-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.camp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra);
+}
+.camp-img {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--crema-2);
+}
+.camp-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.camp-body {
+  padding: 1.2rem 1.3rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.camp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+}
+.camp-tag {
+  background: var(--oro-100);
+  color: var(--oro-600);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.camp-titulo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  margin: 0 0 0.35rem;
+}
+.camp-titulo a {
+  color: var(--tinta);
+  text-decoration: none;
+}
+.camp-titulo a:hover {
+  color: var(--azul-700);
+}
+.camp-lugar {
+  margin: 0 0 0.7rem;
+  font-size: 0.86rem;
+  color: var(--gris-500);
+}
+.camp-resumen {
+  margin: 0 0 1.1rem;
+  color: var(--gris-700);
+  font-size: 0.96rem;
+  flex: 1;
+}
+.camp-progreso {
+  margin-bottom: 1rem;
+}
+.camp-bar {
+  height: 9px;
+  background: var(--crema-2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.45rem;
+}
+.camp-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--oro-500), var(--oro-400));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.camp-cifras {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--gris-700);
+}
+.camp-cta {
+  text-align: center;
+}
+.camp-extra {
+  margin: 0.7rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+}
+/* Los enlaces dentro de texto deben distinguirse sin depender del color */
+.camp-extra a,
+.hub-note a,
+.hub-footer a {
+  text-decoration: underline;
+}
+
+/* ---------- Cómo funciona ---------- */
+.pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+.pasos li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.paso-num {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--azul-900);
+  color: var(--oro-400);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+.pasos h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.02rem;
+  color: var(--tinta);
+}
+.pasos p {
+  margin: 0;
+  color: var(--gris-700);
+  font-size: 0.95rem;
+}
+
+/* ---------- Cierre y pie ---------- */
+.hub-cta-final {
+  text-align: center;
+}
+.hub-cta-final .hub-note {
+  margin-left: auto;
+  margin-right: auto;
+}
+.hub-footer {
+  background: var(--azul-900);
+  color: #cfe0f0;
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 0.94rem;
+}
+.hub-footer strong {
+  color: #fff;
+}
+.hub-footer a {
+  color: var(--oro-400);
+}
+.hub-footer-min {
+  color: #9fb6cd;
+  font-size: 0.84rem;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 640px) {
+  .hub-hero {
+    padding: 2.4rem 0 2.8rem;
+  }
+  .hub-section {
+    padding: 2.4rem 0;
+  }
+  .campanas-grid {
+    grid-template-columns: 1fr;
+  }
+  .hub-nav a:not(.btn) {
+    display: none;
+  }
+}
