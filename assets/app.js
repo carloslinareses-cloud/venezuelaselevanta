@@ -445,6 +445,28 @@
   function animarProgreso() {
     var fill = $('#progress-fill'); var pct = metaPct();
     var pb = $('#progressbar'); if (pb) pb.setAttribute('aria-valuenow', pct);
+
+    // Aún sin donaciones: mostrar "€0" y una barra vacía desanima. Se enseña la
+    // meta y se invita a abrir la campaña. Nunca se inventan cifras.
+    var m = (window.CampaignConfig && window.CampaignConfig.meta) || {};
+    if (!(Number(m.recaudado) > 0)) {
+      var raised = $('.pc-raised');
+      var goal = $('.pc-goal');
+      var track = $('.progress-track');
+      var pctBox = $('#pc-pct');
+      if (raised) raised.textContent = 'Sé la primera persona en donar';
+      if (raised) raised.classList.add('pc-primero');
+      if (goal) {
+        var objetivo = goal.querySelector('strong');
+        goal.innerHTML = 'Meta: ' + (objetivo ? objetivo.outerHTML : '');
+      }
+      if (track) track.hidden = true;
+      // Se oculta el bloque de "% de la meta / donantes": con 0 no aporta nada.
+      var stats = $('.pc-stats');
+      if (stats) stats.hidden = true;
+      else if (pctBox && pctBox.parentElement) pctBox.parentElement.hidden = true;
+    }
+
     // pequeño delay para que la transición CSS se vea
     setTimeout(function () { if (fill) fill.style.width = pct + '%'; }, 250);
     $$('.uso-bar span').forEach(function (s) {

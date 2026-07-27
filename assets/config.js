@@ -25,9 +25,9 @@ window.CampaignConfig = {
   /* ---- Meta de recaudación (barra de progreso del hero) ---- */
   meta: {
     objetivo: 50000,           // meta total
-    recaudado: 478,            // llevado hasta ahora  ← actualízalo
+    recaudado: 0,              // solo cifras reales: se actualiza cuando entren donaciones
     moneda: 'EUR',             // moneda en la que se expresa la meta
-    donantes: 11,              // nº de personas que han aportado
+    donantes: 0,               // nº real de personas que han aportado
     // Si conectas un backend, puedes actualizar recaudado/donantes por API.
   },
 

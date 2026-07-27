@@ -215,6 +215,10 @@
   font-size: 0.9rem;
   color: var(--gris-700);
 }
+.camp-primero {
+  color: var(--oro-600);
+  font-weight: 700;
+}
 .camp-cta {
   text-align: center;
 }

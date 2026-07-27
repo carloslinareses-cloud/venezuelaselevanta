@@ -52,11 +52,17 @@
     var texto = card.querySelector('.camp-cifras');
     if (!barra || !texto) return;
 
-    if (datos.recaudado === null) {
-      texto.innerHTML = '<strong>Meta:</strong> ' + fmt(datos.objetivo, datos.moneda);
+    // Sin datos aún, o sin donaciones todavía: se muestra la meta y se invita.
+    // Nunca se inventa una cifra para que la barra "se vea avanzada".
+    if (datos.recaudado === null || !(Number(datos.recaudado) > 0)) {
+      texto.innerHTML =
+        '<strong>Meta:</strong> ' + fmt(datos.objetivo, datos.moneda) +
+        ' · <span class="camp-primero">sé la primera persona en donar</span>';
       barra.style.width = '0%';
+      barra.parentElement.hidden = true;
       return;
     }
+    barra.parentElement.hidden = false;
     var pct = datos.objetivo > 0 ? Math.min(100, (datos.recaudado / datos.objetivo) * 100) : 0;
     barra.style.width = pct.toFixed(1) + '%';
 
