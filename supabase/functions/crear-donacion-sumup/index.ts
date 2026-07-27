@@ -29,6 +29,25 @@ function corsHeaders(origin: string | null): Record<string, string> {
     "Vary": "Origin",
   };
 }
+/**
+ * ¿Es una URL de retorno de un sitio NUESTRO?
+ *
+ * Antes se aceptaba cualquier URL https, así que un tercero podía crear un enlace
+ * de donación que, tras pagar, enviaba al donante a una web suya (estafa usando
+ * la marca de la campaña). Ahora solo se admiten los orígenes autorizados.
+ */
+function returnUrlPermitida(value: unknown): string {
+  const raw = String(value || "");
+  try {
+    const u = new URL(raw);
+    const esLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(u.origin);
+    if (u.protocol !== "https:" && !esLocal) return "";
+    return ALLOWED.includes(u.origin) || esLocal ? raw : "";
+  } catch {
+    return "";
+  }
+}
+
 function json(body: unknown, status: number, origin: string | null): Response {
   return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...corsHeaders(origin) } });
 }
@@ -118,8 +137,14 @@ Deno.serve(async (req: Request) => {
   if (!(amount >= 1) || amount > 10000) return json({ error: "Monto inválido. Debe estar entre 1 y 10.000 €." }, 400, origin);
 
   const API_KEY = Deno.env.get("SUMUP_DONACION_KEY") || Deno.env.get("SUMUP_API_KEY") || Deno.env.get("SUMUP_SECRET_KEY");
-  const PAY_TO = Deno.env.get("SUMUP_PAY_TO_EMAIL") || "carlos.linares.es@gmail.com";
+  // Sin valor por defecto: el correo del comercio se configura como secreto.
+  // (Estaba escrito en el código y este repositorio se publica entero en GitHub Pages,
+  //  así que quedaba expuesto a cualquiera que leyera el archivo.)
+  const PAY_TO = Deno.env.get("SUMUP_PAY_TO_EMAIL") || "";
   if (!API_KEY) return json({ error: "Pagos no configurados (falta SUMUP_API_KEY)." }, 500, origin);
+  // Antes de desplegar de nuevo esta función hay que definir el secreto
+  // SUMUP_PAY_TO_EMAIL en Supabase; así el correo no viaja en el código público.
+  if (!PAY_TO) return json({ error: "Pagos no configurados (falta SUMUP_PAY_TO_EMAIL)." }, 500, origin);
 
   const nombre = String(body.name || "").slice(0, 80).trim();
   const anonimo = !!body.anonimo;
@@ -136,8 +161,10 @@ Deno.serve(async (req: Request) => {
     hosted_checkout: { enabled: true },
   };
   // redirect_url con el ref para que la página de gracias VERIFIQUE el pago.
-  if (/^https:\/\//i.test(returnUrl)) {
-    checkoutBody.redirect_url = returnUrl + (returnUrl.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(reference);
+  // Solo se acepta una URL de nuestros propios sitios (evita redirigir a terceros).
+  const retornoOk = returnUrlPermitida(returnUrl);
+  if (retornoOk) {
+    checkoutBody.redirect_url = retornoOk + (retornoOk.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(reference);
   }
 
   let resp: Response;

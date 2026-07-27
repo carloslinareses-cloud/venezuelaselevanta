@@ -145,11 +145,23 @@ async function handleWompiEvent(eventBody: Record<string, unknown>, origin: stri
   return json({ received: true, paid: status === "APPROVED", reference }, 200, origin);
 }
 
+/**
+ * ¿Es una URL de retorno de un sitio NUESTRO?
+ *
+ * Antes bastaba con que empezara por https, así que un tercero podía crear un
+ * enlace de donación que, tras pagar, enviaba al donante a una web suya (estafa
+ * usando la marca de la campaña). Ahora se comprueba contra ALLOWED_ORIGINS.
+ */
 function safeReturnUrl(value: unknown): string {
   const raw = String(value || "");
-  if (/^https:\/\//i.test(raw)) return raw;
-  if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//i.test(raw)) return raw;
-  return "";
+  try {
+    const u = new URL(raw);
+    const esLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(u.origin);
+    if (u.protocol !== "https:" && !esLocal) return "";
+    return ALLOWED.includes(u.origin) || esLocal ? raw : "";
+  } catch {
+    return "";
+  }
 }
 
 async function verificarTransaccion(id: string, origin: string | null): Promise<Response> {

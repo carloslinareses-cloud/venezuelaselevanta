@@ -11,3 +11,6 @@ test-results/
 .vscode/
 .supabase/
 .dev-server.pid
+
+# Estado local de la CLI de Supabase (no debe publicarse)
+supabase/.temp/
