@@ -21,6 +21,11 @@
     // sería inexacto y a esta campaña una exageración le costaría la
     // credibilidad entera.
     fotosTabiqueria: [33, 34, 35],
+    // Fotos tomadas en el cuarto de máquinas del ascensor, que está en la
+    // azotea. Es donde más grietas se aprecian. Sin decirlo, quien las mira
+    // ve una construcción baja con alero y no la relaciona con una torre de
+    // diez pisos: el contexto es lo que las hace creíbles.
+    fotosCuartoMaquinas: [28, 29, 30, 31, 32],
     // Fotos de presupuestos/informe en assets/img/ (presupuesto-01.jpeg, -02…).
     // Al poner un número > 0 aparece automáticamente la sección "Presupuestos".
     numPresupuestos: 0,
@@ -53,7 +58,7 @@
 
     "situacion.title": "What is happening?",
     "situacion.body":
-      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave — was left standing, but <strong>damaged in its structure</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>There are <strong>84 families</strong> in Tower B: ten floors of eight flats each, plus four penthouses. Splitting the €10,000 between all of us comes to <strong>€119 per flat</strong>, and even that is out of reach: wages here are paid in bolívares and, for most of us, that figure is several months of spending.</p><p>That is why we are asking for help outside Venezuela. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
+      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave — was left standing, but <strong>damaged in its structure</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>Tower B has <strong>84 affected flats</strong>: ten floors of eight flats each, plus four penthouses. What needs repairing is the whole building — the structure, the elevator and the railings — not one individual home, and that is beyond what we can raise here: wages are paid in bolívares.</p><p>That is why we are asking for help outside Venezuela. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
 
     "goal.title": "Our goal",
     "meta.of": "of",
@@ -122,6 +127,10 @@
     "danos.r6a": "Elevator: the counterweight rail was bent",
     "danos.r6b":
       "With the rail bent, the counterweight came away from its guide. That is why the elevator is out of service: the rail has to be replaced before it can run safely again.",
+    "danos.r8a":
+      "The elevator machine room, up on the roof, is where the most cracks can be seen",
+    "danos.r8b":
+      "It is the small structure on top of the building that houses the machinery driving the elevator. Several photos on this page were taken there: cracks run right across the wall and in places the render has fallen away, leaving the block exposed. Being a small structure on the roof, it does not look like a ten-storey building in the photo, but it is one.",
     "danos.r7a":
       "The top of an interior wall pulled away from the ceiling: an open gap, plaster broken off and loose pieces hanging",
     "danos.r7b":
@@ -782,16 +791,22 @@
   const lbSrcs = [];
   let lbIndex = 0;
 
-  function agregarFotos(contId, prefijo, cantidad, alt, altAlterno, indicesAlternos) {
+  /**
+   * `grupos` permite dar un texto alternativo propio a ciertas fotos:
+   * [{ indices: [28, 29], alt: "…" }]. No todas las fotos muestran lo mismo y
+   * describirlas a todas igual sería inexacto.
+   */
+  function agregarFotos(contId, prefijo, cantidad, alt, grupos) {
     const cont = document.getElementById(contId);
     if (!cont || !cantidad) return false;
-    const alternos = indicesAlternos || [];
+    const grupo = (i) => (grupos || []).find((g) => g.indices.indexOf(i) !== -1);
     let html = "";
     for (let i = 1; i <= cantidad; i++) {
       const nn = String(i).padStart(2, "0");
       const src = "assets/img/" + prefijo + "-" + nn + ".jpeg";
       const idx = lbSrcs.push(src) - 1; // índice global para el lightbox
-      const alv = (alternos.indexOf(i) !== -1 && altAlterno ? altAlterno : alt) + " " + i;
+      const g = grupo(i);
+      const alv = (g ? g.alt : alt) + " " + i;
       html +=
         '<a href="' + src + '" data-index="' + idx + '" class="gallery-link">' +
         '<img loading="lazy" src="' + src + '" alt="' + alv + '" /></a>';
@@ -807,8 +822,16 @@
       "dano",
       CONFIG.numFotos || 0,
       "Daño estructural en la Torre B, Bosque Real —",
-      "Pared interior separada del techo en la Torre B, Bosque Real —",
-      CONFIG.fotosTabiqueria,
+      [
+        {
+          indices: CONFIG.fotosTabiqueria || [],
+          alt: "Pared interior separada del techo en la Torre B, Bosque Real —",
+        },
+        {
+          indices: CONFIG.fotosCuartoMaquinas || [],
+          alt: "Grietas en el cuarto de máquinas del ascensor, en la azotea de la Torre B —",
+        },
+      ],
     );
     const hayPresup = agregarFotos(
       "presupuestos-list",
