@@ -1080,3 +1080,22 @@ img {
     font-size: 0.95rem;
   }
 }
+
+/* ---------- Foto técnica del ascensor ---------- */
+.ascensor-figura {
+  margin: 1.4rem 0 0;
+}
+.ascensor-figura img {
+  width: 100%;
+  max-width: 720px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: block;
+  cursor: zoom-in;
+}
+.ascensor-figura figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  max-width: 720px;
+}

@@ -29,18 +29,18 @@
   const EN = {
     "meta.title": "Help for Tower B — Bosque Real, Charallave",
     "meta.desc":
-      "Solidarity campaign to repair Tower B in the Bosque Real neighborhood, Los Robles sector, Charallave, Venezuela, damaged by an earthquake.",
+      "Solidarity campaign to repair Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave, Venezuela, damaged by an earthquake.",
     "brand.name": "Robles Relief",
     "brand.tag": "Bosque Real · Charallave",
     "nav.donate": "Donate",
 
     "hero.kicker": "After the earthquake",
-    "hero.title": "Help us repair Tower B in the Los Robles sector of Bosque Real",
+    "hero.title": "Help us repair Tower B in the Los Robles building",
     "hero.subtitle":
       "On 24 June 2026, two earthquakes of magnitude 7.2 and 7.5 struck northern Venezuela. Our building was left with structural damage, the elevator out of service and railings split apart. We are the neighbours, and we are asking for help to repair it.",
     "meta.math": "<strong>200 donations of €50</strong> complete the goal.",
     "hero.location":
-      "📍 Bosque Real neighborhood · Los Robles sector · Tower B · Charallave, Venezuela",
+      "📍 Bosque Real Residential Complex · Los Robles building · Tower B · Charallave, Venezuela",
     "hero.ctaDonate": "Donate now",
     "hero.ctaLearn": "See the damage",
     "hero.caption":
@@ -48,7 +48,7 @@
 
     "situacion.title": "What is happening?",
     "situacion.body":
-      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real neighbourhood, Los Robles sector, Charallave — was left standing, but <strong>damaged in its structure</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>We are asking for help outside Venezuela because the repair is beyond what the families in the building can raise. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
+      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave — was left standing, but <strong>damaged in its structure</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>We are asking for help outside Venezuela because the repair is beyond what the families in the building can raise. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
 
     "goal.title": "Our goal",
     "meta.of": "of",
@@ -112,6 +112,11 @@
       "Immediate risk of falling debris over the edge. This is the most urgent thing to secure.",
     "danos.r5a": "Cracked floor slabs and separated tiles",
     "danos.r5b": "The structure moved enough to fracture the floor.",
+    "danos.ascensorPie":
+      "Technical inspection of the elevator: it marks the bent counterweight rail and the gap between the counterweight and the rail. The rail has to be replaced.",
+    "danos.r6a": "Elevator: the counterweight rail was bent",
+    "danos.r6b":
+      "With the rail bent, the counterweight came away from its guide. That is why the elevator is out of service: the rail has to be replaced before it can run safely again.",
 
     "transp.title": "How we handle the money",
     "transp.body":
@@ -146,17 +151,17 @@
 
     "quienes.title": "Who we are",
     "quienes.body":
-      "<p>This campaign is organised by the <strong>Los Robles Tower B Condominium Board</strong>, on behalf of the families living in the building in the Bosque Real neighbourhood, Los Robles sector, in Charallave. All the help received goes toward the repair of the tower.</p>",
+      "<p>This campaign is organised by the <strong>Los Robles Tower B Condominium Board</strong>, on behalf of the families living in the building in the Bosque Real Residential Complex, Los Robles building, in Charallave. All the help received goes toward the repair of the tower.</p>",
     "quienes.emailLabel": "Email",
     "ficha.entidad": "Organised by",
     "ficha.rif": "Tax ID (RIF)",
     "ficha.contacto": "Contact person",
     "ficha.ubicacion": "Location",
     "ficha.ubicacionValor":
-      "Tower B, Bosque Real neighbourhood, Los Robles sector, Charallave, Miranda state, Venezuela",
+      "Tower B, Bosque Real Residential Complex, Los Robles building, Charallave, Miranda state, Venezuela",
 
     "footer.location":
-      "Bosque Real neighborhood · Los Robles sector · Tower B · Charallave, Miranda state, Venezuela",
+      "Bosque Real Residential Complex · Los Robles building · Tower B · Charallave, Miranda state, Venezuela",
     "footer.legal":
       "Campaign organised by the Los Robles Tower B Condominium Board · Tax ID J-501036594 · Contact: Bárbara Bohorques, +58 412-9331278",
   };
@@ -371,7 +376,7 @@
     const url = location.origin + location.pathname;
     const texto = en
       ? "Help repair Tower B in Los Robles, Charallave, damaged by the June 24 earthquake:"
-      : "Ayuda a reparar la Torre B de Los Robles, en Charallave, dañada por el terremoto del 24 de junio:";
+      : "Ayuda a reparar la Torre B del edificio Los Robles, en Charallave, dañada por el terremoto del 24 de junio:";
     const enc = encodeURIComponent;
 
     // El menú nativo del teléfono va primero (convierte mejor en móvil), pero
@@ -823,15 +828,18 @@
     if (img) img.src = lbSrcs[lbIndex];
   }
   function initLightbox() {
-    const gallery = document.getElementById("gallery");
-    if (gallery) {
-      gallery.addEventListener("click", function (e) {
-        const a = e.target.closest("a[data-index]");
-        if (!a) return;
-        e.preventDefault();
-        abrirLightbox(Number(a.dataset.index));
-      });
-    }
+    // Se escucha en todo el documento y se resuelve la imagen por su ruta:
+    // así también funcionan las fotos que están fuera de la galería
+    // (por ejemplo la del ascensor, dentro de la sección de daños).
+    document.addEventListener("click", function (e) {
+      const a = e.target.closest("a.gallery-link");
+      if (!a) return;
+      const src = a.getAttribute("href");
+      let i = lbSrcs.indexOf(src);
+      if (i === -1) i = lbSrcs.push(src) - 1;
+      e.preventDefault();
+      abrirLightbox(i);
+    });
     const lb = document.getElementById("lightbox");
     if (!lb) return;
     const cerrar = document.getElementById("lb-close");

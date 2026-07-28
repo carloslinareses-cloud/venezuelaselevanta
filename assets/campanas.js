@@ -41,7 +41,7 @@ window.Campanas = [
   {
     id: 'torre-b-robles',
     titulo: 'Torre B de Los Robles: reparar el edificio',
-    lugar: 'Urbanización Bosque Real, Charallave, estado Miranda',
+    lugar: 'Conjunto Residencial Bosque Real · Edificio Los Robles, Charallave',
     resumen:
       'El terremoto dañó la estructura del edificio, dejó el ascensor sin funcionar y partió ' +
       'las barandas de los balcones. La Junta de Condominio pide ayuda para repararlo.',
