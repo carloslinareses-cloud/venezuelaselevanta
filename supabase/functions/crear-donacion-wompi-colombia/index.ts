@@ -164,6 +164,23 @@ function safeReturnUrl(value: unknown): string {
   }
 }
 
+/**
+ * Limpia el nombre que escribe el donante antes de guardarlo.
+ *
+ * La web lo pinta con textContent, así que hoy no se ejecutaría nada; pero un
+ * nombre como `<img src=x onerror=...>` guardado tal cual se volvería peligroso
+ * en cuanto alguien lo muestre con innerHTML, lo exporte a un PDF o a una hoja
+ * de cálculo. Se guarda limpio desde el principio.
+ */
+function limpiarNombre(value: unknown): string {
+  return String(value || "")
+    .replace(/[<>]/g, "")                        // nada de etiquetas HTML
+    .replace(/[\u0000-\u001F\u007F]/g, "")       // fuera caracteres de control
+    .replace(/\s+/g, " ")                        // espacios normalizados
+    .trim()
+    .slice(0, 80);
+}
+
 async function verificarTransaccion(id: string, origin: string | null): Promise<Response> {
   const publicKey = wompiPublicKey();
   const authKey = wompiAuthKey();
@@ -228,7 +245,7 @@ Deno.serve(async (req: Request) => {
   const reference = "DONA-SVZLA-CO-" + Date.now() + "-" + crypto.randomUUID().slice(0, 8);
   const amountInCents = amount * 100;
   const signature = await sha256Hex(reference + amountInCents + "COP" + integritySecret);
-  const nombre = String(body.name || "").slice(0, 80).trim();
+  const nombre = limpiarNombre(body.name);
   const anonimo = !!body.anonimo;
 
   await sbInsertDonacion({
