@@ -82,8 +82,16 @@ img {
   text-decoration: none;
   color: var(--ink);
 }
+/* Antes era un emoji 🏢. Ahora es la fachada real de la Torre B: el edificio
+   que se identifica en la cabecera es el mismo que sale en las fotos, que es
+   justo lo que un donante desconfiado necesita poder comprobar. */
 .brand-logo {
-  font-size: 1.6rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 .brand-text {
   display: flex;

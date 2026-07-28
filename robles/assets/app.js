@@ -15,7 +15,12 @@
     email: "admlosroblesb@hotmail.com",
     whatsapp: "584129331278", // 0412-9331278 en formato internacional
     whatsappVisible: "+58 412-9331278",
-    numFotos: 32, // fotos de daños en assets/img/ (dano-01.jpeg ... dano-32.jpeg)
+    numFotos: 35, // fotos de daños en assets/img/ (dano-01.jpeg ... dano-35.jpeg)
+    // Fotos que NO muestran estructura sino tabiquería (pared divisoria
+    // separada del techo). Se describen aparte: llamarlas "daño estructural"
+    // sería inexacto y a esta campaña una exageración le costaría la
+    // credibilidad entera.
+    fotosTabiqueria: [33, 34, 35],
     // Fotos de presupuestos/informe en assets/img/ (presupuesto-01.jpeg, -02…).
     // Al poner un número > 0 aparece automáticamente la sección "Presupuestos".
     numPresupuestos: 0,
@@ -44,7 +49,7 @@
     "hero.ctaDonate": "Donate now",
     "hero.ctaLearn": "See the damage",
     "hero.caption":
-      "A balcony railing split clean through: you can see daylight through the crack.",
+      "This is Tower B, in the Bosque Real residential complex. It is the building shown in every photo on this page.",
 
     "situacion.title": "What is happening?",
     "situacion.body":
@@ -117,6 +122,10 @@
     "danos.r6a": "Elevator: the counterweight rail was bent",
     "danos.r6b":
       "With the rail bent, the counterweight came away from its guide. That is why the elevator is out of service: the rail has to be replaced before it can run safely again.",
+    "danos.r7a":
+      "The top of an interior wall pulled away from the ceiling: an open gap, plaster broken off and loose pieces hanging",
+    "danos.r7b":
+      "What is damaged here is a partition wall and its joint with the ceiling, not a column or a beam. It is the kind of damage that shows up when the structure moves and the wall, which is stiff and brittle, does not follow it. It has to be repaired, and in the meantime the loose pieces of plaster can fall on anyone walking underneath.",
 
     "transp.title": "How we handle the money",
     "transp.body":
@@ -773,17 +782,19 @@
   const lbSrcs = [];
   let lbIndex = 0;
 
-  function agregarFotos(contId, prefijo, cantidad, alt) {
+  function agregarFotos(contId, prefijo, cantidad, alt, altAlterno, indicesAlternos) {
     const cont = document.getElementById(contId);
     if (!cont || !cantidad) return false;
+    const alternos = indicesAlternos || [];
     let html = "";
     for (let i = 1; i <= cantidad; i++) {
       const nn = String(i).padStart(2, "0");
       const src = "assets/img/" + prefijo + "-" + nn + ".jpeg";
       const idx = lbSrcs.push(src) - 1; // índice global para el lightbox
+      const alv = (alternos.indexOf(i) !== -1 && altAlterno ? altAlterno : alt) + " " + i;
       html +=
         '<a href="' + src + '" data-index="' + idx + '" class="gallery-link">' +
-        '<img loading="lazy" src="' + src + '" alt="' + alt + " " + i + '" /></a>';
+        '<img loading="lazy" src="' + src + '" alt="' + alv + '" /></a>';
     }
     cont.innerHTML = html;
     return true;
@@ -796,6 +807,8 @@
       "dano",
       CONFIG.numFotos || 0,
       "Daño estructural en la Torre B, Bosque Real —",
+      "Pared interior separada del techo en la Torre B, Bosque Real —",
+      CONFIG.fotosTabiqueria,
     );
     const hayPresup = agregarFotos(
       "presupuestos-list",
