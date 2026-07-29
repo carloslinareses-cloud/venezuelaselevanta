@@ -907,8 +907,35 @@
   /* ============================================================
    *  Init
    * ============================================================ */
+  /**
+   * Avisa al servidor de que alguien abrió la página, para poder saber CUÁNTA
+   * gente entra y DE DÓNDE viene. No se envía nada que identifique a nadie.
+   *
+   * WhatsApp no manda el dato de procedencia, así que un enlace compartido por
+   * ahí aparecería como "directo". Por eso se acepta también una etiqueta en la
+   * dirección: .../robles/?de=whatsapp — así se puede repartir un enlace
+   * distinto por cada canal y saber cuál funciona de verdad.
+   */
+  function contarVisita() {
+    let etiqueta = "";
+    try {
+      etiqueta = new URLSearchParams(location.search).get("de") || "";
+    } catch (e) {
+      /* ignore */
+    }
+    fetch(CONFIG.apiBase + "/api/visita", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ de: etiqueta, ref: document.referrer }),
+      keepalive: true,
+    }).catch(() => {
+      /* si falla no pasa nada: es solo el recuento */
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     capturarES();
+    contarVisita();
     let saved = null;
     try {
       saved = localStorage.getItem("lang");
