@@ -99,7 +99,7 @@
     "pm.titular": "Account name",
     "pm.copiar": "Copy",
     "pm.aviso":
-      "⚠️ <strong>Important:</strong> contributions via pago móvil <strong>do not appear automatically</strong> in the counter above, because that counter only reads card payments. We add them manually and report them under <a href='#actualizaciones'>Updates</a>. If you contribute this way, let us know on WhatsApp so we can keep track and thank you.",
+      "⚠️ <strong>Important:</strong> contributions via pago móvil <strong>do not appear automatically</strong> in the counter above, because that counter only reads card payments.<br><br><strong>Send us a screenshot of your payment</strong> to the building administration's email, <a class='pm-correo' href='#'>admlosroblesb@hotmail.com</a>, or on WhatsApp. It is the only way your contribution gets counted: we add it manually, report it under <a href='#actualizaciones'>Updates</a> and can thank you for it.",
 
     "verif.title": "Check it for yourself",
     "verif.note":
@@ -338,6 +338,17 @@
     const emailReal = CONFIG.email && CONFIG.email !== "CORREO@EJEMPLO.com";
     const waReal = CONFIG.whatsapp && CONFIG.whatsapp !== "000000000000";
     const waUrl = "https://wa.me/" + CONFIG.whatsapp;
+
+    // El correo del aviso de pago móvil sale de CONFIG, no escrito a mano, y se
+    // rehace en cada cambio de idioma porque aplicarIdioma reescribe el bloque.
+    // El asunto viene puesto para que llegue identificado y sea fácil de sumar.
+    document.querySelectorAll("a.pm-correo").forEach((a) => {
+      if (!emailReal) return;
+      a.textContent = CONFIG.email;
+      a.href =
+        "mailto:" + CONFIG.email +
+        "?subject=" + encodeURIComponent("Captura de pago móvil - Torre B Los Robles");
+    });
 
     const emailCard = document.getElementById("contact-email");
     if (emailReal) {
