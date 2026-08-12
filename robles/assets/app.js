@@ -833,12 +833,17 @@
     for (let i = 1; i <= cantidad; i++) {
       const nn = String(i).padStart(2, "0");
       const src = "assets/img/" + prefijo + "-" + nn + ".jpeg";
+      // La rejilla pinta tarjetas de unos 200x150 px. Antes ponía ahí el archivo
+      // entero: se descargaban 47 megapíxeles para mostrar 5, y quien solo hacía
+      // scroll se llevaba 3,8 MB. Con la miniatura aparte, el archivo grande lo
+      // baja únicamente quien abre la foto.
+      const mini = "assets/img/thumbs/" + prefijo + "-" + nn + ".jpeg";
       const idx = lbSrcs.push(src) - 1; // índice global para el lightbox
       const g = grupo(i);
       const alv = (g ? g.alt : alt) + " " + i;
       html +=
         '<a href="' + src + '" data-index="' + idx + '" class="gallery-link">' +
-        '<img loading="lazy" src="' + src + '" alt="' + alv + '" /></a>';
+        '<img loading="lazy" src="' + mini + '" alt="' + alv + '" /></a>';
     }
     cont.innerHTML = html;
     return true;
@@ -898,6 +903,22 @@
     img.src = lbSrcs[i];
     lb.hidden = false;
     document.body.style.overflow = "hidden";
+    precargarVecinas(i);
+  }
+
+  /**
+   * Adelanta la descarga de la foto anterior y la siguiente.
+   *
+   * Hace falta desde que la rejilla muestra miniaturas. Antes el archivo grande
+   * ya estaba en la caché del navegador —lo había bajado la propia tarjeta— y el
+   * lightbox abría instantáneo; ese era el único mérito del diseño anterior y es
+   * justo lo que se pierde al separar los dos archivos. Precargar las vecinas lo
+   * devuelve para quien va pasando fotos, que es lo que hace todo el mundo.
+   */
+  function precargarVecinas(i) {
+    for (const j of [i + 1, i - 1]) {
+      if (j >= 0 && j < lbSrcs.length) new Image().src = lbSrcs[j];
+    }
   }
   function cerrarLightbox() {
     const lb = document.getElementById("lightbox");
