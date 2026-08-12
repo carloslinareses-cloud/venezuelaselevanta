@@ -7,7 +7,7 @@
   const CONFIG = {
     // Backend de pagos: lo define assets/api-base.js (vacío = mismo dominio).
     apiBase: window.ROBLES_API_BASE || "",
-    metaEur: 10000, // meta en euros (el recaudado se lee automáticamente de /api/stats)
+    metaEur: 25000, // meta en euros (el recaudado se lee automáticamente de /api/stats)
     // Datos de la Junta de Condominio
     entidad: "Junta de Condominio Los Robles Torre B",
     rif: "J-501036594",
@@ -28,7 +28,14 @@
     fotosCuartoMaquinas: [28, 29, 30, 31, 32],
     // Fotos de presupuestos/informe en assets/img/ (presupuesto-01.jpeg, -02…).
     // Al poner un número > 0 aparece automáticamente la sección "Presupuestos".
-    numPresupuestos: 0,
+    numPresupuestos: 8,
+    // Qué muestra cada una de esas ocho imágenes. Van descritas por separado
+    // porque las cinco últimas no son un presupuesto: son el informe de riesgo
+    // de Protección Civil, y llamarlas "presupuesto" a todas sería inexacto.
+    docPared: [1],
+    docAscensor: [2],
+    docTecho: [3],
+    docDefensaCivil: [4, 5, 6, 7, 8],
   };
 
   /* ============================================================
@@ -48,7 +55,7 @@
     "hero.title": "Help us repair Tower B in the Los Robles building",
     "hero.subtitle":
       "On 24 June 2026, two earthquakes of magnitude 7.2 and 7.5 struck northern Venezuela. Our building was left with structural damage, the elevator out of service and railings split apart. We are the neighbours, and we are asking for help to repair it.",
-    "meta.math": "<strong>200 donations of €50</strong> complete the goal.",
+    "meta.math": "<strong>500 donations of €50</strong> complete the goal.",
     "hero.location":
       "📍 Bosque Real Residential Complex · Los Robles building · Tower B · Charallave, Venezuela",
     "hero.ctaDonate": "Donate now",
@@ -58,7 +65,7 @@
 
     "situacion.title": "What is happening?",
     "situacion.body":
-      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave — was left standing, but <strong>damaged in its structure</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>Tower B has <strong>84 affected flats</strong>: ten floors of eight flats each, plus four penthouses. What needs repairing is the whole building — the structure, the elevator and the railings — not one individual home, and that is beyond what we can raise here: wages are paid in bolívares.</p><p>That is why we are asking for help outside Venezuela. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
+      "<p>On <strong>24 June 2026</strong>, at 6:04 in the evening, a magnitude <strong>7.2</strong> earthquake struck northern Venezuela with its epicentre near San Felipe, in Yaracuy state. Thirty-nine seconds later a second quake followed, magnitude <strong>7.5</strong>. It was one of the worst natural disasters in the country's recent history.</p><p>Our building — Tower B in the Bosque Real Residential Complex, Los Robles building, Charallave — was left standing, but <strong>damaged</strong>. The photos on this page show vertical cracks running the full height of <strong>columns</strong>, spalled concrete at the <strong>beam-column joints</strong>, <strong>cracked floor slabs</strong> and diagonally cracked walls, including the rooftop structure.</p><p><strong>How far that damage goes is what remains to be determined.</strong> Civil Protection inspected the building and put on record a <strong>continuous fracture running from the ground floor up to the roof</strong>, expansion joints with extreme movement, and an X-shaped crack in the elevator machine room which it calls \"potentially dangerous\". In that same visual inspection it recorded that it <strong>did not observe structural damage to the base columns</strong>, and it recommended an assessment by municipal and forensic engineers to evaluate the structure, the joints and the service staircase, which is the building's <strong>only evacuation route</strong>. That assessment is pending, and the full report is published further down.</p><p>The <strong>elevator stopped working</strong> and several <strong>balcony railings split apart</strong> completely: in some you can see daylight through the crack.</p><p>Tower B has <strong>84 affected flats</strong>: ten floors of eight flats each, plus four penthouses. What needs repairing is the whole building — the structure, the elevator and the railings — not one individual home, and that is beyond what we can raise here: wages are paid in bolívares.</p><p>That is why we are asking for help outside Venezuela. What we are asking for is concrete: <strong>repair the structure, get the elevator running and secure the railings</strong>.</p>",
 
     "goal.title": "Our goal",
     "meta.of": "of",
@@ -67,10 +74,12 @@
 
     "uso.title": "How your help will be used",
     "uso.estimacion":
-      "<strong>About the €10,000:</strong> this is the Condominium Board's preliminary estimate based on the visible damage. The technical assessment of the building has been arranged and we will publish the itemised quotes here. If the final figure changes, we will say so on this same page.",
-    "uso.item1": "Structural repair: columns, beams and beam-column joints",
+      "<strong>About the €25,000:</strong> the quotes drawn up by engineer Ricardo Girón and the Civil Protection report are published below. The three quotes add up to <strong>$13,536</strong>: block wall $1,789.58, elevator counterweight rail $720, and roof slab waterproofing with expansion joints $11,026.48 — in this last one, the joints are quoted <strong>per floor</strong> ($763) and the tower has ten. Still to be quoted are the <strong>stabilisation works</strong> called for by the Civil Protection report, among them the X-shaped crack in the elevator machine room, which the report describes as \"potentially dangerous, having lost load-bearing capacity\". The goal covers both what is already quoted and those works. If the final figure changes, we will say so on this same page.",
+    "uso.item1": "An engineers' assessment and the stabilisation works it determines",
     "uso.item2": "Elevator repair",
     "uso.item3": "Cracked walls, safety railings and rooftop",
+    "uso.item4": "Roof slab waterproofing and expansion joints, floor by floor",
+    "uso.item5": "The service staircase, which is the building's only evacuation route",
 
     "donar.title": "Make your donation",
     "donar.subtitle": "Secure card payment through SumUp. Amounts are in euros (€).",
@@ -111,7 +120,7 @@
     "danos.col2": "What it means",
     "danos.r1a": "Vertical cracks running the full height of a column",
     "danos.r1b":
-      "Columns hold the building up. A crack like this means that element was pushed to its limit during the quake.",
+      "Columns hold the building up, so a crack there has to be assessed by an engineer. In its visual inspection, Civil Protection did not observe structural damage to the base columns; the engineers' assessment it recommends is still pending.",
     "danos.r2a": "Concrete blown out where a beam meets a column",
     "danos.r2b":
       "This is the point that suffers most in an earthquake. When the concrete spalls, the inside of the element is left exposed.",
@@ -146,9 +155,18 @@
     "transp.item3":
       "We will publish here <strong>what every contribution is used for</strong>, with photos of the work as it progresses.",
     "transp.item4":
-      "The <strong>technical assessment of the building has already been arranged</strong>, and the <strong>repair quotes</strong> will be published on this same page, so anyone can see where the figure we are asking for comes from.",
+      "The <strong>technical assessment of the building is done</strong> and the <strong>repair quotes are published</strong> further down, together with the Civil Protection report, so anyone can see where the figure we are asking for comes from.",
+
+    "presup.title": "Quotes and technical assessment",
+    "presup.note":
+      "These are the documents the figure we are asking for is based on, exactly as they were given to us: three quotes from engineer Ricardo Girón — block wall, elevator counterweight rail, and roof slab waterproofing with expansion joints, this last one <strong>for each of the ten floors</strong> — and the Civil Protection technical risk report. Tap an image to see it in full.",
+    "presup.matiz":
+      "<strong>One caveat, because we would rather say it ourselves:</strong> in its visual inspection, Civil Protection recorded that it did <em>not</em> observe structural damage to the base columns or to the main load-bearing elements, and it recommends an assessment by <strong>municipal and forensic engineers</strong> to determine the damage to the structure, to the expansion joints and to the service staircase, which is the building's only evacuation route. That assessment is still pending. We are publishing the full report, that sentence included: we would rather you read it than have us summarise it for you. <strong>As more reports and quotes come in, we will upload them here</strong>, in full and unedited.",
 
     "updates.title": "Updates",
+    "updates.u3date": "August 2026 · Quotes and technical report",
+    "updates.u3body":
+      "We are publishing the <strong>Civil Protection technical risk report</strong> and <strong>three quotes</strong> from engineer Ricardo Girón. With the documents in hand, the repair turned out to be more expensive than we had estimated: the expansion joints are quoted for each of the ten floors, and the stabilisation works called for by the report still have to be costed. That is why we have <strong>raised the goal from €10,000 to €25,000</strong>. The documents are published in full in the \"Quotes and technical assessment\" section.",
     "updates.u2date": "July 2026 · Technical assessment",
     "updates.u2body":
       "The technical assessment of the building has been arranged. We will publish the repair quotes here as soon as we have them.",
@@ -832,7 +850,7 @@
       "gallery",
       "dano",
       CONFIG.numFotos || 0,
-      "Daño estructural en la Torre B, Bosque Real —",
+      "Daños tras el sismo en la Torre B, Bosque Real —",
       [
         {
           indices: CONFIG.fotosTabiqueria || [],
@@ -849,6 +867,24 @@
       "presupuesto",
       CONFIG.numPresupuestos || 0,
       "Presupuesto / informe técnico —",
+      [
+        {
+          indices: CONFIG.docPared || [],
+          alt: "Presupuesto de construcción de pared de bloques, firmado por el Ing. Ricardo Girón —",
+        },
+        {
+          indices: CONFIG.docAscensor || [],
+          alt: "Presupuesto de reparación del riel de contrapeso del ascensor —",
+        },
+        {
+          indices: CONFIG.docTecho || [],
+          alt: "Presupuesto de impermeabilización de la losa de techo y juntas de dilatación —",
+        },
+        {
+          indices: CONFIG.docDefensaCivil || [],
+          alt: "Informe técnico de riesgo de Protección Civil sobre la Torre B, página",
+        },
+      ],
     );
     const sec = document.getElementById("presupuestos");
     if (sec) sec.hidden = !hayPresup;
