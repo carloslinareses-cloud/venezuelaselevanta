@@ -86,6 +86,14 @@
     "donar.amountLabel": "Choose an amount",
     "donar.customLabel": "Other amount (€)",
     "donar.continue": "Continue to payment",
+    "donar.nameLabel": "Your name (optional)",
+    "donar.namePublish": "I want my name to appear in the list of donors on this page",
+    "donar.namePrivacy":
+      "If you leave the box unticked, your donation appears as \"Anonymous\". We never publish anyone's name unless they ask us to.",
+
+    "donantes.title": "Who has helped",
+    "donantes.note":
+      "Each line is a card donation confirmed by the payment gateway. Names only appear when the person asks for theirs to appear; everyone else is listed as \"Anonymous\".",
     "trust.secure": "🔒 Secure payment processed by SumUp",
     "trust.card": "💳 Your card details never pass through this site",
     "trust.auto": "📊 The amount raised updates automatically",
@@ -674,10 +682,17 @@
     );
     try {
       const returnUrl = new URL("gracias.html", location.href).href;
+      // El nombre solo se manda si la persona marcó la casilla. Se envía al
+      // crear el pago —no después— porque cuando el pago vuelve confirmado ya
+      // no hay ningún formulario del que sacarlo.
+      const campoNombre = document.getElementById("donante-nombre");
+      const campoPublicar = document.getElementById("donante-publicar");
+      const publicar = !!(campoPublicar && campoPublicar.checked);
+      const nombre = publicar && campoNombre ? campoNombre.value.trim().slice(0, 40) : "";
       const res = await fetch(api("/api/checkout"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: montoSeleccionado, returnUrl }),
+        body: JSON.stringify({ amount: montoSeleccionado, returnUrl, nombre, publicar }),
       });
       const data = await res.json();
       if (!res.ok || (!data.hostedUrl && !data.checkoutId)) {
@@ -750,7 +765,7 @@
   /* ============================================================
    *  Progreso real de la campaña (datos verificados de SumUp)
    * ============================================================ */
-  const estado = { raised: 0, count: 0, goal: CONFIG.metaEur };
+  const estado = { raised: 0, count: 0, goal: CONFIG.metaEur, donantes: [] };
 
   const fmtEur = (n) =>
     "€" +
@@ -799,6 +814,41 @@
     }
   }
 
+  /**
+   * Lista de quién ha ayudado.
+   *
+   * Se construye con nodos y textContent, nunca concatenando HTML: el nombre lo
+   * escribe un desconocido en un formulario público y no puede acabar
+   * interpretándose como etiquetas. El servidor ya le quita los caracteres con
+   * los que se abre una etiqueta; esto es la segunda barrera, no la única.
+   *
+   * Quien no pidió aparecer viaja con el nombre vacío y sale como «Anónimo».
+   */
+  function pintarDonantes() {
+    const sec = document.getElementById("donantes");
+    const lista = document.getElementById("donantes-list");
+    if (!sec || !lista) return;
+
+    const filas = estado.donantes || [];
+    sec.hidden = filas.length === 0;
+    if (!filas.length) return;
+
+    const en = document.documentElement.lang === "en";
+    lista.textContent = "";
+    for (const d of filas) {
+      const li = document.createElement("li");
+      const quien = document.createElement("span");
+      quien.className = "donante-quien";
+      quien.textContent = d.n || (en ? "Anonymous" : "Anónimo");
+      const cuanto = document.createElement("span");
+      cuanto.className = "donante-cuanto";
+      cuanto.textContent = fmtEur(d.a || 0);
+      li.appendChild(quien);
+      li.appendChild(cuanto);
+      lista.appendChild(li);
+    }
+  }
+
   async function cargarProgreso() {
     try {
       const r = await fetch(api("/api/stats"), { cache: "no-store" });
@@ -806,8 +856,10 @@
       if (d && typeof d.raised === "number") {
         estado.raised = d.raised;
         estado.count = d.count || 0;
+        estado.donantes = Array.isArray(d.donantes) ? d.donantes : [];
         if (d.goal) estado.goal = d.goal;
         pintarProgreso();
+        pintarDonantes();
       }
     } catch (e) {
       /* si falla, se mantiene la meta mostrada */

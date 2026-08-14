@@ -160,6 +160,29 @@
                     placeholder="0"
                   />
                 </div>
+                <div class="donante-campo">
+                  <label for="donante-nombre" data-i18n="donar.nameLabel">
+                    Tu nombre (opcional)
+                  </label>
+                  <input
+                    id="donante-nombre"
+                    type="text"
+                    maxlength="40"
+                    autocomplete="name"
+                    placeholder="Como quieras que aparezca"
+                  />
+                  <label class="donante-permiso">
+                    <input id="donante-publicar" type="checkbox" />
+                    <span data-i18n="donar.namePublish">
+                      Quiero que mi nombre salga en la lista de donantes de esta página
+                    </span>
+                  </label>
+                  <p class="donante-nota" data-i18n="donar.namePrivacy">
+                    Si dejas la casilla sin marcar, tu donación aparece como «Anónimo». No
+                    publicamos el nombre de nadie sin que lo pida.
+                  </p>
+                </div>
+
                 <button id="donate-btn" class="btn btn-primary btn-block" type="button">
                   <span id="donate-btn-label" data-i18n="donar.continue">Donar</span>
                 </button>
@@ -558,6 +581,18 @@
             íntegros y sin recortar.
           </p>
           <div id="presupuestos-list" class="gallery"></div>
+        </div>
+      </section>
+
+      <!-- DONANTES (aparece sola en cuanto hay donaciones) -->
+      <section id="donantes" class="section" hidden>
+        <div class="container container-medium">
+          <h2 data-i18n="donantes.title">Quiénes han ayudado</h2>
+          <p class="section-note" data-i18n="donantes.note">
+            Cada línea es una donación con tarjeta confirmada por la pasarela de pago. Los nombres
+            solo salen cuando la persona pide que salga el suyo; el resto figura como «Anónimo».
+          </p>
+          <ol id="donantes-list" class="donantes"></ol>
         </div>
       </section>
 
